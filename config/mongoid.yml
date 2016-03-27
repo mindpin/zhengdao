@@ -1,0 +1,16 @@
+development:
+  sessions:
+    default:
+      database: knowledge-camp-development
+      hosts:
+        - 127.0.0.1:27017
+test:
+  sessions:
+    default:
+      database: knowledge-camp-test
+      hosts:
+        - 127.0.0.1:27017
+      options:
+        read: primary
+        max_retries: 1
+        retry_interval: 0

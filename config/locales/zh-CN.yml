@@ -1,0 +1,95 @@
+zh-CN:
+  views:
+    pagination:
+      first: "&laquo; 第一页"
+      last: "最后页 &raquo;"
+      previous: 上页
+      next: 下页
+      truncate: ...
+    new:
+      file: 上传文件
+      document: 创建文档
+      point: 创建知识点
+      plan: 创建教案
+
+  time:
+    formats:
+      default: "%H:%M"
+
+  mongoid:
+    models:
+      net: 知识网络
+      plan: 教案
+      file: 文件
+      document: 文档
+      point: 知识点
+    errors:
+      models:
+        net:
+          attributes:
+            name:
+              taken: 已经存在同名的知识网络了
+
+        # 20160311
+        user:
+          attributes:
+            email:
+              blank: 邮箱不能为空
+              invalid: 邮箱格式不正确
+              taken: 邮箱已被注册
+            password:
+              blank: 密码不能为空
+              too_short: 密码太短 #（最少 4 位）
+              too_long: 密码太长 #（最多 32 位）
+            name:
+              blank: 没有填写用户名
+              too_short: 用户名太短 #（最少 2 位）
+              too_long: 用户名太长 #（最多 20 位）
+
+
+  simple_form:
+    labels:
+      plan:
+        net_id: 所属知识网络
+      user:
+        login: 用户名
+        email: 邮箱
+        password: 密码
+        remember_me: 记住我的登录状态
+        avatar: 头像
+      topic:
+        title: 标题
+        desc: 简单描述
+        points: 关联知识点
+        image: 上传封面图片
+      tutorial:
+        title: 标题
+        desc: 简单描述
+        points: 关联知识点（从主题的知识点中选取）
+        image: 上传封面图片
+
+    placeholders:
+      plan:
+        name: 输入名称
+        desc: 输入描述信息
+
+  helpers:
+    submit:
+      create: 确定创建
+      update: 确定修改
+
+      user:
+        login: 登录
+
+
+  # 20160311
+  devise:
+    failure:
+      user:
+        # 邮箱和密码都不输入内容
+        # 邮箱不输入内容，密码输入内容
+        unauthenticated: 用户名/密码不对
+        # 输入的邮箱没有找到对应的用户
+        not_found_in_database: 没有找到对应用户
+        # 输入的邮箱能找到对应的用户，但是输入的密码不正确
+        invalid: 用户名/密码不对

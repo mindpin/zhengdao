@@ -1,0 +1,13 @@
+development:
+  static_file_url_prefix: static_files/development
+  upload_file_base_path: <%= Rails.root.join("public/static_files/development") %>
+  qiniu_bucket: xxx
+  qiniu_domain: http://xxx.xxx.xxx.xxx.clouddn.com
+  qiniu_base_path: kc
+  qiniu_app_access_key: xxx
+  qiniu_app_secret_key: xxx
+  qiniu_callback_host:  http://xxx.xxx.xxx
+
+test:
+  static_file_url_prefix: static_files/test
+  upload_file_base_path: <%= Rails.root.join("public/static_files/test") %>
