@@ -1,5 +1,7 @@
 // *= require zhengdao/semantic
 
+@import 'patient-graph';
+
 body, .ui.header, .ui.menu, .ui.button, 
 .ui.cards>.card>.content>.header,
 .ui.card>.content>.header
@@ -233,6 +235,16 @@ body.admin {
     opacity:0;
     transform: scale(1.5);
   }
+}
+
+@keyframes graphflash {
+  // 0% {
+  // }
+  // 100% {
+  //   transform: scale(1.1);
+  // }
+  // // 0% {
+  // // }
 }
 
 .diagnosis-page {

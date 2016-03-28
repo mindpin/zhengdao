@@ -2,6 +2,8 @@ class IndexController < ActionController::Base
   PAGE_AND_COMPONENT = {
     home: %w{common DemoIndexPage},
 
+    :'patient-graph' => %w{common DemoPatientGraphPage},
+
     guide: %w{diagnosis GHSelectPage},
       :'guide-guahao' => %w{diagnosis GHXCPage},
         :'guide-doctor-select' => %w{diagnosis GHDoctorSelectPage},

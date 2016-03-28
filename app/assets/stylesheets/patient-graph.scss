@@ -1,0 +1,231 @@
+@mixin yaowan($w, $h, $bgc) {
+  background-color: $bgc;
+  font-size: 16px;
+  font-weight: bold;
+  border: solid 3px rgba(black, 0.2);
+  width: $w;
+  height: $h;
+  line-height: $h - 6px;
+  text-align: center;
+  border-radius: $h / 2;
+  position: absolute;
+  left: 50%;
+  z-index: 1;
+}
+
+@mixin circle($w, $bgc) {
+  border: solid 3px rgba(black, 0.2);
+  background-color: $bgc;
+  color: white;
+  font-weight: bold;
+  border-radius: 100%;
+  width: $w;
+  height: $w;
+  text-align: center;
+  line-height: $w - 6px;
+  position: absolute;
+  left:50%;
+  margin-left: -$w/2;
+  z-index: 1;
+}
+
+@mixin line {
+  position: absolute;
+  background-color: #7F7F7F;
+}
+
+.patient-graph-page {
+  position: relative;
+  color: white;
+
+  .patient {
+    @include circle(150px, #EA700D);
+    font-size: 20px;
+    top: 40px;
+  }
+
+  .patient-line {
+    @include line;
+    width: 4px;
+    top: 60px;
+    height: 1500px;
+    left: 50%;
+    margin-left: -2px;
+  }
+
+  $t1: 250px;
+  .yuyue {
+    @include yaowan(150px, 40px, #7E649E);
+    margin-left: 120px;
+    top: 250px;
+  }
+
+  .yuyue-line {
+    @include line;
+    height: 4px;
+    left:50%;
+    width: 150px;
+    top: $t1 + 18px;
+  }
+
+  .weixin {
+    @include circle(50px, #78AB34);
+    margin-left: 320px;
+    top: 250px;
+    margin-top: -60px;
+  }
+  .weixin-line {
+    @include line;
+    height: 4px;
+    left:50%;
+    width: 140px;
+    top: $t1 + 18px;
+    margin-left: 220px;
+    margin-top: -60 + 6px;
+  }
+  .wangzhan-line {
+    @include line;
+    height: 4px;
+    left:50%;
+    width: 140px;
+    top: $t1 + 18px;
+    margin-left: 220px;
+    margin-top: 60 - 6px;
+  }
+  .wangzhan-line1 {
+    @include line;
+    height: 110px;
+    left:50%;
+    width: 4px;
+    top: $t1 + 18px;
+    margin-left: 220px;
+    margin-top: - 60 + 6px;
+  }
+  .wangzhan {
+    @include circle(50px, #78AB34);
+    margin-left: 320px;
+    top: 250px;
+    margin-top: 48px;
+  }
+
+  $t2: $t1 + 90px;
+  .guahao {
+    @include yaowan(150px, 40px, #7E649E);
+    margin-left: -220px ;
+    top: $t2;
+  }
+  .guahao-line {
+    @include line;
+    height: 4px;
+    left:50%;
+    width: 150px;
+    top: $t2 + 18px;
+    margin-left: -150px;
+  }
+
+  $t3: $t2 + 120px;
+  .dangan {
+    @include yaowan(150px, 40px, #BF9000);
+    margin-left: 40px ;
+    top: $t3;
+  }
+  .dangan-line {
+    @include line;
+    height: 4px;
+    left:50%;
+    width: 150px;
+    top: $t3 + 18px;
+  }
+
+  .dangan-jiben {
+    @include yaowan(120px, 32px, #BF9000);
+    top: $t3 + 4px;
+    margin-left: 210px;
+
+    &.j1 {
+      margin-top: 50px;
+    }
+    &.j2 {
+      margin-top: 175px;
+    }
+    &.j3 {
+      margin-top: 270px;
+    }
+  }
+
+
+  $t4: $t3 + 180px;
+  .zhenduan {
+    @include yaowan(150px, 40px, #4BACC6);
+    margin-left: -220px ;
+    top: $t4;
+  }
+  .zhenduan-line {
+    @include line;
+    height: 4px;
+    left:50%;
+    width: 150px;
+    top: $t4 + 18px;
+    margin-left: -150px;
+  }
+
+  $t5: $t4 + 90px;
+  .zhiliao {
+    @include yaowan(150px, 40px, #21BA45);
+    margin-left: 40px ;
+    top: $t5;
+  }
+  .zhiliao-line {
+    @include line;
+    height: 4px;
+    left:50%;
+    width: 150px;
+    top: $t5 + 18px;
+  }
+
+  $t6: $t5 + 90px;
+  .jiankang {
+    @include yaowan(150px, 40px, #3B5998);
+    margin-left: -220px ;
+    top: $t6;
+  }
+  .jiankang-line {
+    @include line;
+    height: 4px;
+    left:50%;
+    width: 150px;
+    top: $t6 + 18px;
+    margin-left: -150px;
+  }
+
+  .tijian-xitong {
+    @include yaowan(120px, 32px, #4BACC6);
+    margin-left: -360px;
+    top: $t4 + 4px;
+    font-size: 14px;
+  }
+  .tijian-xitong-img {
+    width:100px;
+    height:134px;
+    background: url(http://i.teamkn.com/i/OGVxOYor.png?imageMogr2/thumbnail/100x);
+    position: absolute;
+    top:$t4 - 16px + 34px - 90px - 65px;
+    left:50%;
+    border:solid 2px rgba(black, 0.2);
+    margin-left: -350px;
+    animation: graphflash 2s infinite;
+  }
+
+  .dangan-img {
+    width:200px;
+    height:267px;
+    background: url(http://i.teamkn.com/i/UpEYr9Y2.png?imageMogr2/thumbnail/200x);
+    position: absolute;
+    top:$t3 - 16px + 34px;
+    left:50%;
+    border:solid 2px rgba(black, 0.2);
+    margin-left: 310px;
+    margin-top: -50px;
+    animation: graphflash 2s infinite;
+  }
+}

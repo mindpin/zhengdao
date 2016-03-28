@@ -18,8 +18,11 @@
 
       <div className='ui vertical segment'>
         <div className='ui container'>
+          <a className='ui button brown' href='patient-graph.html'>
+            <i className='icon doctor' /> 患者体验流程
+          </a>
           <a className='ui button brown' href='graph.html'>
-            <i className='icon doctor' /> 查看业务过程图示
+            <i className='icon doctor' /> 业务图示
           </a>
         </div>
       </div>
