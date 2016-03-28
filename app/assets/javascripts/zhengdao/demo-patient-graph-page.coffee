@@ -69,6 +69,11 @@
 
           <div className='tijian-xitong'>体检记录系统</div>
           <a className='tijian-xitong-img' href='zd-diagnosis.html' target='_blank' />
+
+          <div className='zhenduan z1'>舌诊</div>
+          <div className='zhenduan z2'>面诊</div>
+          <div className='zhenduan z3'>背诊</div>
+          <div className='zhenduan z4'>腹诊</div>
         </div>
 
     Zhiliao: React.createClass
