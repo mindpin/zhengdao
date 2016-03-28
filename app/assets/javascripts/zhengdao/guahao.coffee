@@ -215,7 +215,7 @@ ConfirmZhiliaoYYInfoPanel = React.createClass
       <div className='ui container'>
         <div className='info-input-form result'>
           <h3 className='ui header'>挂号成功</h3>
-          <p style={'text-align': 'center'}>就诊号：<strong>105</strong></p>
+          <p style={'textAlign': 'center'}>就诊号：<strong>105</strong></p>
           <a className='ui right labeled icon button brown enter-yy' href='javascript:;'>
             <i className='icon print' />
             <span>打印挂号单</span>
@@ -400,7 +400,7 @@ PatientInfoItem = React.createClass
     <div className='gh-page'>
       <div className='ui container'>
         <h2 className='ui header topbar'>
-          <TopbarBack href='guide-quhao.html' />
+          <TopbarBack href='guide-period-select.html' />
           <span>治疗预约</span>
         </h2>
 

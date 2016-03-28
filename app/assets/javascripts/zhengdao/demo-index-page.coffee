@@ -15,6 +15,14 @@
           </HorizontalChineseScroll>
         </div>
       </div>
+
+      <div className='ui vertical segment'>
+        <div className='ui container'>
+          <a className='ui button brown' href='graph.html'>
+            <i className='icon doctor' /> 查看业务过程图示
+          </a>
+        </div>
+      </div>
       
     </div>
 

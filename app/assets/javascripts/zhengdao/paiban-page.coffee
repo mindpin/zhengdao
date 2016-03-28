@@ -1,3 +1,11 @@
+@PaibanPageFromDoctor = React.createClass
+  render: ->
+    <PaibanPage back='doctor.html' />
+
+@PaibanPageFromTijian = React.createClass
+  render: ->
+    <PaibanPage back='tijian.html' />
+
 @PaibanPage = React.createClass
   render: ->
     <div className='gh-page'>
