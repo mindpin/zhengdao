@@ -1,0 +1,74 @@
+!!!
+%html{ lang: "zh" }
+  %head
+    %meta{ content: "text/html; charset=utf-8", http:{ equiv: "Content-Type" } }
+    %meta{ content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", name: "viewport"}
+
+    %title 正道中医演示系统
+
+    = csrf_meta_tags
+
+    = stylesheet_link_tag :zhengdao, :'data-turbolinks-track' => true
+    = javascript_include_tag :zhengdao, :'data-turbolinks-track' => true
+
+  %body.manager
+
+    :ruby
+      manager_sidebar_data = {
+        current_func: @current_func,
+
+        dashboard: {
+          id: 'dashboard',
+          name: '总控面板',
+          icon: 'dashboard'
+        },
+
+        scenes: [
+          {
+            name: '角色看板',
+            funcs: [
+              {
+                name: '导诊看板',
+                icon: 'grid user',
+                url: zhengdao_url(page: 'dashboard-guide')
+              },
+              {
+                name: '医师看板',
+                icon: 'grid user',
+                url: zhengdao_url(page: 'dashboard-doctor')
+              },
+              {
+                name: '体检师看板',
+                icon: 'grid user',
+                url: zhengdao_url(page: 'dashboard-pe')
+              },
+              {
+                name: '治疗师看板',
+                icon: 'grid user',
+                url: zhengdao_url(page: 'dashboard-treat')
+              },
+            ]
+          },
+          {
+            name: '业务介绍',
+            funcs: [
+              name: '业务流程',
+              icon: 'sitemap',
+              url: zhengdao_url(page: 'graph')
+            ]
+          }
+        ]
+      }
+
+      top_menu_data = {
+        sign_out_url: '',
+        sign_out_to_url: ''
+      }
+
+    = react_component 'LayoutManagerSidebar', data: manager_sidebar_data
+    = react_component 'LayoutManagerTopMenu', data: top_menu_data, current_user_data: nil
+
+
+    .manager-page-content
+      .func-content.ui.segment.basic
+        = yield

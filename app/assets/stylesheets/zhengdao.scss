@@ -35,6 +35,52 @@ $zdzy-yz-1-url: 'http://i.teamkn.com/i/y3sAFlhE.png';
 $mianzhen-title: 'http://i.teamkn.com/i/r9UurnsF.png';
 $beizhen-title: 'http://i.teamkn.com/i/iuTohFMc.png';
 
+$mindpin-font-family: "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", "sans-serif", "微软雅黑" !important;
+
+$number-font-family: "Helvetica Neue", "Arial", "Helvetica", "sans-serif" !important;
+
+@import 'zhengdao/auth';
+@import 'zhengdao/manager';
+
+body,
+
+.ui.menu,
+
+.ui.cards > .card > .content > .header, 
+.ui.card > .content > .header,
+
+.ui.header,
+
+.ui.button,
+{
+  font-family: $mindpin-font-family;
+}
+
+.ui.button.brown {
+  // $c: #977B69;
+  $c: #B87F59;
+
+  background-color: $c;
+  &:hover {
+    background-color: darken($c, 5%);
+  }
+}
+
+.ui.segment,
+{
+  border-radius: 0 !important;
+}
+
+.ui.label.red {
+  background-color: #C15D3E !important;
+}
+
+.ui.label.green {
+  background-color: #53C13E !important;
+}
+
+// -----------------
+
 body {
   background-color: $body-bg-color;
 }
@@ -1020,7 +1066,8 @@ table.paiban {
 
   .svg-source {
     // padding: 15px 100px;
-    width:800px;
+    // width:800px;
+    width: 100%;
     padding-top: 15px;
     margin: 0 auto;
     svg {
@@ -1278,12 +1325,13 @@ table.paiban {
   }
 
   .demo-new-index-page-component {
-    width:800px;
+    // width:800px;
+    width: 100%;
     margin:0 auto;
     padding-top: 15px;
     .desc {
       padding: 15px;
-      background-color: rgba(black, 0.04);
+      background-color: #ffffda;
       margin-top: 15px;
       font-size: 16px;
     }

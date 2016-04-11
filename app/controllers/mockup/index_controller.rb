@@ -1,4 +1,6 @@
-class IndexController < ActionController::Base
+class Mockup::IndexController < ApplicationController
+  include SampleData
+
   PAGE_AND_COMPONENT = {
     home: %w{common DemoIndexPage},
 
@@ -60,15 +62,67 @@ class IndexController < ActionController::Base
   }
 
   def index
-    redirect_to zhengdao_url page: 'home'
+    redirect_to auth_url page: 'sign_in'
   end
 
   def page
     page = params[:page].to_sym
-    @component_name = PAGE_AND_COMPONENT[page][1]
+
+    case page
+    when :'dashboard-guide'
+      get_dashboard_guide
+    when :'dashboard-doctor'
+      get_dashboard_doctor
+    when :'dashboard-pe'
+      get_dashboard_pe
+    when :'dashboard-treat'
+      get_dashboard_treat
+    else
+      @component_name = PAGE_AND_COMPONENT[page][1]
+    end
   end
 
   def graph
-    render layout: 'common'
+    render layout: 'dashboard'
   end
+
+  def get_dashboard_guide
+    @component_name = 'DashboardPage.Guide'
+    @component_data = {
+      yuyue_queue: GUAHAO_PATIENTS[0...8],
+      zaiguan_queue: ZAIGUAN_PATIENTS[0...7],
+      free_doctor: DOCTORS[0...7],
+      free_pe: PES[0...5],
+      free_treat: TREATS[0...6],
+    }
+    render layout: 'dashboard'
+  end
+
+  def get_dashboard_doctor
+    @component_name = 'DashboardPage.Doctor'
+    @component_data = {
+      yuyue_queue: GUAHAO_PATIENTS,
+      zaiguan_queue: ZAIGUAN_PATIENTS
+    }
+    render layout: 'dashboard'
+  end
+
+  def get_dashboard_pe
+    @component_name = 'DashboardPage.PE'
+    @component_data = {
+      yuyue_queue: GUAHAO_PATIENTS[0...5],
+      zaiguan_queue: ZAIGUAN_PATIENTS[0...4]
+    }
+    render layout: 'dashboard'
+  end
+
+  def get_dashboard_treat
+    @component_name = 'DashboardPage.Treat'
+    @component_data = {
+      yuyue_queue: GUAHAO_PATIENTS,
+      zaiguan_queue: ZAIGUAN_PATIENTS
+    }
+    render layout: 'dashboard'
+  end
+
 end
