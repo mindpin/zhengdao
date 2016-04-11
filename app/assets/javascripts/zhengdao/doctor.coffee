@@ -108,11 +108,18 @@
 
 
 @DoctorPatientInfoPage = React.createClass
-  getInitialState: ->
-    active: 0
   render: ->
     <div className='zd-patient-info-page doctor-pinfo'>
       <div className='ui container'>
+        <DoctorPatientInfoPage.Panel />
+      </div>
+    </div>
+
+  statics:
+    Panel: React.createClass
+      getInitialState: ->
+        active: @props.active || 0
+      render: ->
         <h2 className='ui header topbar'>
           <TopbarBack href='doctor-patient-list.html' />
           <span>患者信息</span>
@@ -155,7 +162,7 @@
                   ['就诊时间', '2015-12-08（星期二）下午']
                   ['门诊类型', '专家门诊（14元）']
                 ]
-                jiaofei: false
+                jiaofei: true
               }
               {
                 kind: '治疗'
@@ -228,23 +235,21 @@
         </div>
 
         </div>
-      </div>
-    </div>
 
-  select0: ->
-    @setState active: 0
-  select1: ->
-    @setState active: 1
-  select2: ->
-    @setState active: 2
-  select3: ->
-    @setState active: 3
+      select0: ->
+        @setState active: 0
+      select1: ->
+        @setState active: 1
+      select2: ->
+        @setState active: 2
+      select3: ->
+        @setState active: 3
 
 PatientInfo = React.createClass
   render: ->
     <div className='ui segment patient-info'>
       <div className='avatar' style={'backgroundImage':'url(http://i.teamkn.com/i/jdXKi54u.png)', 'backgroundSize':'cover', 'width':'120px', 'height':'120px'}></div>
-      <div className='content'>
+      <div className='ccontent'>
         <h3 className='ui header name'>王大锤</h3>
         <div className='info'>
           <span>男，33岁，诊疗卡号：</span>
@@ -253,20 +258,17 @@ PatientInfo = React.createClass
         <div className='info'>既往史：无</div>
         <div className='info'>家族史：无</div>
       </div>
-      <a href='doctor-pay.html' className='doctor-pay ui orange button'>
+      <a href='javascript:;' onClick={@pay} className='doctor-pay ui orange button'>
         <i className='icon rmb' />
         结清缴费
       </a>
     </div>
 
+  pay: ->
+    jQuery.open_large_modal <DoctorPayPage.Panel />
+
 
 @DoctorPayPage = React.createClass
-  getInitialState: ->
-    pays: [
-      ['基础体检', '次', '10.00', 1, '10.00']
-      ['舌诊', '次', '20.00', 1, '20.00']
-      ['脉诊', '次', '30.00', 1, '30.00']
-    ]
   render: ->
     <div className='zd-patient-info-page pay'>
       <div className='ui container'>
@@ -274,6 +276,19 @@ PatientInfo = React.createClass
           <TopbarBack href='doctor-patient-info.html' />
           <span>患者信息</span>
         </h2>
+        <DoctorPayPage.Panel />
+      </div>
+    </div>
+
+  statics:
+    Panel: React.createClass
+      getInitialState: ->
+        pays: [
+          ['基础体检', '次', '10.00', 1, '10.00']
+          ['舌诊', '次', '20.00', 1, '20.00']
+          ['脉诊', '次', '30.00', 1, '30.00']
+        ]
+      render: ->
         <div className='table-div'>
           <PatientInfo />
 
@@ -312,26 +327,27 @@ PatientInfo = React.createClass
               klass = new ClassName
                 'ui button orange': true
                 'disabled': total is 0
-              <a href='doctor-patient-info.html' className={klass}>
+              <a href='javascript:;' onClick={@close} className={klass}>
                 <i className='icon rmb' />
                 确定缴费
               </a>
             }
           </div>
         </div>
-      </div>
-    </div>
 
-  toggle_all: (evt)->
-    checked = evt.target.checked
-    pays = @state.pays
-    for p in pays
-      p[5] = checked
-    @setState pays: pays
+      close: ->
+        @state.close()
 
-  toggle: (idx)->
-    (evt)=>
-      checked = evt.target.checked
-      pays = @state.pays
-      pays[idx][5] = checked
-      @setState pays: pays
+      toggle_all: (evt)->
+        checked = evt.target.checked
+        pays = @state.pays
+        for p in pays
+          p[5] = checked
+        @setState pays: pays
+
+      toggle: (idx)->
+        (evt)=>
+          checked = evt.target.checked
+          pays = @state.pays
+          pays[idx][5] = checked
+          @setState pays: pays

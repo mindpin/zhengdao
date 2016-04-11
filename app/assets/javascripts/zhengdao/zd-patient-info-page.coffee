@@ -9,7 +9,6 @@
     <div className='zd-patient-info-page'>
       <div className='ui container'>
         <h2 className='ui header topbar'>
-          <TopbarBack href='zd-patient-list.html' />
           <span>患者信息</span>
         </h2>
 
@@ -41,9 +40,9 @@
         </table>
 
         <div>
-          <a className='ui labeled icon button back' href='zd-patient-list.html'>
+          <a className='ui labeled icon button back' href='dashboard-pe'>
             <i className='left arrow icon' />
-            <span>返回患者队列</span>
+            <span>返回队列</span>
           </a>
           <a className='ui right labeled icon button brown next' href='zd-diagnosis.html'>
             <i className='right arrow icon' />

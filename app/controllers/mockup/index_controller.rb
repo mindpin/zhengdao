@@ -4,7 +4,7 @@ class Mockup::IndexController < ApplicationController
   PAGE_AND_COMPONENT = {
     home: %w{common DemoIndexPage},
 
-    :'patient-graph' => %w{common DemoPatientGraphPage},
+    :'patient-graph' => %w{dashboard DemoPatientGraphPage},
 
     guide: %w{diagnosis GHSelectPage},
       :'guide-guahao' => %w{diagnosis GHXCPage},

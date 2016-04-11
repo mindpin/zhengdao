@@ -33,8 +33,6 @@
     </div>
 
 @GHXCPage = React.createClass
-  getInitialState: ->
-    active: 0
   render: ->
     <div className='gh-page'>
       <div className='ui container'>
@@ -43,6 +41,16 @@
           <span>现场挂号</span>
         </h2>
 
+        <GHXCPage.Panel />
+      </div>
+    </div>
+
+  statics:
+    Panel: React.createClass
+      getInitialState: ->
+        active: 0
+
+      render: ->
         <div className='info-input-form'>
           {
             klass0 = new ClassName
@@ -53,8 +61,8 @@
               'active': @state.active == 1
 
             <div className="ui two item menu">
-              <a className={klass0} onClick={@select0}>新患者</a>
-              <a className={klass1} onClick={@select1}>已注册患者</a>
+              <a className={klass0} onClick={@select(0)}>新增档案</a>
+              <a className={klass1} onClick={@select(1)}>读取已有档案</a>
             </div>
           }
           {
@@ -63,33 +71,31 @@
                 '　就诊人', '身份证号', '　手机号', '诊疗卡号', 
                 '症状描述', '个人病史', '家庭病史'
               ]
-              <FormPanel title='输入患者信息' button='进入预约' inputs={inputs} to='guide-doctor-select.html'/>
+              <FormPanel title='输入基本档案信息' button='进入预约' inputs={inputs} to='guide-doctor-select.html'/>
             
             else if @state.active == 1
               inputs = [
                 '手机号'
               ]
-              <FormPanel title='读取患者信息' button='进入预约' inputs={inputs} to='guide-doctor-select.html'>
-              <div className='ui segment basic'>
-                <div className='ui form'>
-                  <div className='grouped fields'>
-                    <div className='field'>
-                      <div className="ui radio checkbox">
-                        <input type="radio" name="radio" />
-                        <label>王大锤 - 男 - 33 岁</label>
-                      </div>
+              <FormPanel title='读取档案信息' button='进入预约' inputs={inputs} to='guide-doctor-select.html'>
+              <div className='ui form' style={paddingTop: '0.5rem'}>
+                <div className='grouped fields'>
+                  <div className='field'>
+                    <div className="ui radio checkbox">
+                      <input type="radio" name="radio" />
+                      <label>王大锤 - 男 - 33 岁</label>
                     </div>
-                    <div className='field'>
-                      <div className="ui radio checkbox">
-                        <input type="radio" name="radio" />
-                        <label>王小锤 - 男 - 3 岁</label>
-                      </div>
+                  </div>
+                  <div className='field'>
+                    <div className="ui radio checkbox">
+                      <input type="radio" name="radio" />
+                      <label>王小锤 - 男 - 3 岁</label>
                     </div>
-                    <div className='field'>
-                      <div className="ui radio checkbox">
-                        <input type="radio" name="radio" />
-                        <label>孔连顺 - 女 - 24 岁</label>
-                      </div>
+                  </div>
+                  <div className='field'>
+                    <div className="ui radio checkbox">
+                      <input type="radio" name="radio" />
+                      <label>孔连顺 - 女 - 24 岁</label>
                     </div>
                   </div>
                 </div>
@@ -97,13 +103,10 @@
               </FormPanel>
           }
         </div>
-      </div>
-    </div>
 
-  select0: ->
-    @setState active: 0
-  select1: ->
-    @setState active: 1
+      select: (idx)->
+        =>
+          @setState active: idx
 
 @GHYYPage = React.createClass
   render: ->
@@ -157,13 +160,13 @@ FormPanel = React.createClass
       </div>
     </div>
 
-ConfirmYYInfoPanel = React.createClass
+@ConfirmYYInfoPanel = React.createClass
   render: ->
     data = [
-      ['　就诊人', '王大锤']
-      ['预约医师', '叶建华（主任医师 - 体检科）']
-      ['就诊时间', '2015-12-08（星期二）上午']
-      ['门诊类型', '专家门诊']
+      ['　预约人', '王大锤']
+      ['预约类型', '普通预约']
+      ['就诊时间', '2016-04-12（星期二）上午']
+      ['预约医师', '李海峰']
     ]
 
     <div className='info-input-form yy-info'>
@@ -213,6 +216,13 @@ ConfirmZhiliaoYYInfoPanel = React.createClass
   render: ->
     <div className='gh-page'>
       <div className='ui container'>
+        <GHYYResultPage.Panel />
+      </div>
+    </div>
+
+  statics:
+    Panel: React.createClass
+      render: ->
         <div className='info-input-form result'>
           <h3 className='ui header'>挂号成功</h3>
           <p style={'textAlign': 'center'}>就诊号：<strong>105</strong></p>
@@ -225,8 +235,8 @@ ConfirmZhiliaoYYInfoPanel = React.createClass
             <span>退出</span>
           </a>
         </div>
-      </div>
-    </div>
+
+
 
 @GHDoctorSelectPage = React.createClass
   render: ->

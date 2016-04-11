@@ -14,7 +14,7 @@
       {
         for idx in [0...10]
           patient = @props.data[idx]
-          <PatientQueue.Patient key={idx} data={patient} />
+          <PatientQueue.Patient key={idx} data={patient} click={@props.click} />
       }
       </div>
     </div>
@@ -23,7 +23,7 @@
     Patient: React.createClass
       render: ->
         if @props.data?
-          <div className='item patient'>
+          <div className='item patient' onClick={@props.click}>
             <div className='right floated content'>
               <span className='memo'>{@props.data.label}</span>
               <i className='icon chevron right' />

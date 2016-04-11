@@ -14,5 +14,5 @@
       @setState status: !@state.status
     , 10
 
-  componentDidUnmount: ->
+  componentWillUnmount: ->
     clearInterval @timer

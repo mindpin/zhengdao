@@ -10,7 +10,7 @@
       {
         for idx in [0...10]
           worker = @props.data[idx]
-          <FreeWorkers.Worker key={idx} data={worker} />
+          <FreeWorkers.Worker key={idx} data={worker} queue={@props.queue} />
       }
       </div>
     </div>
@@ -19,7 +19,7 @@
     Worker: React.createClass
       render: ->
         if @props.data?
-          <div className='item worker'>
+          <div className='item worker' onClick={@click}>
             <div className='right floated content'>
               {
                 if @props.data.busy
@@ -35,3 +35,25 @@
           </div>
         else
           <div className='item'></div>
+
+      click: ->
+        if not @props.data.busy
+          jQuery.open_modal <FreeWorkers.Assign queue={@props.queue} />
+
+    Assign: React.createClass
+      render: ->
+        <div className='worker-assign'>
+          <div className='header'>队列分配</div>
+          <div>以下就诊者符合条件，请从中选择：</div>
+          <div className='ui celled list'>
+          {
+            for p, idx in @props.queue[0...5]
+              <div key={idx} className='item patient'>
+                <div className='content'>
+                  <i className='icon user' />
+                  <span>{p.name}</span>
+                </div>
+              </div>
+          }
+          </div>
+        </div>

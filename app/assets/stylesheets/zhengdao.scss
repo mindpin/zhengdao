@@ -41,6 +41,7 @@ $number-font-family: "Helvetica Neue", "Arial", "Helvetica", "sans-serif" !impor
 
 @import 'zhengdao/auth';
 @import 'zhengdao/manager';
+@import 'zhengdao/widget';
 
 body,
 
@@ -77,6 +78,10 @@ body,
 
 .ui.label.green {
   background-color: #53C13E !important;
+}
+
+h1, h2, h3 {
+  font-family: $mindpin-font-family;
 }
 
 // -----------------
@@ -1043,7 +1048,7 @@ table.paiban {
     overflow:hidden;
     position: relative;
     .avatar {float: left;}
-    .content {
+    .ccontent {
       margin-left: 135px;
       .info {
         margin-bottom: 10px;

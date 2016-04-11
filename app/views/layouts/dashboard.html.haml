@@ -52,9 +52,26 @@
           {
             name: '业务介绍',
             funcs: [
-              name: '业务流程',
-              icon: 'sitemap',
-              url: zhengdao_url(page: 'graph')
+              {
+                name: '业务流程',
+                icon: 'sitemap',
+                url: zhengdao_url(page: 'graph')
+              },
+              {
+                name: '用户体验',
+                url: zhengdao_url(page: 'patient-graph'),
+                icon: 'user',
+              }
+            ]
+          },
+          {
+            name: '后台管理',
+            funcs: [
+              {
+                name: '后台管理',
+                icon: 'desktop',
+                url: zhengdao_url(page: 'clinic'),
+              }
             ]
           }
         ]

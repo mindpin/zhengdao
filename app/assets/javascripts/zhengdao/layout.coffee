@@ -15,7 +15,7 @@
 @DemoManageSidebar = React.createClass
   render: ->
     <div className='ui left vertical inverted sidebar labeled icon menu visible'>
-      <a className='item quit' href='index.html'>
+      <a className='item quit' href='/dashboard-guide'>
         <i className="icon chevron left circle" />
       </a>
 

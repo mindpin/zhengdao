@@ -347,3 +347,16 @@ body.manager {
     }
   }
 }
+
+.worker-assign {
+  .list .item {
+    .content{
+      height: 24px;
+      line-height: 24px;
+    }
+    &:hover {
+      background-color: #F9F6F1;
+      cursor: pointer;
+    }
+  }
+}
