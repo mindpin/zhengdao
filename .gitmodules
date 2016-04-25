@@ -1,0 +1,3 @@
+[submodule "lily"]
+	path = vendor/assets/stylesheets/lily
+	url = git://github.com/mindpin/lily.git

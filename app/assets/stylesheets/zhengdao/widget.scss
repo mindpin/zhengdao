@@ -1,0 +1,73 @@
+.modal.jquery {
+  width: 600px !important;
+  margin-left: -300px !important;
+
+  .header {
+    font-weight: bold;
+    margin: -1.5rem;
+    margin-bottom: 1rem;
+    font-size: 16px;
+    padding: 1.5rem;
+    border-bottom: solid 1px #ddd;
+  }
+  .actions {
+    margin: -1.5rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: solid 1px #ddd;
+    text-align: right;
+    .button:last-child {
+      margin-right: 0;
+    }
+  }
+
+
+  .panel .header {
+    font-size: 16px;
+    font-weight: normal;
+    border-bottom: 0 none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+
+  .panel > .input {
+    margin-bottom: 0.5rem;
+  }
+
+  .enter-yy {
+    display: none;
+  }
+
+  .button.fluid {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.modal {
+  .doctor-pay {
+    display: none;
+  }
+
+  .pay .doctor-pay {
+    display: block;
+  }
+
+  .patient-info {
+    overflow:hidden;
+    position: relative;
+    .avatar {float: left;}
+    .ccontent {
+      margin-left: 135px;
+      .info {
+        margin-bottom: 10px;
+        .id {color: #f2711c;}
+      }
+    }
+    .doctor-pay {
+      position: absolute;
+      top:15px;right:15px;
+    }
+  }
+}
