@@ -10,35 +10,32 @@ body.auth {
     box-shadow: none !important;
     border: 0 none !important;
     padding: 2rem;
-    background-color: rgba(white, 0.5);
+    background-color: rgba(white, 0.618);
   }
 
   .auth-sign-in-page {
+    padding-top: 8rem;
+    @include respond(mobile) {
+      padding-top: 0;
+    }
+
     .product-logo {
-      .logo-img {
-        height: 3.0rem;
-        background-image: url(http://i.teamkn.com/i/xAkEcjUr.png);
-        // background-image: url(http://i.teamkn.com/i/ErOn9MZb.png);
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        opacity: 0.9;
+      @include contain-image('http://i.teamkn.com/i/xAkEcjUr.png');
+      height: 3rem;
+      margin-bottom: 2rem;
+      @include respond(mobile) {
+        height: 2.5rem;
       }
     }
 
     .customer-logo {
+      @include contain-image('http://i.teamkn.com/i/lT03Iqzr.png');
       height: 15rem;
-      margin-top: 1rem;
-
-      background-image: url(http://i.teamkn.com/i/lT03Iqzr.png);
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: contain;
-    }
-
-    .ui.container {
-      margin-top: 10rem;
-      width: 60rem;
+      margin-top: 5rem;
+      @include respond(mobile) {
+        margin-top: 2rem;
+        height: 12.5rem;
+      }
     }
 
     .head {
