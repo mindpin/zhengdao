@@ -27,5 +27,10 @@ module KnowledgeCamp
     config.i18n.default_locale = 'zh-CN'.to_sym
     config.encoding = 'utf-8'
     config.autoload_paths += %W(#{config.root}/lib)
+
+    # 允许 ajax 注册登录
+    config.to_prepare do
+      DeviseController.respond_to :html, :json
+    end
   end
 end

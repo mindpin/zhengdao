@@ -4,7 +4,7 @@
       <div className='sidebar-inner'>
         {
          active = @props.data.current_func is @props.data.dashboard.id
-         <div style={display: 'none'}>
+         <div>
          <LayoutManagerSidebar.Item data={@props.data.dashboard} active={active} />
          </div>
         }

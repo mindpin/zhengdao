@@ -10,6 +10,8 @@ gem "coffee-rails", "~> 4.1.0"
 gem "jquery-rails"
 gem "haml"
 
+gem "devise", "3.5.2"
+
 gem 'sprockets', '3.4.0'
 gem 'sprockets-rails', '2.3.3'
 
@@ -21,6 +23,7 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'pry-rails'
 end
 
 group :test do

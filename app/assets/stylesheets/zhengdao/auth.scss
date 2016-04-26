@@ -1,10 +1,7 @@
 body.auth {
   overflow: hidden;
-  background-color: #EBE2C1;
-  background-image: url(http://i.teamkn.com/i/vrItxnik.jpg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+  background-color: #E0E0E0;
+  @include cover-image('http://i.teamkn.com/i/y5uLesMC.jpg');
 
   .ui.segment {
     box-shadow: none !important;
@@ -14,6 +11,9 @@ body.auth {
   }
 
   .auth-sign-in-page {
+    position: absolute;
+    top:0;left:0;right:0;bottom:0;
+
     padding-top: 8rem;
     @include respond(mobile) {
       padding-top: 0;
@@ -25,11 +25,12 @@ body.auth {
       margin-bottom: 2rem;
       @include respond(mobile) {
         height: 2.5rem;
+        display: none;
       }
     }
 
     .customer-logo {
-      @include contain-image('http://i.teamkn.com/i/lT03Iqzr.png');
+      @include contain-image('http://i.teamkn.com/i/QZVOaJWX.png');
       height: 15rem;
       margin-top: 5rem;
       @include respond(mobile) {

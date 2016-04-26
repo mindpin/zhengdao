@@ -45,6 +45,13 @@ $number-font-family: "Helvetica Neue", "Arial", "Helvetica", "sans-serif" !impor
 @import 'zhengdao/manager';
 @import 'zhengdao/widget';
 
+a {
+  color: #94634a;
+  &:hover {
+    color: darken(#94634a, 10%);
+  }
+}
+
 body,
 
 .ui.menu,
@@ -60,8 +67,16 @@ body,
 }
 
 .ui.button.brown {
-  // $c: #977B69;
-  $c: #B87F59;
+  $c: #94634a;
+
+  background-color: $c;
+  &:hover {
+    background-color: darken($c, 5%);
+  }
+}
+
+.ui.button.black {
+  $c: #666;
 
   background-color: $c;
   &:hover {

@@ -1,16 +1,14 @@
 class Mockup::AuthController < ApplicationController
-  PAGE_AND_COMPONENT = {
-    sign_in: %w{auth AuthSignInPage}
-  }
-
   layout -> {
-    page = params[:page].to_sym
-    PAGE_AND_COMPONENT[page][0]
+    'auth'
   }
 
   def page
     page = params[:page].to_sym
-    @component_name = PAGE_AND_COMPONENT[page][1]
+    @component_name = 'AuthSignInPage'
+    @component_data = {
+      
+    }
   end
 
   def do_post

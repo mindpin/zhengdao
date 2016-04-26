@@ -4,7 +4,7 @@
     %meta{ content: "text/html; charset=utf-8", http:{ equiv: "Content-Type" } }
     %meta{ content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", name: "viewport"}
 
-    %title 正道中医演示系统
+    %title 正道中医信息系统
 
     = csrf_meta_tags
 
@@ -30,62 +30,37 @@
               {
                 name: '导诊看板',
                 icon: 'grid user',
-                url: zhengdao_url(page: 'dashboard-guide')
+                url: ''
               },
               {
                 name: '医师看板',
                 icon: 'grid user',
-                url: zhengdao_url(page: 'dashboard-doctor')
+                url: ''
               },
               {
                 name: '体检师看板',
                 icon: 'grid user',
-                url: zhengdao_url(page: 'dashboard-pe')
+                url: ''
               },
               {
                 name: '治疗师看板',
                 icon: 'grid user',
-                url: zhengdao_url(page: 'dashboard-treat')
+                url: ''
               },
             ]
           },
-          {
-            name: '业务介绍',
-            funcs: [
-              {
-                name: '业务流程',
-                icon: 'sitemap',
-                url: zhengdao_url(page: 'graph')
-              },
-              {
-                name: '用户体验',
-                url: zhengdao_url(page: 'patient-graph'),
-                icon: 'user',
-              }
-            ]
-          },
-          {
-            name: '后台管理',
-            funcs: [
-              {
-                name: '后台管理',
-                icon: 'desktop',
-                url: zhengdao_url(page: 'clinic'),
-              }
-            ]
-          }
         ]
       }
 
       top_menu_data = {
-        sign_out_url: '',
-        sign_out_to_url: ''
+        sign_out_url: api_sign_out_path,
+        sign_out_to_url: root_path
       }
 
     = react_component 'LayoutManagerSidebar', data: manager_sidebar_data
-    = react_component 'LayoutManagerTopMenu', data: top_menu_data, current_user_data: nil
+    .manager-sidebar-pusher
+      = react_component 'LayoutManagerTopMenu', data: top_menu_data, current_user_data: nil
 
-
-    .manager-page-content
-      .func-content.ui.segment.basic
-        = yield
+      .manager-page-content
+        .func-content.ui.segment.basic
+          =# yield
