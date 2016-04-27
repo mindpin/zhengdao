@@ -18,5 +18,8 @@ Rails.application.routes.draw do
 
   namespace :manager do
     get '/' => 'index#index'
+    get '/sysinfo' => 'index#sysinfo'
+
+    resources :users
   end
 end

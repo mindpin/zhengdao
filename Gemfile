@@ -33,7 +33,7 @@ group :test do
 end
 
 gem "unicorn"
-gem "mongoid", "~> 4.0.0"
+gem "mongoid", "~> 5.1.0"
 gem "mina", "0.3.7"
 
 # 通过 rails assets 服务加载前端包

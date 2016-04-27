@@ -14,41 +14,27 @@
   %body.manager
 
     :ruby
+      scene = case current_user.role
+        when 'admin'
+          {
+            name: '管理功能',
+            funcs: DataFormer.new(current_user).logic(:funcs).data()[:funcs]
+          }
+        end
+
+
       manager_sidebar_data = {
         current_func: @current_func,
 
         dashboard: {
           id: 'dashboard',
           name: '总控面板',
-          icon: 'dashboard'
+          icon: 'dashboard',
+          url: manager_path
         },
 
         scenes: [
-          {
-            name: '角色看板',
-            funcs: [
-              {
-                name: '导诊看板',
-                icon: 'grid user',
-                url: ''
-              },
-              {
-                name: '医师看板',
-                icon: 'grid user',
-                url: ''
-              },
-              {
-                name: '体检师看板',
-                icon: 'grid user',
-                url: ''
-              },
-              {
-                name: '治疗师看板',
-                icon: 'grid user',
-                url: ''
-              },
-            ]
-          },
+          scene,
         ]
       }
 
@@ -59,8 +45,8 @@
 
     = react_component 'LayoutManagerSidebar', data: manager_sidebar_data
     .manager-sidebar-pusher
-      = react_component 'LayoutManagerTopMenu', data: top_menu_data, current_user_data: nil
+      = react_component 'LayoutManagerTopMenu', data: top_menu_data, current_user_data: nil, extend_nav_data: @extend_nav_data
 
       .manager-page-content
         .func-content.ui.segment.basic
-          =# yield
+          = yield

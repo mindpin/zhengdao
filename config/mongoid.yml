@@ -1,12 +1,12 @@
 development:
-  sessions:
+  clients:
     default:
       database: zhengdao_development
       hosts:
         - localhost:27017
 
 test:
-  sessions:
+  clients:
     default:
       database: zhengdao_test
       hosts:

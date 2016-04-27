@@ -26,7 +26,7 @@
           'scene': true
           'open': @state.open
 
-        funcs_height = if @state.open then @props.data.funcs.length * 40 else 0
+        funcs_height = if @state.open then @props.data.funcs.length * 50 else 0
 
         <div className={klass}>
           <div className='si' onClick={@toggle}>

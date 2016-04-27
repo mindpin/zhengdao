@@ -12,9 +12,9 @@
           <div className='ui segment'>
             <div className='head'>
               <i className='icon sign in' />
-              <span className='sign-in link'>工作人员登录</span>
+              <span className='sign-in link'>普通登录</span>
               <a href={@props.data.manager_sign_in_url} style={float: 'right'}>
-                <i className='icon configure' /> 后台管理登录
+                <i className='icon setting' /> 管理登录
               </a>
             </div>
             <SignInForm submit_url={@props.data.common_submit_url} />
@@ -37,10 +37,10 @@
           <div className='product-logo' />
           <div className='ui segment'>
             <div className='head'>
-              <i className='icon configure' />
-              <span className='sign-in link'>后台管理登录</span>
+              <i className='icon setting' />
+              <span className='sign-in link'>管理登录</span>
               <a href={@props.data.common_sign_in_url} style={float: 'right'}>
-                <i className='icon sign in' /> 工作人员登录
+                <i className='icon sign in' /> 普通登录
               </a>
             </div>
             <SignInForm submit_url={@props.data.manager_submit_url} admin_auth />

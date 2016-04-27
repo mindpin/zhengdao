@@ -41,6 +41,15 @@ $mindpin-font-family: "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", "sans-
 
 $number-font-family: "Helvetica Neue", "Arial", "Helvetica", "sans-serif" !important;
 
+@mixin clearfix {
+  &:after {
+    content: " ";
+    display: block;
+    clear: both;
+    height: 0;
+  }
+}
+
 @import 'zhengdao/auth';
 @import 'zhengdao/manager';
 @import 'zhengdao/widget';
