@@ -22,4 +22,11 @@ Rails.application.routes.draw do
 
     resources :users
   end
+
+  namespace :wizard do
+    get '/' => 'index#index'
+    get "/search/(:query)" => 'index#search', as: 'search'
+
+    resources :patients
+  end
 end

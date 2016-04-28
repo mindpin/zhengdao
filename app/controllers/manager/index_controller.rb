@@ -4,7 +4,9 @@ class Manager::IndexController < ApplicationController
   def index
     @page_name = 'manager_index'
     @component_data = {
-      funcs: DataFormer.new(current_user).logic(:funcs).data()[:funcs]
+      funcs: DataFormer.new(current_user).logic(:scenes).data()[:scenes].map {|x|
+        x[:funcs]
+      }.flatten
     }
     @extend_nav_data = {
       current_title: '总控面板'

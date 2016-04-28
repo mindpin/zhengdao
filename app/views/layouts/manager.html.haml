@@ -14,14 +14,7 @@
   %body.manager
 
     :ruby
-      scene = case current_user.role
-        when 'admin'
-          {
-            name: '管理功能',
-            funcs: DataFormer.new(current_user).logic(:funcs).data()[:funcs]
-          }
-        end
-
+      scenes = DataFormer.new(current_user).logic(:scenes).data()[:scenes]
 
       manager_sidebar_data = {
         current_func: @current_func,
@@ -30,12 +23,10 @@
           id: 'dashboard',
           name: '总控面板',
           icon: 'dashboard',
-          url: manager_path
+          url: root_path
         },
 
-        scenes: [
-          scene,
-        ]
+        scenes: scenes
       }
 
       top_menu_data = {

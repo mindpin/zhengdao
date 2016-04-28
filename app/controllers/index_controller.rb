@@ -1,4 +1,6 @@
 class IndexController < ApplicationController
+  layout 'manager'
+
   def index
     if not user_signed_in?
       redirect_to sign_in_path
@@ -7,6 +9,11 @@ class IndexController < ApplicationController
     
     if current_user.role == 'admin'
       redirect_to manager_path
+      return
+    end
+
+    if current_user.role == 'wizard'
+      redirect_to wizard_path
       return
     end
 

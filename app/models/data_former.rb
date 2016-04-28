@@ -2,6 +2,7 @@ class DataFormer
   include DataFormerConfig
   
   include UserFormer
+  include PatientFormer
 
   def self.paginate_data(models)
     begin

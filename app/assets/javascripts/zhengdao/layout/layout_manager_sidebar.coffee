@@ -9,7 +9,7 @@
          </div>
         }
         {
-          for scene, idx in @props.data.scenes
+          for scene, idx in @props.data.scenes || []
             <LayoutManagerSidebar.Scene key={idx} data={scene} parent={@} />
         }
       </div>
