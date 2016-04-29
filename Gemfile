@@ -9,6 +9,7 @@ gem 'sass-rails', '~> 5.0'
 gem "coffee-rails", "~> 4.1.0"
 gem "jquery-rails"
 gem "haml"
+gem "kaminari", "~> 0.15.1"
 
 gem "devise", "3.5.2"
 

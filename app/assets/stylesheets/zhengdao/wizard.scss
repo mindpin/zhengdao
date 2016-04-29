@@ -1,43 +1,65 @@
-.wizard-search-page {
+.wizard-patients-list {
   max-width: 600px;
+  background-color: #FFF;
+  margin-bottom: 1rem;
+  .item {
+    padding: 0;
+    border-bottom: solid 1px #ececec;
+    display: block;
+    color: #333;
+    font-size: 16px;
+    overflow: hidden;
+    padding: 0 0.5rem;
 
-  .patients {
-    background-color: #FFF;
-    .item {
-      padding: 0;
-      border-bottom: solid 1px #ececec;
-      display: block;
-      color: #333;
-      font-size: 16px;
-      overflow: hidden;
-      padding: 0 0.5rem;
+    i.icon.user {
+      color: darken(#94634a, 10%);
+      font-size: 2rem;
+      float: left;
+      height: 4rem;line-height:4rem;
+    }
 
-      i.icon.user {
-        color: darken(#94634a, 10%);
-        font-size: 2rem;
-        float: left;
-        height: 4rem;line-height:4rem;
-      }
+    i.icon.angle.right {
+      color: #aaa;
+      font-size: 1.5rem;
+      float: right;
+      height: 4rem;line-height:4rem;
+    }
 
-      i.icon.angle.right {
-        color: #aaa;
-        font-size: 1.5rem;
-        float: right;
-        height: 4rem;line-height:4rem;
+    .content {
+      margin-left: 3rem;margin-right: 3rem;
+      margin-top: 0.5rem;
+      height:3rem;line-height:1.5rem;
+      .name {}
+      .info {
+        color: #999;font-size: 14px;
       }
+    }
+    &:hover {
+      background-color: #FFFAF3;
+    }
+  }
+}
 
-      .content {
-        margin-left: 3rem;margin-right: 3rem;
-        margin-top: 0.5rem;
-        height:3rem;line-height:1.5rem;
-        .name {}
-        .info {
-          color: #999;font-size: 14px;
-        }
-      }
-      &:hover {
-        background-color: #FFFAF3;
-      }
+.patient-base-info {
+  max-width: 800px;
+  background-color: #FFF;
+  .field {
+    border-bottom: solid 1px #ECECEC;
+    overflow: hidden;
+    label {
+      height:50px;line-height:50px;
+      width: 6rem;
+      float: left;
+      padding-right: 1rem;
+      text-align: right;
+      font-weight: bold;
+    }
+    .icontent {
+      min-height: 50px;
+      line-height: 24px;
+      padding: 13px 1rem;
+      border-left: solid 1px #ECECEC;
+      margin-left: 6rem;
     }
   }
 }

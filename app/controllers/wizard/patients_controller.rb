@@ -2,8 +2,16 @@ class Wizard::PatientsController < ApplicationController
   layout 'manager'
 
   def index
+    patients = Patient.all.page(params[:page]).per(15)
+    patients_data = patients.map {|x|
+      DataFormer.new(x).data
+    }
+
     @page_name = 'wizard_patients'
     @component_data = {
+      patients: patients_data,
+      paginate: DataFormer.paginate_data(patients),
+      search_url: wizard_search_path
     }
     @extend_nav_data = {
       mobile_back_to: wizard_path,
@@ -40,7 +48,7 @@ class Wizard::PatientsController < ApplicationController
     }
     @extend_nav_data = {
       mobile_back_to: wizard_patients_path,
-      current_title: "患者信息：#{patient.name}"
+      current_title: "患者档案：#{patient.name}"
     }
   end
 

@@ -203,6 +203,18 @@ body.admin {
   }
 }
 
+.ui.pagination.menu {
+  box-shadow: none !important;
+}
+
+@include respond(mobile) {
+  .ui.pagination.menu {
+    margin-left: 0.5rem;
+    .item.icon:first-child {display: none;}
+    .item.icon:last-child {display: none;}
+  }
+}
+
 .demo-placeholder {
   font-size: 16px;
   font-weight: bold;

@@ -240,7 +240,7 @@ body.manager {
 .dashboard-search {
   margin-bottom: 1rem;
   input {
-    width: 320px;
+    width: 600px;
     font-size: 16px;
     font-family: $mindpin-font-family;
     &::-webkit-input-placeholder{
@@ -409,6 +409,10 @@ body.manager {
       display: block;
       float: left;
     }
+
+    @include respond(mobile) {
+      textarea{ resize: none !important; }
+    }
   }
 
   .field.error {
@@ -428,10 +432,6 @@ body.manager {
       background-color: inherit !important;
       box-shadow:0 0 0 2px #fdc !important;
       color: inherit !important;
-
-      @include respond(mobile) {
-        resize: none;
-      }
     }
   }
 
