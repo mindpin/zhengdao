@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     get '/' => 'index#index'
     get "/search/(:query)" => 'index#search', as: 'search'
 
-    resources :patients
+    resources :patients do
+      resources :records
+    end
   end
 end

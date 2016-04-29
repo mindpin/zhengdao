@@ -46,7 +46,7 @@ module UserFormer
               name: '导诊',
               funcs: [
                 {
-                  name: '就诊登记',
+                  name: '患者登记',
                   url: new_wizard_patient_path,
                   icon: 'plus circle'
                 },

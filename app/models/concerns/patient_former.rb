@@ -15,6 +15,12 @@ module PatientFormer
       field :wizard_show_url, ->(instance) {
         wizard_patient_path(instance)
       }
+      field :records_url, ->(instance) {
+        wizard_patient_records_path(instance)
+      }
+      field :new_record_url, ->(instance) {
+        new_wizard_patient_record_path(instance)
+      }
     end
 
   end

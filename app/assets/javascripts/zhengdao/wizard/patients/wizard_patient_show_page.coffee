@@ -11,6 +11,19 @@
     }
 
     <div className='wizard-patient-show'>
+      <div className='tabs'>
+        <div className='item active'>
+          <a className='label' href={patient.wizard_show_url}>基本信息</a>
+        </div>
+        <div className='item'>
+          <a className='label' href={patient.records_url}>就诊记录</a>
+        </div>
+        <div className='item button'>
+          <a className='ui button green mini' href={patient.new_record_url}>
+            <i className='icon plus' /> 新增挂号
+          </a>
+        </div>
+      </div>
       <div className='patient-base-info'>
       {
         for field, text of fields

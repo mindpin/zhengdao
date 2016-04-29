@@ -387,6 +387,9 @@ body.manager {
     @include clearfix;
     display: flex;
     margin-bottom: 1.5rem !important;
+    @include respond(mobile) {
+      margin-bottom: 1rem !important;
+    }
 
     label {
       box-sizing:border-box;

@@ -27,7 +27,7 @@ class Wizard::PatientsController < ApplicationController
     }
     @extend_nav_data = {
       mobile_back_to: wizard_path,
-      current_title: '就诊登记'
+      current_title: '患者登记'
     }
   end
 

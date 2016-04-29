@@ -33,7 +33,7 @@
     </div>
 
   done: (res)->
-    Turbolinks.visit @props.data.cancel_url
+    Turbolinks.visit res.wizard_show_url
 
   cancel: ->
     Turbolinks.visit @props.data.cancel_url
