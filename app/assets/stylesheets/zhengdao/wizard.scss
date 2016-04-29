@@ -108,3 +108,18 @@
     }
   }
 }
+
+.wizard-patient-records-new-page {
+  max-width: 800px;
+  .step {
+    background-color: white;
+    margin-bottom: 1rem;
+    min-height: 7rem;
+    h4 {
+      padding: 0.7rem 1rem;
+      border-bottom: solid 1px #ececec;
+      font-weight: normal;
+      i{color: #C15D3E;}
+    }
+  }
+}
