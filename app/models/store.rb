@@ -2,6 +2,8 @@ class Store
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :name,     type: String
-  field :location, type: String
+  field :name
+  field :location
+  field :phone_number
+  field :principal # 负责人
 end

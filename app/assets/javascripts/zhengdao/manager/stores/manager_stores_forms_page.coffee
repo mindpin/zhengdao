@@ -17,6 +17,8 @@
       >
         <TextInputField {...layout} label='店面名称：' name='name' required />
         <TextInputField {...layout} label='地址：' name='location' required />
+        <TextInputField {...layout} label='电话：' name='phone_number' required />
+        <TextInputField {...layout} label='负责人：' name='principal' required />
         <Submit {...layout} text='确定保存' with_cancel='取消' />
       </SimpleDataForm>
     </div>
@@ -47,6 +49,8 @@
       >
         <TextInputField {...layout} label='店面名称：' name='name' required />
         <TextInputField {...layout} label='地址：' name='location' required />
+        <TextInputField {...layout} label='电话：' name='phone_number' required />
+        <TextInputField {...layout} label='负责人：' name='principal' required />
         <Submit {...layout} text='确定保存' with_cancel='取消' />
       </SimpleDataForm>
     </div>

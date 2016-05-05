@@ -63,6 +63,6 @@ class Manager::StoresController < ApplicationController
   private
 
   def store_params
-    params.require(:store).permit(:name, :location)
+    params.require(:store).permit(:name, :location, :phone_number, :principal)
   end
 end
