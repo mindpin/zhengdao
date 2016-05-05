@@ -16,11 +16,13 @@
           fields:
             names: '用户名'
             role_str: '角色'
+            store: '店面'
             ops: '操作'
           data_set: @props.data.users.map (x)->
             id: x.id
             names: "#{x.name}(#{x.login})"
             role_str: x.role_str
+            store: x.store.name || '无'
             ops:
               <a href={x.edit_url} className='ui button basic mini'><i className='icon edit' /> 修改</a>
           th_classes: {
@@ -37,6 +39,6 @@
             <a href={@props.data.new_url} className='ui button green'>
               <i className='icon plus' /> 添加人员
             </a>
-          </div>        
+          </div>
           <ManagerTable data={table_data} title='人员管理' />
         </div>

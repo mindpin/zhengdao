@@ -16,6 +16,10 @@
       'pe': '体检师'
       'cure': '治疗师'
 
+    stores_select_info = {}
+    for s in @props.data.stores
+      stores_select_info[s.id] = s.name
+
     <div className='ui segment'>
       <SimpleDataForm
         model='user'
@@ -27,6 +31,7 @@
         <TextInputField {...layout} label='登录名：' name='login' required />
         <PasswordField {...layout} label='密码：' name='password' required />
         <SelectField {...layout} label='角色：' name='role' values={roles} />
+        <SelectField {...layout} label='店面：' name='store_id' values={stores_select_info} />
         <Submit {...layout} text='确定保存' with_cancel='取消' />
       </SimpleDataForm>
     </div>
@@ -55,6 +60,10 @@
       'pe': '体检师'
       'cure': '治疗师'
 
+    stores_select_info = {}
+    for s in @props.data.stores
+      stores_select_info[s.id] = s.name
+
     <div className='ui segment'>
       <SimpleDataForm
         model='user'
@@ -67,6 +76,7 @@
         <TextInputField {...layout} label='登录名：' name='login' required />
         <PasswordField {...layout} label='重设密码：' name='password' />
         <SelectField {...layout} label='角色：' name='role' values={roles} />
+        <SelectField {...layout} label='店面：' name='store_id' values={stores_select_info} />
         <Submit {...layout} text='确定保存' with_cancel='取消' />
       </SimpleDataForm>
     </div>

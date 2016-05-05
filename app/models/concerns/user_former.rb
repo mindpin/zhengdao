@@ -11,6 +11,14 @@ module UserFormer
       field :role_str, ->(instance) {
         {'wizard' => '导诊', 'doctor' => '医师', 'pe' => '体检师', 'cure' => '治疗师'}[instance.role]
       }
+      field :store, ->(instance) {
+        store = instance.store
+        if store.blank?
+          {}
+        else
+          {id: store.id.to_s, name: store.name}
+        end
+      }
       field :edit_url, ->(instance) {
         edit_manager_user_path(instance)
       }
