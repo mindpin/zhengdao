@@ -18,10 +18,14 @@ class Manager::UsersController < ApplicationController
   end
 
   def new
+    stores = Store.all.map {|x|
+      DataFormer.new(x).data
+    }
     @page_name = 'manager_users_new'
     @component_data = {
       submit_url: manager_users_path,
-      cancel_url: manager_users_path
+      cancel_url: manager_users_path,
+      stores: stores
     }
     @extend_nav_data = {
       mobile_back_to: manager_users_path,
@@ -39,12 +43,15 @@ class Manager::UsersController < ApplicationController
 
   def edit
     user = User.find params[:id]
-
+    stores = Store.all.map {|x|
+      DataFormer.new(x).data
+    }
     @page_name = 'manager_users_edit'
     @component_data = {
       user: DataFormer.new(user).data,
       submit_url: manager_user_path(user),
-      cancel_url: manager_users_path
+      cancel_url: manager_users_path,
+      stores: stores
     }
     @extend_nav_data = {
       mobile_back_to: manager_users_path,
@@ -63,6 +70,6 @@ class Manager::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :login, :role, :password)
+    params.require(:user).permit(:name, :login, :role, :password, :store_id)
   end
 end

@@ -11,6 +11,14 @@ module UserFormer
       field :role_str, ->(instance) {
         {'wizard' => '导诊', 'doctor' => '医师', 'pe' => '体检师', 'cure' => '治疗师'}[instance.role]
       }
+      field :store, ->(instance) {
+        store = instance.store
+        if store.blank?
+          {}
+        else
+          {id: store.id.to_s, name: store.name}
+        end
+      }
       field :edit_url, ->(instance) {
         edit_manager_user_path(instance)
       }
@@ -23,9 +31,19 @@ module UserFormer
               name: '管理功能',
               funcs: [
                 {
+                  name: '店面管理',
+                  icon: 'hospital',
+                  url: manager_stores_path
+                },
+                {
                   name: '人员管理',
                   icon: 'doctor',
                   url: manager_users_path
+                },
+                {
+                  name: '收费项目管理',
+                  icon: 'yen',
+                  url: manager_pay_defines_path
                 },
                 {
                   name: '患者档案',
