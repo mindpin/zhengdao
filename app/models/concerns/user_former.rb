@@ -23,6 +23,11 @@ module UserFormer
               name: '管理功能',
               funcs: [
                 {
+                  name: '店面管理',
+                  icon: 'hospital',
+                  url: manager_stores_path
+                },
+                {
                   name: '人员管理',
                   icon: 'doctor',
                   url: manager_users_path

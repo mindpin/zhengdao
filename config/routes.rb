@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     get '/sysinfo' => 'index#sysinfo'
 
     resources :users
+    resources :stores
   end
 
   namespace :wizard do
