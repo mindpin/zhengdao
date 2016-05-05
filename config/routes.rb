@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
     resources :users
     resources :stores
+    resources :pay_defines
   end
 
   namespace :wizard do

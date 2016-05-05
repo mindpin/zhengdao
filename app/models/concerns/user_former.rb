@@ -41,6 +41,11 @@ module UserFormer
                   url: manager_users_path
                 },
                 {
+                  name: '收费项目管理',
+                  icon: 'yen',
+                  url: manager_pay_defines_path
+                },
+                {
                   name: '患者档案',
                   icon: 'newspaper',
                   url: manager_path
