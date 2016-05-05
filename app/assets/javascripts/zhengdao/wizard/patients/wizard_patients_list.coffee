@@ -1,10 +1,10 @@
 @WiazrdPatientsList = React.createClass
   render: ->
-    <div className='wizard-patients-list'>
+    <div className='wizard-patients-list common-item-list'>
     {
       for patient in @props.data
         <a key={patient.id} className='item' href={patient.wizard_show_url}>
-          <i className='icon user' />
+          <i className='icon user left' />
           <i className='icon angle right' />
           <div className='content'>
             <div className='name'>{patient.name}</div>

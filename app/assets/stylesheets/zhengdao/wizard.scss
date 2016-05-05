@@ -1,4 +1,4 @@
-.wizard-patients-list {
+.common-item-list {
   max-width: 600px;
   background-color: #FFF;
   margin-bottom: 1rem;
@@ -11,7 +11,7 @@
     overflow: hidden;
     padding: 0 0.5rem;
 
-    i.icon.user {
+    i.icon.left {
       color: darken(#94634a, 10%);
       font-size: 2rem;
       float: left;
@@ -29,14 +29,28 @@
       margin-left: 3rem;margin-right: 3rem;
       margin-top: 0.5rem;
       height:3rem;line-height:1.5rem;
-      .name {}
-      .info {
-        color: #999;font-size: 14px;
-      }
     }
     &:hover {
       background-color: #FFFAF3;
     }
+  }
+}
+
+.wizard-patients-list {
+  .content {
+    .name {}
+    .info {
+      color: #999;font-size: 14px;
+    }
+  }
+}
+
+.common-item-list.records {
+  .date {
+    color: #999;font-size: 14px;
+  }
+  .worker {
+    font-size: 14px;
   }
 }
 
@@ -109,6 +123,10 @@
   }
 }
 
+.patient-records {
+
+}
+
 .wizard-patient-records-new-page {
   max-width: 800px;
   .step {
@@ -120,6 +138,27 @@
       border-bottom: solid 1px #ececec;
       font-weight: normal;
       i{color: #C15D3E;}
+    }
+    .ct {
+      padding: 0 1rem 1rem;
+      .desc {
+        margin-bottom: 0.5rem;
+      }
+    }
+    .select0 {
+      width: 6rem;
+      min-width: auto;
+    }
+    .sd1, .sd2, .sd3 {
+      width: 6rem;
+      min-width: auto;
+      margin-right: 0.5rem;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    .sd1 {
+      width: 13rem;
     }
   }
   .submit {

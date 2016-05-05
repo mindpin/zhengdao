@@ -9,7 +9,7 @@ class Patient
   field :personal_pathography # 个人病史
   field :family_pathography # 家族病史
 
-  has_many :patient_records
+  has_many :patient_records # 挂号及在馆活动记录
 
   validates :name, presence: true, uniqueness: true
   validates :name, length: {in: 2..10}, :if => Proc.new {|user|

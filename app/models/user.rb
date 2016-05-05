@@ -32,12 +32,12 @@ class User
 
   # -------------------
 
-  field :role
+  field :role # wizard, doctor, pe, cure, admin
   field :login
   validates :login, presence: true, uniqueness: { case_sensitive: false }
 
   def email_required?; false; end
   def email_changed?; false; end
 
-  has_one :worker_state
+  # has_one :worker_state
 end
