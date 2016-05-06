@@ -27,10 +27,21 @@ Rails.application.routes.draw do
 
   namespace :wizard do
     get '/' => 'index#index'
-    get "/search/(:query)" => 'index#search', as: 'search'
+    get '/search/(:query)' => 'index#search', as: 'search'
 
     resources :patients do
+      get :records_info, on: :member
+      get :active_record_info, on: :member
+
       resources :records
     end
+  end
+
+  namespace :doctor do
+    get '/' => 'index#index'
+    get 'queue' => 'index#queue'
+    get 'calendar' => 'index#calendar'
+
+    resources :activities
   end
 end

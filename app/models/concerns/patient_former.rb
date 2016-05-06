@@ -15,11 +15,29 @@ module PatientFormer
       field :wizard_show_url, ->(instance) {
         wizard_patient_path(instance)
       }
-      field :records_url, ->(instance) {
-        wizard_patient_records_path(instance)
+      field :records_info_url, ->(instance) {
+        records_info_wizard_patient_path(instance)
       }
+      field :active_record_info_url, ->(instance) {
+        active_record_info_wizard_patient_path(instance)
+      }
+
       field :new_record_url, ->(instance) {
         new_wizard_patient_record_path(instance)
+      }
+
+      logic :records_count, ->(instance) {
+        instance.patient_records.count
+      }
+      logic :records, ->(instance) {
+        instance.patient_records.desc(:id).map {|x|
+          DataFormer.new(x).data
+        }
+      }
+      logic :active_record, ->(instance) {
+        active_record = instance.active_record
+        return nil if active_record.blank?
+        return DataFormer.new(active_record).data
       }
     end
 
@@ -28,14 +46,22 @@ module PatientFormer
       field :reg_kind
       field :reg_date
       field :reg_period
-      field :worker_id
+      field :reg_worker_id
+      field :reg_number
 
-      field :worker, ->(instance) {
-        User.where(id: instance.worker_id).first
+      field :reg_worker_name, ->(instance) {
+        worker = instance.reg_worker
+        return '未指定' if worker.blank?
+        return worker.name
       }
 
       field :time_str, ->(instance) {
         instance.reg_date.strftime('%Y年%-m月%-d日')
+      }
+      field :time_weekday_str, ->(instance) {
+        date = instance.reg_date
+        wday = ['日', '一', '二', '三', '四', '五', '六'][date.wday]
+        date.strftime("%Y年%-m月%-d日, 星期#{wday}")
       }
       field :period_str, ->(instance) {
         PatientRecord.reg_periods[instance.reg_period]
@@ -44,7 +70,11 @@ module PatientFormer
         PatientRecord.reg_kinds[instance.reg_kind]
       }
       field :reg_worker_str, ->(instance) {
-        PatientRecord.reg_kinds[instance.reg_kind]
+        PatientRecord.reg_workers[instance.reg_kind]
+      }
+
+      logic :patient, ->(instance) {
+        DataFormer.new(instance.patient).data
       }
     end
 

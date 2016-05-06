@@ -76,6 +76,29 @@ module UserFormer
               ]
             }
           ]
+        when 'doctor'
+          [
+            {
+              name: '医师',
+              funcs: [
+                {
+                  name: '队列处理',
+                  url: doctor_queue_path,
+                  icon: 'flag'
+                },
+                {
+                  name: '工作日历',
+                  url: doctor_calendar_path,
+                  icon: 'calendar'
+                },
+                {
+                  name: '工作记录',
+                  url: doctor_activities_path,
+                  icon: 'list'
+                }
+              ]
+            }
+          ]
         else
           []
         end

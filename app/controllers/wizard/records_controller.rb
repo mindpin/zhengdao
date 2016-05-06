@@ -1,22 +1,6 @@
 class Wizard::RecordsController < ApplicationController
   layout 'manager'
 
-  def index
-    records = current_patient.patient_records.desc(:id).map {|x|
-      DataFormer.new(x).data
-    }
-
-    @page_name = 'wizard_patient_records'
-    @component_data = {
-      patient: DataFormer.new(current_patient).data,
-      records: records
-    }
-    @extend_nav_data = {
-      mobile_back_to: wizard_patients_path,
-      current_title: "就诊记录：#{current_patient.name}"
-    }
-  end
-
   def new
     patient = Patient.find params[:patient_id]
 
@@ -48,7 +32,10 @@ class Wizard::RecordsController < ApplicationController
     record = patient.patient_records.new record_params
     record.save
 
-    render json: DataFormer.new(record).data
+    render json: {
+      record: DataFormer.new(record).data,
+      patient_url: wizard_patient_path(patient)
+    }
   end
 
   private
@@ -58,6 +45,6 @@ class Wizard::RecordsController < ApplicationController
   end
 
   def record_params
-    params.require(:record).permit(:reg_kind, :reg_date, :reg_period, :worker_id)
+    params.require(:record).permit(:reg_kind, :reg_date, :reg_period, :reg_worker_id)
   end
 end

@@ -18,4 +18,9 @@ class Patient
 
   validates :id_card, presence: true, uniqueness: true
   validates :mobile_phone, presence: true
+
+  # 患者当前活动挂号记录
+  def active_record
+    patient_records.where(is_active: true).first
+  end
 end

@@ -23,3 +23,18 @@
 
       <RolesFuncs data={@props.data.funcs} />
     </div>
+
+@DoctorIndexPage = React.createClass
+  render: ->
+    <div className='manager-index-page'>
+      <div className='ui icon message warning'>
+        <i className='icon info circle' />
+        你正以医师身份登录，你可以在此处理患者就诊队列，安排诊疗环节和记录信息
+      </div>
+
+      <div className='dashboard-search'>
+        <SiteSearch placeholder='根据姓名/身份证/手机号查找患者' url={@props.data.search_url} />
+      </div>
+
+      <RolesFuncs data={@props.data.funcs} />
+    </div>

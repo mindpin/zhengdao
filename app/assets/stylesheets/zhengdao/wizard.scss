@@ -54,7 +54,7 @@
   }
 }
 
-.wizard-patient-show {
+.with-tabs {
   max-width: 800px;
   .tabs {
     overflow: hidden;
@@ -80,12 +80,12 @@
         padding-left: 0;
         padding-right: 0;
         text-align: center;
-        height: 2.4rem;line-height:2.4rem;
+        height: 2.5rem;line-height:2.5rem;
         padding-top: 0;
         padding-bottom: 0;
         display: block;
         margin-right: 0;
-        margin-top: 0.3rem;
+        margin-top: 0.0rem;
       }
     }
     @include respond(mobile) {
@@ -94,6 +94,38 @@
         a.label {padding:0;text-align: center;}
       }
       a.button {
+      }
+    }
+  }
+  .tab-content {
+    background-color: #FFF;
+    min-height: 4rem;
+    padding: 0 1rem 1rem;
+  }
+}
+
+.active-record-info {
+  .info {
+    margin-bottom: 0.5rem;
+    label {
+      color: #888;
+    }
+
+    &.number {
+      label {
+        padding-top: 1rem;
+        margin-top: 1rem;
+        display: block;
+        text-align: center;
+        border-top: solid 1px #ECECEC;
+      }
+      span.n {
+        margin-top: 1rem;
+        display: block;
+        color: #FF6600;
+        font-weight: bold;
+        font-size: 30px;
+        text-align: center;
       }
     }
   }
@@ -119,6 +151,7 @@
       padding: 13px 1rem;
       border-left: solid 1px #ECECEC;
       margin-left: 6rem;
+      word-break: break-all;
     }
   }
 }

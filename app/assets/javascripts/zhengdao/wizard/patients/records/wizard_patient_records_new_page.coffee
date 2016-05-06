@@ -3,7 +3,7 @@
     reg_kind: null
     reg_date: new Date
     reg_period: null
-    worker_id: null
+    reg_worker_id: null
 
   render: ->
     <div className='wizard-patient-records-new-page'>
@@ -63,7 +63,7 @@
             <h4><i className='icon angle down' /> 选择{worker_str}</h4>
 
             <div className='ct'>
-              <select className='ui dropdown' onChange={@change('worker_id')} value={@state.worker_id} ref='select2'>
+              <select className='ui dropdown' onChange={@change('reg_worker_id')} value={@state.reg_worker_id} ref='select2'>
                 <option value={'none'}>不指定</option>
               {
                 for worker in workers
@@ -106,12 +106,12 @@
   change_kind: (evt)->
     @setState 
       reg_kind: evt.target.value
-      worker_id: null
+      reg_worker_id: null
 
   change: (name)->
     (evt)=>
       value = evt.target.value
-      if name == 'worker_id' and value == 'none'
+      if name == 'reg_worker_id' and value == 'none'
         value = null
 
       @setState "#{name}": value
@@ -132,3 +132,4 @@
     
     .done (res)->
       console.log res
+      Turbolinks.visit res.patient_url
