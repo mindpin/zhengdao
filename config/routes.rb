@@ -33,4 +33,5 @@ Rails.application.routes.draw do
       resources :records
     end
   end
+  resources :pe_records
 end
