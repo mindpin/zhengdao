@@ -191,6 +191,22 @@
 
 }
 
+.select-workers {
+  .worker {
+    margin:0 -1rem;
+    padding: 1rem;
+    border-bottom: solid 1px #ececec;
+    &:first-child {
+      border-top: solid 1px #ececec;
+    }
+    i {
+      float: right;display:none;
+    }
+    &.selected i {display: block;}
+    &.selected {background-color: #FFFAF3;}
+  }
+}
+
 .wizard-patient-records-new-page {
   max-width: 800px;
   .step {

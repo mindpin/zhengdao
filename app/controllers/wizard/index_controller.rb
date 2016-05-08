@@ -37,13 +37,19 @@ class Wizard::IndexController < ApplicationController
     case queue
     when 'reg'
       records = PatientRecord.wizard_reg_queue
+    when 'landing'
+      records = PatientRecord.wizard_landing_queue
     end
 
 
     @page_name = 'wizard_queue'
     @component_data = {
       queue: queue,
+      reg_queue_url: wizard_queue_path(queue: 'reg'),
+      landing_queue_url: wizard_queue_path(queue: 'landing'),
+
       reg_queue_count: PatientRecord.wizard_reg_queue.count,
+      landing_queue_count: PatientRecord.wizard_landing_queue.count,
       records: records.map {|x|
         DataFormer.new(x)
           .logic(:patient)

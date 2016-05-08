@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
       resources :records, shallow: true do 
         get :receive, on: :member
+        put :do_receive, on: :member
       end
     end
   end

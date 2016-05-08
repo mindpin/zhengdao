@@ -117,21 +117,28 @@ PatientTabs = React.createClass
     <div className='wizard-patient-show with-tabs'>
       <PatientTabs data={patient} active={3} />
 
-      <div className='active-record-info tab-content'>
-        <div className='info'>
-          <label>　就诊人：</label> {patient.name}
-        </div>
-        <div className='info'>
-          <label>预约类型：</label> {active_record.reg_kind_str}
-        </div>
-        <div className='info'>
-          <label>预约时间：</label> {active_record.time_weekday_str}, {active_record.period_str}
-        </div>
-        <div className='info'>
-          <label>指定{active_record.reg_worker_str}：</label> {active_record.reg_worker_name}
-        </div>
-        <div className='info number'>
-          <label>　就诊号({active_record.time_str})：</label> <span className='n'>{active_record.reg_number}</span>
-        </div>
+      <ActiveRecordInfo patient={patient} record={active_record} />
+    </div>
+
+@ActiveRecordInfo = React.createClass
+  render: ->
+    patient = @props.patient
+    active_record = @props.record
+
+    <div className='active-record-info tab-content'>
+      <div className='info'>
+        <label>　就诊人：</label> {patient.name}
+      </div>
+      <div className='info'>
+        <label>预约类型：</label> {active_record.reg_kind_str}
+      </div>
+      <div className='info'>
+        <label>预约时间：</label> {active_record.time_weekday_str}, {active_record.period_str}
+      </div>
+      <div className='info'>
+        <label>指定{active_record.reg_worker_str}：</label> {active_record.reg_worker_name}
+      </div>
+      <div className='info number'>
+        <label>　就诊号({active_record.time_str})：</label> <span className='n'>{active_record.reg_number}</span>
       </div>
     </div>

@@ -63,10 +63,22 @@ class PatientRecord
   end
 
   def self.landing_statuses
-    { 'NOT_HERE' => '未在馆', 
+    { 'NOT_HERE' => '待接诊', 
+      'WAIT_FOR_ASSIGN_PE' => '待分配体检', 'WAIT_FOR_ASSIGN_CURE' => '待分配治疗',
       'WAIT_FOR_DOCTOR' => '待诊', 'WAIT_FOR_PE' => '待体检', 'WAIT_FOR_CURE' => '待治疗',
       'GO_AWAY' => '离开'
     }
+  end
+
+  # 该挂号记录的待选 worker
+  def constraint_workers(wizard)
+    User.where(role: self.reg_kind.downcase, store: wizard.store)
+  end
+
+  def assign_visit_worker(next_visit_worker_id)
+    self.next_visit_worker_id = next_visit_worker_id
+    self.landing_status = "WAIT_FOR_#{self.reg_kind}"
+    self.save
   end
 
   # ----------------------
@@ -74,6 +86,14 @@ class PatientRecord
   def self.wizard_reg_queue
     PatientRecord
       .where(is_active: true, landing_status: 'NOT_HERE', :reg_date.gte => Date.today)
+      .asc(:reg_date)
+      .asc(:reg_number)
+  end
+
+  # 导诊，在馆队列
+  def self.wizard_landing_queue
+    PatientRecord
+      .where(is_active: true, :landing_status.in => ['WAIT_FOR_ASSIGN_PE', 'WAIT_FOR_ASSIGN_CURE'], :reg_date.gte => Date.today)
       .asc(:reg_date)
       .asc(:reg_number)
   end

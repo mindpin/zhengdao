@@ -5,6 +5,10 @@
     <div className='patient-records-queue'>
       <div className='common-item-list queue'>
       {
+        if records.length == 0
+          <div style={padding: '1rem'}>队列中目前没有患者</div>
+      }
+      {
         for record in records
           console.log record
 

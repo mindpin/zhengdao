@@ -46,7 +46,9 @@ module PatientFormer
       field :reg_kind
       field :reg_date
       field :reg_period
-      field :reg_worker_id
+      field :reg_worker_id, ->(instance) {instance.reg_worker_id.to_s}
+      field :next_visit_worker_id, ->(instance) {instance.next_visit_worker_id.to_s}
+      field :attending_doctor_id, ->(instance) {instance.attending_doctor_id.to_s}
       field :reg_number
       field :landing_status
 
@@ -88,6 +90,10 @@ module PatientFormer
 
       field :wizard_receive_url, ->(instance) {
         receive_wizard_record_path(instance)
+      }
+
+      field :wizard_do_receive_url, ->(instance) {
+        do_receive_wizard_record_path(instance)
       }
 
       logic :patient, ->(instance) {
