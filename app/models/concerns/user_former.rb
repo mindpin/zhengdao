@@ -72,6 +72,11 @@ module UserFormer
                   name: '患者档案',
                   url: wizard_patients_path,
                   icon: 'newspaper'
+                },
+                {
+                  name: '队列处理',
+                  url: wizard_queue_path,
+                  icon: 'flag'
                 }
               ]
             }

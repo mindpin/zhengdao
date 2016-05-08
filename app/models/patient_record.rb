@@ -62,6 +62,23 @@ class PatientRecord
     { 'DOCTOR' => '医师', 'PE' => '体检师', 'CURE' => '治疗师' }
   end
 
+  def self.landing_statuses
+    { 'NOT_HERE' => '未在馆', 
+      'WAIT_FOR_DOCTOR' => '待诊', 'WAIT_FOR_PE' => '待体检', 'WAIT_FOR_CURE' => '待治疗',
+      'GO_AWAY' => '离开'
+    }
+  end
+
+  # ----------------------
+  # 导诊，预约队列
+  def self.wizard_reg_queue
+    PatientRecord
+      .where(is_active: true, landing_status: 'NOT_HERE', :reg_date.gte => Date.today)
+      .asc(:reg_date)
+      .asc(:reg_number)
+  end
+
+
   # 由指定医师处理的待诊记录
   def self.wait_of_doctor(doctor)
     PatientRecord.where(worker_id: doctor.id.to_s)

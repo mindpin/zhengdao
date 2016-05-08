@@ -28,12 +28,15 @@ Rails.application.routes.draw do
   namespace :wizard do
     get '/' => 'index#index'
     get '/search/(:query)' => 'index#search', as: 'search'
+    get 'queue' => 'index#queue'
 
     resources :patients do
       get :records_info, on: :member
       get :active_record_info, on: :member
 
-      resources :records
+      resources :records, shallow: true do 
+        get :receive, on: :member
+      end
     end
   end
 

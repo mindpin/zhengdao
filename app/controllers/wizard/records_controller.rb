@@ -34,7 +34,7 @@ class Wizard::RecordsController < ApplicationController
 
     render json: {
       record: DataFormer.new(record).data,
-      patient_url: wizard_patient_path(patient)
+      active_record_info_url: active_record_info_wizard_patient_path(patient)
     }
   end
 

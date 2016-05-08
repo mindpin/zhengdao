@@ -30,4 +30,29 @@ class Wizard::IndexController < ApplicationController
       current_title: '患者查找'
     }
   end
+
+  def queue
+    queue = params[:queue] || 'reg'
+
+    case queue
+    when 'reg'
+      records = PatientRecord.wizard_reg_queue
+    end
+
+
+    @page_name = 'wizard_queue'
+    @component_data = {
+      queue: queue,
+      reg_queue_count: PatientRecord.wizard_reg_queue.count,
+      records: records.map {|x|
+        DataFormer.new(x)
+          .logic(:patient)
+          .data
+      }
+    }
+    @extend_nav_data = {
+      mobile_back_to: wizard_path,
+      current_title: '导诊队列处理'
+    }
+  end
 end

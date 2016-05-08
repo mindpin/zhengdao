@@ -132,4 +132,4 @@
     
     .done (res)->
       console.log res
-      Turbolinks.visit res.patient_url
+      Turbolinks.visit res.active_record_info_url
