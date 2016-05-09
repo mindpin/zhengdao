@@ -3,6 +3,8 @@ class Patient
   include Mongoid::Timestamps
 
   field :name # 姓名
+  field :gender # 性别
+  field :age # 年龄
   field :id_card # 身份证
   field :mobile_phone # 手机号
   field :symptom_desc # 症状描述

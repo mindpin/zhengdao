@@ -6,6 +6,11 @@ module PatientFormer
     former "Patient" do
       field :id, ->(instance) {instance.id.to_s}
       field :name
+      field :gender
+      field :gender_str, ->(instance) {
+        {'MALE' => '男', 'FEMALE' => '女'}[instance.gender]
+      }
+      field :age
       field :id_card
       field :mobile_phone
       field :symptom_desc
@@ -87,6 +92,15 @@ module PatientFormer
       field :landing_status_str, ->(instance) {
         PatientRecord.landing_statuses[instance.landing_status]
       }
+      field :next_visit_worker_info_str, ->(instance) {
+        next_visit_worker = instance.next_visit_worker
+        return '' if next_visit_worker.blank?
+        return "接诊#{next_visit_worker.role_str}：#{next_visit_worker.name}"
+      }
+
+      field :common_update_url, ->(instance) {
+        record_path(instance)
+      }
 
       field :wizard_receive_url, ->(instance) {
         receive_wizard_record_path(instance)
@@ -96,8 +110,41 @@ module PatientFormer
         do_receive_wizard_record_path(instance)
       }
 
+      field :doctor_visit_url, ->(instance) {
+        visit_doctor_record_path(instance)
+      }
+      field :doctor_send_pe_url, ->(instance) {
+        send_pe_doctor_record_path(instance)
+      }
+      field :doctor_send_cure_url, ->(instance) {
+        send_cure_doctor_record_path(instance)
+      }
+
       logic :patient, ->(instance) {
         DataFormer.new(instance.patient).data
+      }
+
+      logic :first_visit, ->(instance) {
+        instance.first_visit
+      }
+      logic :first_visit_conclusion, ->(instance) {
+        instance.first_visit_conclusion
+      }
+      logic :cure_advice, ->(instance) {
+        instance.cure_advice
+      }
+      logic :conclusion, ->(instance) {
+        instance.conclusion
+      }
+      logic :pe_records, ->(instance) {
+        instance.pe_records.map {|x|
+          DataFormer.new(x).data
+        }
+      }
+      logic :cure_records, ->(instance) {
+        instance.cure_records.map {|x|
+          DataFormer.new(x).data
+        }
       }
     end
 

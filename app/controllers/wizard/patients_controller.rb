@@ -91,6 +91,10 @@ class Wizard::PatientsController < ApplicationController
   private
 
   def patient_params
-    params.require(:patient).permit(:name, :id_card, :mobile_phone, :symptom_desc, :personal_pathography, :family_pathography)
+    params.require(:patient).permit(
+      :name, :gender, :age,
+      :id_card, :mobile_phone, :symptom_desc, 
+      :personal_pathography, :family_pathography
+    )
   end
 end

@@ -91,16 +91,29 @@ module UserFormer
                   url: doctor_queue_path,
                   icon: 'flag'
                 },
+                # {
+                #   name: '工作日历',
+                #   url: doctor_calendar_path,
+                #   icon: 'calendar'
+                # },
+                # {
+                #   name: '工作记录',
+                #   url: doctor_activities_path,
+                #   icon: 'list'
+                # }
+              ]
+            }
+          ]
+        when 'cure'
+          [
+            {
+              name: '治疗师',
+              funcs: [
                 {
-                  name: '工作日历',
-                  url: doctor_calendar_path,
-                  icon: 'calendar'
+                  name: '队列处理',
+                  url: cure_queue_path,
+                  icon: 'flag'
                 },
-                {
-                  name: '工作记录',
-                  url: doctor_activities_path,
-                  icon: 'list'
-                }
               ]
             }
           ]

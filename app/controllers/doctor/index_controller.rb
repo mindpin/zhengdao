@@ -15,17 +15,32 @@ class Doctor::IndexController < ApplicationController
   end
 
   def queue
-    records = PatientRecord.wait_of_doctor(current_user)
+    queue = params[:queue] || 'wait'
+
+    case queue
+    when 'wait'
+      records = PatientRecord.doctor_wait_queue(current_user)
+    when 'pe'
+      records = PatientRecord.doctor_send_pe_queue(current_user)
+    when 'cure'
+      records = PatientRecord.doctor_send_cure_queue(current_user)
+    end
 
     @page_name = 'doctor_queue'
     @component_data = {
-      queue: params[:queue],
+      queue: queue,
+      wait_queue_count: PatientRecord.doctor_wait_queue(current_user).count,
+      send_pe_queue_count: PatientRecord.doctor_send_pe_queue(current_user).count,
+      send_cure_queue_count: PatientRecord.doctor_send_cure_queue(current_user).count,
+
       records: records.map {|x|
         DataFormer.new(x)
           .logic(:patient)
           .data
       },
-      default_queue_url: doctor_queue_path,
+
+
+      default_queue_url: doctor_queue_path(queue: 'wait'),
       pe_queue_url: doctor_queue_path(queue: 'pe'),
       cure_queue_url: doctor_queue_path(queue: 'cure'),
     }

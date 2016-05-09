@@ -27,8 +27,11 @@ class PatientRecord
   has_many :pe_records # 体检记录
   field :pe_conclusion # 体检综合结论
 
+  field :cure_advice # 治疗建议
   has_many :cure_records # 治疗记录
   field :cure_conclusion # 治疗综合结论
+
+  field :conclusion # 总综合结论
 
   has_many :pay_items # 费用记录
 
@@ -99,8 +102,26 @@ class PatientRecord
   end
 
 
-  # 由指定医师处理的待诊记录
-  def self.wait_of_doctor(doctor)
-    PatientRecord.where(worker_id: doctor.id.to_s)
+  # 医师，待诊队列
+  def self.doctor_wait_queue(doctor)
+    PatientRecord.where(next_visit_worker_id: doctor.id.to_s, :landing_status.in => ['WAIT_FOR_DOCTOR'])
+  end
+
+  # 医师，体检中队列
+  def self.doctor_send_pe_queue(doctor)
+    PatientRecord.where(attending_doctor_id: doctor.id.to_s, 
+      :landing_status.in => ['WAIT_FOR_ASSIGN_PE', 'WAIT_FOR_PE'])
+  end
+
+  # 医师，治疗中队列
+  def self.doctor_send_cure_queue(doctor)
+    PatientRecord.where(attending_doctor_id: doctor.id.to_s, 
+      :landing_status.in => ['WAIT_FOR_ASSIGN_CURE', 'WAIT_FOR_CURE'])
+  end
+
+  # 治疗师，等待队列
+  def self.cure_wait_queue(cure)
+    PatientRecord.where(next_visit_worker_id: cure.id.to_s, 
+      :landing_status.in => ['WAIT_FOR_CURE'])
   end
 end

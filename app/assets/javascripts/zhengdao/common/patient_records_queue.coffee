@@ -23,6 +23,11 @@
 
           href = switch record.landing_status
             when 'NOT_HERE' then record.wizard_receive_url
+            when 'WAIT_FOR_DOCTOR' then record.doctor_visit_url
+            when 'WAIT_FOR_ASSIGN_PE' then record.doctor_visit_url
+            when 'WAIT_FOR_PE' then record.doctor_visit_url
+            when 'WAIT_FOR_ASSIGN_CURE' then record.doctor_visit_url
+            when 'WAIT_FOR_CURE' then record.doctor_visit_url
 
 
           <a key={record.id} className={klass} href={href}>
@@ -39,6 +44,36 @@
                     <span>{record.time_period_str}，</span>
                     <span>指定{record.reg_worker_str}：</span>
                     <span>{record.reg_worker_name}</span>
+                  </div>
+                </div>
+
+              else if record.landing_status == 'WAIT_FOR_DOCTOR'
+                <div className='content'>
+                  <div className='patient'>
+                    <span>{patient.name} ({record.landing_status_str})</span>
+                  </div>
+                  <div className='status'>
+                    <span>{record.next_visit_worker_info_str}</span>
+                  </div>
+                </div>
+
+              else if record.landing_status == 'WAIT_FOR_ASSIGN_PE' or record.landing_status == 'WAIT_FOR_PE'
+                <div className='content'>
+                  <div className='patient'>
+                    <span>{patient.name} ({record.landing_status_str})</span>
+                  </div>
+                  <div className='status'>
+                    <span>{record.next_visit_worker_info_str}</span>
+                  </div>
+                </div>
+
+              else if record.landing_status == 'WAIT_FOR_ASSIGN_CURE' or record.landing_status == 'WAIT_FOR_CURE'
+                <div className='content'>
+                  <div className='patient'>
+                    <span>{patient.name} ({record.landing_status_str})</span>
+                  </div>
+                  <div className='status'>
+                    <span>{record.next_visit_worker_info_str}</span>
                   </div>
                 </div>
             }

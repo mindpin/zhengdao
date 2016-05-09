@@ -46,6 +46,19 @@ Rails.application.routes.draw do
     get 'queue' => 'index#queue'
     get 'calendar' => 'index#calendar'
 
+    resources :records do
+      get :visit, on: :member
+      put :send_pe, on: :member
+      put :send_cure, on: :member
+    end
+
     resources :activities
   end
+
+  namespace :cure do
+    get '/' => 'index#index'
+    get 'queue' => 'index#queue'
+  end
+
+  resources :records
 end

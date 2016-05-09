@@ -41,4 +41,13 @@ class User
 
   # has_one :worker_state
   belongs_to :store
+
+  def role_str
+    {
+      'wizard' => '导诊',
+      'doctor' => '医师',
+      'pe' => '体检师',
+      'cure' => '治疗师',
+    }[self.role]
+  end
 end

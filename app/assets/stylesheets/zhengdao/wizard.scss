@@ -165,9 +165,10 @@
 .patient-base-info {
   background-color: #FFF;
   border-top: solid 1px #ECECEC;
+  margin-bottom: 1rem;
   .field {
     border-bottom: solid 1px #ECECEC;
-    overflow: hidden;
+    @include clearfix;
     label {
       height:50px;line-height:50px;
       width: 6rem;
@@ -183,6 +184,11 @@
       border-left: solid 1px #ECECEC;
       margin-left: 6rem;
       word-break: break-all;
+    }
+
+    textarea {
+      margin-bottom: 0.5rem;
+      resize: none;
     }
   }
 }
