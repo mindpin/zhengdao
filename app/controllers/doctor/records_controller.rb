@@ -71,4 +71,19 @@ class Doctor::RecordsController < ApplicationController
       .logic(:conclusion)
       .data
   end
+
+  def back_to
+    record = PatientRecord.find params[:id]
+
+    if record.attending_doctor.present?
+      record.landing_status = 'BACK_TO_DOCTOR'
+      record.save
+    else
+      record.landing_status = 'FINISH'
+      record.save
+    end
+
+    render json: DataFormer.new(record)
+      .data
+  end
 end

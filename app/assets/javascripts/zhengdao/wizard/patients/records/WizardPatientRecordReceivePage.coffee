@@ -46,6 +46,20 @@
           else
             <div className='ui segment'>预约日期未到，现在不能处理</div>
 
+        else if record.landing_status == 'FINISH'
+          <div>
+            <div className='ui segment'>
+              <div>当前状态：{record.landing_status_str}</div>
+            </div>
+            <div className='ui segment'>
+              {
+                klass = new ClassName
+                  'ui button green mini': true
+
+                <a className={klass} onClick={@confirm_go_away}><i className='icon sign out' /> 确认离馆</a>
+              }
+            </div>
+          </div>
         else
           <div>
             <div className='ui segment'>
@@ -78,6 +92,16 @@
           url: @props.data.record.wizard_do_receive_url
           data:
             next_visit_worker_id: @state.next_visit_worker_id
+        .done (res)->
+          Turbolinks.visit '/wizard/queue'
+
+  confirm_go_away: ->
+    jQuery.modal_confirm
+      text: '确定该患者离馆吗？'
+      yes: =>
+        jQuery.ajax
+          type: 'PUT'
+          url: @props.data.record.wizard_do_receive_url
         .done (res)->
           Turbolinks.visit '/wizard/queue'
 

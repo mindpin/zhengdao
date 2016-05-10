@@ -39,6 +39,8 @@ class Wizard::IndexController < ApplicationController
       records = PatientRecord.wizard_reg_queue
     when 'landing'
       records = PatientRecord.wizard_landing_queue
+    when 'finish'
+      records = PatientRecord.wizard_finish_queue
     end
 
 
@@ -47,9 +49,12 @@ class Wizard::IndexController < ApplicationController
       queue: queue,
       reg_queue_url: wizard_queue_path(queue: 'reg'),
       landing_queue_url: wizard_queue_path(queue: 'landing'),
+      finish_queue_url: wizard_queue_path(queue: 'finish'),
 
       reg_queue_count: PatientRecord.wizard_reg_queue.count,
       landing_queue_count: PatientRecord.wizard_landing_queue.count,
+      finish_queue_count: PatientRecord.wizard_finish_queue.count,
+
       records: records.map {|x|
         DataFormer.new(x)
           .logic(:patient)

@@ -36,9 +36,8 @@ class Cure::IndexController < ApplicationController
           .data
       },
 
-      # default_queue_url: doctor_queue_path(queue: 'wait'),
-      # pe_queue_url: doctor_queue_path(queue: 'pe'),
-      # cure_queue_url: doctor_queue_path(queue: 'cure'),
+      wait_queue_url: cure_queue_path(queue: 'wait'),
+      send_queue_url: cure_queue_path(queue: 'send'),
     }
     @extend_nav_data = {
       mobile_back_to: cure_path,

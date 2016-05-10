@@ -28,6 +28,7 @@
             when 'WAIT_FOR_PE'          then record.visit_url
             when 'WAIT_FOR_ASSIGN_CURE' then record.visit_url
             when 'WAIT_FOR_CURE'        then record.visit_url
+            when 'FINISH'               then record.visit_url
 
 
           <a key={record.id} className={klass} href={href}>
@@ -74,6 +75,15 @@
                   </div>
                   <div className='status'>
                     <span>{record.next_visit_worker_info_str}</span>
+                  </div>
+                </div>
+
+              else if record.landing_status == 'FINISH'
+                <div className='content'>
+                  <div className='patient'>
+                    <span>{patient.name} ({record.landing_status_str})</span>
+                  </div>
+                  <div className='status'>
                   </div>
                 </div>
             }

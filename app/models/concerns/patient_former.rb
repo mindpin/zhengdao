@@ -127,6 +127,9 @@ module PatientFormer
       field :doctor_send_cure_url, ->(instance) {
         send_cure_doctor_record_path(instance)
       }
+      field :back_to_doctor_url, ->(instance) {
+        back_to_doctor_record_path(instance)
+      }
 
       logic :patient, ->(instance) {
         DataFormer.new(instance.patient).data

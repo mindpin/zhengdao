@@ -41,7 +41,8 @@ class Wizard::RecordsController < ApplicationController
   def receive
     record = PatientRecord.find params[:id]
     patient = record.patient
-    constraint_workers = record.constraint_workers(current_user)
+
+    constraint_workers = record.constraint_workers(current_user) || []
 
     @page_name = 'wizard_patient_record_receive'
     @component_data = {
@@ -59,7 +60,11 @@ class Wizard::RecordsController < ApplicationController
 
   def do_receive
     record = PatientRecord.find params[:id]
-    record.assign_visit_worker params[:next_visit_worker_id]
+    if record.landing_status == 'FINISH'
+      record.go_away
+    else
+      record.assign_visit_worker params[:next_visit_worker_id]
+    end
     render json: DataFormer.new(record).data
   end
 

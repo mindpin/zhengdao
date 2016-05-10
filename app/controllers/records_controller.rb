@@ -14,6 +14,13 @@ class RecordsController < ApplicationController
     if current_user.role == 'doctor'
       return redirect_to visit_doctor_record_path(record)
     end
+
+    if current_user.role == 'pe'
+    end
+
+    if current_user.role == 'cure'
+      return redirect_to visit_cure_record_path(record)
+    end
   end
 
   def record_params

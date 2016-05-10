@@ -76,7 +76,8 @@ class PatientRecord
     { 'NOT_HERE' => '待接诊', 
       'WAIT_FOR_ASSIGN_PE' => '待分配体检', 'WAIT_FOR_ASSIGN_CURE' => '待分配治疗',
       'WAIT_FOR_DOCTOR' => '待诊', 'WAIT_FOR_PE' => '待体检', 'WAIT_FOR_CURE' => '待治疗',
-      'GO_AWAY' => '离开'
+      'BACK_TO_DOCTOR' => '待医师确认',
+      'FINISH' => '待离馆确认', 'GO_AWAY' => '已离开'
     }
   end
 
@@ -101,6 +102,13 @@ class PatientRecord
     self.save
   end
 
+  # 离馆
+  def go_away
+    self.landing_status = 'GO_AWAY'
+    self.is_active = false
+    self.save
+  end
+
   # ----------------------
   # 导诊，预约队列
   def self.wizard_reg_queue
@@ -114,6 +122,14 @@ class PatientRecord
   def self.wizard_landing_queue
     PatientRecord
       .where(is_active: true, :landing_status.in => ['WAIT_FOR_ASSIGN_PE', 'WAIT_FOR_ASSIGN_CURE'])
+      .asc(:reg_date)
+      .asc(:reg_number)
+  end
+
+  # 导诊，离馆队列
+  def self.wizard_finish_queue
+    PatientRecord
+      .where(is_active: true, landing_status: 'FINISH')
       .asc(:reg_date)
       .asc(:reg_number)
   end

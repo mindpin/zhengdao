@@ -10,6 +10,10 @@
       'item': true
       'active': queue == 'landing'
 
+    klass3 = new ClassName
+      'item': true
+      'active': queue == 'finish'
+
     records = @props.data.records
 
     <div className='wizard-queue-page with-tabs'>
@@ -19,6 +23,9 @@
         </div>
         <div className={klass2}>
           <a className='label' href={@props.data.landing_queue_url}>在馆({@props.data.landing_queue_count})</a>
+        </div>
+        <div className={klass3}>
+          <a className='label' href={@props.data.finish_queue_url}>待离馆({@props.data.finish_queue_count})</a>
         </div>
       </div>
 
