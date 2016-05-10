@@ -16,9 +16,8 @@
         done={@done}
         cancel={@cancel}
       >
-        <TextInputField {...layout} label='收费项名称：' name='name' required />
+        <TextInputField {...layout} label='名称：' name='name' required />
         <TextAreaField {...layout} label='描述：' name='desc' />
-        <TextInputField {...layout} label='单价：' name='unit_price' required />
         <Submit {...layout} text='确定保存' with_cancel='取消' />
       </SimpleDataForm>
     </div>
@@ -48,9 +47,8 @@
         done={@done}
         cancel={@cancel}
       >
-        <TextInputField {...layout} label='收费项名称：' name='name' required />
+        <TextInputField {...layout} label='名称：' name='name' required />
         <TextAreaField {...layout} label='描述：' name='desc' />
-        <TextInputField {...layout} label='单价：' name='unit_price' required />
         <Submit {...layout} text='确定保存' with_cancel='取消' />
       </SimpleDataForm>
     </div>

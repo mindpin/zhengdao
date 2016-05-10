@@ -2,8 +2,8 @@
   render: ->
     <div className='manager-pay-defines-page'>
       <div className='ui icon message warning'>
-        <i className='icon yen' />
-        管理收费项目定义
+        <i className='icon add square' />
+        管理治疗项目定义
       </div>
 
       <ManagerPayDefinesPage.Table data={@props.data} />
@@ -14,8 +14,7 @@
       render: ->
         table_data = {
           fields:
-            name: '收费项名称'
-            unit_price: '单价'
+            name: '治疗项名称'
             ops: '操作'
           data_set: @props.data.pay_defines.map (x)->
             id: x.id
@@ -34,8 +33,8 @@
         <div>
           <div className='ui segment basic ops'>
             <a href={@props.data.new_url} className='ui button green'>
-              <i className='icon plus' /> 添加收费项
+              <i className='icon plus' /> 添加治疗项
             </a>
           </div>
-          <ManagerTable data={table_data} title='收费项目管理' />
+          <ManagerTable data={table_data} title='治疗项目管理' />
         </div>
