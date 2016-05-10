@@ -31,6 +31,11 @@ module PatientFormer
         new_wizard_patient_record_path(instance)
       }
 
+      field :current_status_info, ->(instance) {
+        return '未在馆' if instance.active_record.blank?
+        return PatientRecord.landing_statuses[instance.active_record.landing_status]
+      }
+
       logic :records_count, ->(instance) {
         instance.patient_records.count
       }
@@ -102,17 +107,20 @@ module PatientFormer
         record_path(instance)
       }
 
-      field :wizard_receive_url, ->(instance) {
-        receive_wizard_record_path(instance)
+      field :visit_url, ->(instance) {
+        visit_record_path(instance)
       }
 
+      # field :wizard_receive_url, ->(instance) {
+      #   receive_wizard_record_path(instance)
+      # }
       field :wizard_do_receive_url, ->(instance) {
         do_receive_wizard_record_path(instance)
       }
 
-      field :doctor_visit_url, ->(instance) {
-        visit_doctor_record_path(instance)
-      }
+      # field :doctor_visit_url, ->(instance) {
+      #   visit_doctor_record_path(instance)
+      # }
       field :doctor_send_pe_url, ->(instance) {
         send_pe_doctor_record_path(instance)
       }

@@ -53,7 +53,7 @@ class Wizard::RecordsController < ApplicationController
     }
     @extend_nav_data = {
       mobile_back_to: wizard_queue_path,
-      current_title: "接诊处理：#{patient.name}"
+      current_title: "导诊处理：#{patient.name}"
     }
   end
 

@@ -22,12 +22,12 @@
             'not-today': not record.is_today
 
           href = switch record.landing_status
-            when 'NOT_HERE' then record.wizard_receive_url
-            when 'WAIT_FOR_DOCTOR' then record.doctor_visit_url
-            when 'WAIT_FOR_ASSIGN_PE' then record.doctor_visit_url
-            when 'WAIT_FOR_PE' then record.doctor_visit_url
-            when 'WAIT_FOR_ASSIGN_CURE' then record.doctor_visit_url
-            when 'WAIT_FOR_CURE' then record.doctor_visit_url
+            when 'NOT_HERE'             then record.visit_url
+            when 'WAIT_FOR_DOCTOR'      then record.visit_url
+            when 'WAIT_FOR_ASSIGN_PE'   then record.visit_url
+            when 'WAIT_FOR_PE'          then record.visit_url
+            when 'WAIT_FOR_ASSIGN_CURE' then record.visit_url
+            when 'WAIT_FOR_CURE'        then record.visit_url
 
 
           <a key={record.id} className={klass} href={href}>

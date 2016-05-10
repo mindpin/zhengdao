@@ -60,5 +60,7 @@ Rails.application.routes.draw do
     get 'queue' => 'index#queue'
   end
 
-  resources :records
+  resources :records do
+    get :visit, on: :member
+  end
 end

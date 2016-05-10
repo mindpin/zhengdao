@@ -8,7 +8,7 @@
           <i className='icon angle right' />
           <div className='content'>
             <div className='name'>{patient.name}</div>
-            <div className='info'>手机号：{patient.mobile_phone}</div>
+            <div className='info'>当前状态：{patient.current_status_info}</div>
           </div>
         </a>
     }

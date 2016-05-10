@@ -27,16 +27,14 @@ class Cure::IndexController < ApplicationController
     @page_name = 'cure_queue'
     @component_data = {
       queue: queue,
-      # wait_queue_count: PatientRecord.doctor_wait_queue(current_user).count,
-      # send_pe_queue_count: PatientRecord.doctor_send_pe_queue(current_user).count,
-      # send_cure_queue_count: PatientRecord.doctor_send_cure_queue(current_user).count,
+      wait_queue_count: PatientRecord.cure_wait_queue(current_user).count,
+      send_queue_count: PatientRecord.cure_send_queue(current_user).count,
 
-      # records: records.map {|x|
-      #   DataFormer.new(x)
-      #     .logic(:patient)
-      #     .data
-      # },
-
+      records: records.map {|x|
+        DataFormer.new(x)
+          .logic(:patient)
+          .data
+      },
 
       # default_queue_url: doctor_queue_path(queue: 'wait'),
       # pe_queue_url: doctor_queue_path(queue: 'pe'),

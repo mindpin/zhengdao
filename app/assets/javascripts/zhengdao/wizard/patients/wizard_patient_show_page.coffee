@@ -14,13 +14,6 @@ PatientTabs = React.createClass
       'item': true
       'active': @props.active == 3
 
-    button =
-      <div className='item button'>
-        <a className='ui button green mini' href={patient.new_record_url}>
-          <i className='icon plus' /> 新增挂号
-        </a>
-      </div>
-
     <div className='tabs'>
       <div className={klass1}>
         <a className='label' href={patient.wizard_show_url}>基本信息</a>
@@ -34,7 +27,11 @@ PatientTabs = React.createClass
             <a className='label' href={patient.active_record_info_url}>挂号信息</a>
           </div>
         else
-          {button}
+          <div className='item button'>
+            <a className='ui button green mini' href={patient.new_record_url}>
+              <i className='icon plus' /> 新增挂号
+            </a>
+          </div>
       }
     </div>
 

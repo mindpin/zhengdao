@@ -5,6 +5,17 @@ class RecordsController < ApplicationController
     render json: DataFormer.new(record).data
   end
 
+  def visit
+    record = PatientRecord.find params[:id]
+    if current_user.role == 'wizard'
+      return redirect_to receive_wizard_record_path(record)
+    end
+
+    if current_user.role == 'doctor'
+      return redirect_to visit_doctor_record_path(record)
+    end
+  end
+
   def record_params
     params.require(:record).permit(
       :first_visit, :first_visit_conclusion, :cure_advice,
