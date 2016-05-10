@@ -21,66 +21,102 @@
       </div>
 
       {
-        if @state.record.landing_status == 'WAIT_FOR_DOCTOR'
+        if @state.record.landing_status == 'WAIT_FOR_DOCTOR' or @state.record.landing_status == 'BACK_TO_DOCTOR' or @state.record.landing_status == 'FINISH'
+
           <div>
-          <div className='patient-base-info'>
-            <div className='field'>
-              <label>体检</label>
-              <div className='icontent'>
-                <select multiple className='ui fluid dropdown' ref='select0' onChange={@pe_change}>
-                  <option value=''>添加体检项</option>
-                  <option value='脉诊'>脉诊</option>
-                  <option value='三部九侯诊'>三部九侯诊</option>
-                  <option value='舌诊'>舌诊</option>
-                  <option value='面诊'>面诊</option>
-                  <option value='腹诊'>腹诊</option>
-                  <option value='背诊'>背诊</option>
-                  <option value='脊柱诊'>脊柱诊</option>
-                  <option value='经络诊'>经络诊</option>
-                </select>
+          {
+            if @state.record.pe_records.length > 0 or @state.record.landing_status == 'FINISH'
+              <div className='patient-base-info'>
+              {
+                for pe_record in @state.record.pe_records
+                  <div className='field' key={pe_record.id}>
+                    <label>{pe_record.name}</label>
+                    <div className='icontent'>
+                      {pe_record.conclusion}
+                    </div>
+                  </div>
+              }
               </div>
-            </div>
+            else
+              <div className='patient-base-info'>
+                <div className='field'>
+                  <label>体检</label>
+                  <div className='icontent'>
+                    <select multiple className='ui fluid dropdown' ref='select0' onChange={@pe_change}>
+                      <option value=''>添加体检项</option>
+                      <option value='脉诊'>脉诊</option>
+                      <option value='三部九侯诊'>三部九侯诊</option>
+                      <option value='舌诊'>舌诊</option>
+                      <option value='面诊'>面诊</option>
+                      <option value='腹诊'>腹诊</option>
+                      <option value='背诊'>背诊</option>
+                      <option value='脊柱诊'>脊柱诊</option>
+                      <option value='经络诊'>经络诊</option>
+                    </select>
+                  </div>
+                </div>
 
-            {
-              klass = new ClassName
-                'ui button green mini': true
-                'disabled': @state.selected_pe_items.length == 0
+                {
+                  klass = new ClassName
+                    'ui button green mini': true
+                    'disabled': @state.selected_pe_items.length == 0
 
-              <div className='field' style={padding: '1rem', paddingLeft: '7rem'}>
-                <a className={klass} onClick={@confirm_pe}><i className='icon send' /> 安排体检</a>
+                  <div className='field' style={padding: '1rem', paddingLeft: '7rem'}>
+                    <a className={klass} onClick={@confirm_pe}><i className='icon send' /> 安排体检</a>
+                  </div>
+                }
               </div>
-            }
-          </div>
+          }
 
-          <div className='patient-base-info'>
-            <SaveableField label='治疗建议' field='cure_advice' record={@state.record} />
-            <div className='field'>
-              <label>治疗</label>
-              <div className='icontent'>
-                <select multiple className='ui fluid dropdown' ref='select1' onChange={@cure_change}>
-                  <option value=''>添加治疗项</option>
-                  {
-                    for cure_item in @props.data.cure_items
-                      <option key={cure_item.id} value={cure_item.id}>{cure_item.name}</option>
-                  }
-                </select>
+          {
+            if @state.record.cure_records.length > 0 or @state.record.landing_status == 'FINISH'
+              <div className='patient-base-info'>
+              {
+                for cure_record in @state.record.cure_records
+                  <div className='field' key={cure_record.id}>
+                    <label>{cure_record.name}</label>
+                    <div className='icontent'>
+                      {cure_record.conclusion}
+                    </div>
+                  </div>
+              }
               </div>
-            </div>
-            {
-              klass = new ClassName
-                'ui button green mini': true
-                'disabled': @state.selected_cure_items.length == 0
-              <div className='field' style={padding: '1rem', paddingLeft: '7rem'}>
-                <a className={klass}  onClick={@confirm_cure}><i className='icon send' /> 安排治疗</a>
+            else
+              <div className='patient-base-info'>
+                <SaveableField label='治疗建议' field='cure_advice' record={@state.record} />
+                <div className='field'>
+                  <label>治疗</label>
+                  <div className='icontent'>
+                    <select multiple className='ui fluid dropdown' ref='select1' onChange={@cure_change}>
+                      <option value=''>添加治疗项</option>
+                      {
+                        for cure_item in @props.data.cure_items
+                          <option key={cure_item.id} value={cure_item.id}>{cure_item.name}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+                {
+                  klass = new ClassName
+                    'ui button green mini': true
+                    'disabled': @state.selected_cure_items.length == 0
+                  <div className='field' style={padding: '1rem', paddingLeft: '7rem'}>
+                    <a className={klass}  onClick={@confirm_cure}><i className='icon send' /> 安排治疗</a>
+                  </div>
+                }
               </div>
-            }
-          </div>
+          }
 
           <div className='patient-base-info'>
             <SaveableField label='综合结论' field='conclusion' record={@state.record} />
-            <div className='field' style={padding: '1rem', paddingLeft: '7rem'}>
-              <a className='ui button blue mini'><i className='icon check' /> 全部结束</a>
-            </div>
+            {
+              if @state.record.landing_status != 'FINISH'
+                <div className='field' style={padding: '1rem', paddingLeft: '7rem'}>
+                  <a className='ui button blue mini' onClick={@confirm_finish}><i className='icon check' /> 结束诊疗流程</a>
+                </div>
+              else
+                <div className='field' style={padding: '1rem'}>诊疗流程已结束</div>
+            }
           </div>
           </div>
       
@@ -168,6 +204,19 @@
           url: @state.record.doctor_send_cure_url
           data:
             selected_items: citems
+
+        .done (res)->
+          window.location.reload()
+
+  confirm_finish: ->
+    text = '确定结束全部诊疗流程吗？'
+
+    jQuery.modal_confirm
+      text: text
+      yes: =>
+        jQuery.ajax
+          type: 'PUT'
+          url: @state.record.finish_url
 
         .done (res)->
           window.location.reload()

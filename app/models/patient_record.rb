@@ -73,11 +73,16 @@ class PatientRecord
   end
 
   def self.landing_statuses
-    { 'NOT_HERE' => '待接诊', 
-      'WAIT_FOR_ASSIGN_PE' => '待分配体检', 'WAIT_FOR_ASSIGN_CURE' => '待分配治疗',
-      'WAIT_FOR_DOCTOR' => '待诊', 'WAIT_FOR_PE' => '待体检', 'WAIT_FOR_CURE' => '待治疗',
+    { 
+      'NOT_HERE' => '待接诊', 
+      'WAIT_FOR_ASSIGN_PE' => '待分配体检', 
+      'WAIT_FOR_ASSIGN_CURE' => '待分配治疗',
+      'WAIT_FOR_DOCTOR' => '待诊', 
+      'WAIT_FOR_PE' => '待体检', 
+      'WAIT_FOR_CURE' => '待治疗',
       'BACK_TO_DOCTOR' => '待医师确认',
-      'FINISH' => '待离馆确认', 'GO_AWAY' => '已离开'
+      'FINISH' => '待离馆确认', 
+      'GO_AWAY' => '已离开'
     }
   end
 
@@ -137,7 +142,9 @@ class PatientRecord
 
   # 医师，待诊队列
   def self.doctor_wait_queue(doctor)
-    PatientRecord.where(next_visit_worker_id: doctor.id.to_s, :landing_status.in => ['WAIT_FOR_DOCTOR'])
+    PatientRecord.where(next_visit_worker: doctor, 
+      :landing_status.in => ['WAIT_FOR_DOCTOR', 'BACK_TO_DOCTOR']
+    )
   end
 
   # 医师，体检中队列

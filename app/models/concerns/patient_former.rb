@@ -130,6 +130,9 @@ module PatientFormer
       field :back_to_doctor_url, ->(instance) {
         back_to_doctor_record_path(instance)
       }
+      field :finish_url, ->(instance) {
+        finish_doctor_record_path(instance)
+      }
 
       logic :patient, ->(instance) {
         DataFormer.new(instance.patient).data

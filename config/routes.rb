@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       put :send_pe, on: :member
       put :send_cure, on: :member
       put :back_to, on: :member
+      put :finish, on: :member
     end
 
     resources :activities

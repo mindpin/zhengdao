@@ -77,12 +77,21 @@ class Doctor::RecordsController < ApplicationController
 
     if record.attending_doctor.present?
       record.landing_status = 'BACK_TO_DOCTOR'
+      record.next_visit_worker = record.attending_doctor
       record.save
     else
       record.landing_status = 'FINISH'
       record.save
     end
 
+    render json: DataFormer.new(record)
+      .data
+  end
+
+  def finish
+    record = PatientRecord.find params[:id]
+    record.landing_status = 'FINISH'
+    record.save
     render json: DataFormer.new(record)
       .data
   end

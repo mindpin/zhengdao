@@ -28,6 +28,7 @@
             when 'WAIT_FOR_PE'          then record.visit_url
             when 'WAIT_FOR_ASSIGN_CURE' then record.visit_url
             when 'WAIT_FOR_CURE'        then record.visit_url
+            when 'BACK_TO_DOCTOR'       then record.visit_url
             when 'FINISH'               then record.visit_url
 
 
@@ -48,7 +49,7 @@
                   </div>
                 </div>
 
-              else if record.landing_status == 'WAIT_FOR_DOCTOR'
+              else if record.landing_status == 'WAIT_FOR_DOCTOR' or record.landing_status == 'BACK_TO_DOCTOR'
                 <div className='content'>
                   <div className='patient'>
                     <span>{patient.name} ({record.landing_status_str})</span>
