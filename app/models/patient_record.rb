@@ -159,6 +159,20 @@ class PatientRecord
       :landing_status.in => ['WAIT_FOR_ASSIGN_CURE', 'WAIT_FOR_CURE'])
   end
 
+  # 体检师，等待队列
+  def self.pe_wait_queue(pe)
+    PatientRecord.where(next_visit_worker: pe, 
+      :landing_status.in => ['WAIT_FOR_PE'],
+      :attending_doctor_id => nil)
+  end
+
+  # 体检师，医师推送队列
+  def self.pe_send_queue(pe)
+    PatientRecord.where(next_visit_worker: pe, 
+      :landing_status.in => ['WAIT_FOR_PE'],
+      :attending_doctor_id.ne => nil)
+  end
+
   # 治疗师，等待队列
   def self.cure_wait_queue(cure)
     PatientRecord.where(next_visit_worker: cure, 

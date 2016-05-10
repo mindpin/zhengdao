@@ -16,6 +16,7 @@ class RecordsController < ApplicationController
     end
 
     if current_user.role == 'pe'
+      return redirect_to visit_pe_record_path(record)
     end
 
     if current_user.role == 'cure'

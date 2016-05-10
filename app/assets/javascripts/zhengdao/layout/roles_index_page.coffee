@@ -35,6 +35,17 @@
       <RolesFuncs data={@props.data.funcs} />
     </div>
 
+@PeIndexPage = React.createClass
+  render: ->
+    <div className='manager-index-page'>
+      <div className='ui icon message warning'>
+        <i className='icon info circle' />
+        你正以体检师身份登录，你可以在此处理患者治疗队列
+      </div>
+
+      <RolesFuncs data={@props.data.funcs} />
+    </div>
+
 @CureIndexPage = React.createClass
   render: ->
     <div className='manager-index-page'>

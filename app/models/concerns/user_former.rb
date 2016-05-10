@@ -104,6 +104,19 @@ module UserFormer
               ]
             }
           ]
+        when 'pe'
+          [
+            {
+              name: '体检师',
+              funcs: [
+                {
+                  name: '队列处理',
+                  url: pe_queue_path,
+                  icon: 'flag'
+                },
+              ]
+            }
+          ]
         when 'cure'
           [
             {

@@ -57,14 +57,21 @@ Rails.application.routes.draw do
     resources :activities
   end
 
+  namespace :pe do
+    get '/' => 'index#index'
+    get 'queue' => 'index#queue'
+
+    resources :records do
+      get :visit, on: :member
+    end
+  end
+
   namespace :cure do
     get '/' => 'index#index'
     get 'queue' => 'index#queue'
 
     resources :records do
       get :visit, on: :member
-      put :send_pe, on: :member
-      put :send_cure, on: :member
     end
   end
 

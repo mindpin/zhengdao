@@ -21,6 +21,10 @@ class IndexController < ApplicationController
       redirect_to doctor_path
     end
 
+    if current_user.role == 'pe'
+      redirect_to pe_path
+    end
+
     if current_user.role == 'cure'
       redirect_to cure_path
     end
