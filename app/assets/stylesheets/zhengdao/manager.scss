@@ -666,3 +666,19 @@ body.manager {
     }
   }
 }
+
+.pe-records-page {
+  .pe-recorder {
+    background-color: #FFF;
+    .add-item {
+      padding: 1rem;
+      border-top: solid 1px #ececec;
+    }
+  }
+
+  .page-save {
+    background-color: #FFF;
+    padding: 1rem;
+    border-top: solid 1px #ECECEC;
+  }
+}

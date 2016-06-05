@@ -1,12 +1,13 @@
 @PeRecordsNewPage = React.createClass
   render: ->
-    <div className='ui segment form data-form'>
+    <div className='pe-records-page'>
       <PeRecorder data={@props.data.pe} ref="pe_recorder" />
 
-      <a className='ui button green' href='javascript:;' onClick={@on_click}>
-        <i className='icon check' />
-        提交
-      </a>
+      <div className='page-save'>
+        <a className='ui button green mini' href='javascript:;' onClick={@on_click}>
+          <i className='icon check' /> 保存
+        </a>
+      </div>
     </div>
 
   on_click: ->

@@ -10,20 +10,23 @@
           label: label
           values: values
 
-    <div className='ui segment'>
-    {
-      for item in @props.data.define.data
-        <PeRecorder.PeItemInput key={item.label} data={item} pe={@props.data} />
-    }
-    <a className='ui button green' href='javascript:;' onClick={@add_field}>
-      <i className='icon add' />
-      增加
-    </a>
+    <div className='pe-recorder'>
+      <div className='items'>
+      {
+        for item, idx in @props.data.define.data
+          <PeRecorder.PeItemInput key={idx} data={item} pe={@props.data} />
+      }
+      </div>
+      <div className='add-item'>
+        <a className='ui button green mini' href='javascript:;' onClick={@add_field}>
+          <i className='icon add' /> 增加记录项
+        </a>
+      </div>
     </div>
 
   add_field: ->
     @props.data.define.data.push
-      label: "新增"
+      label: "记录项"
       values: []
       disabled: false
     @setState {}
@@ -47,6 +50,7 @@
             @props.pe.record[@props.data.label] ||= []
             @props.pe.record[@props.data.label] = @props.pe.record[@props.data.label].filter (value)->
               value != removedValue
+              
       render: ->
         <div className='field'>
           <div className="ui input">
