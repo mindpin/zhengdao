@@ -44,7 +44,10 @@ class Wizard::PatientsController < ApplicationController
 
     @page_name = 'wizard_patient_show'
     @component_data = {
-      patient: DataFormer.new(patient).data
+      patient: DataFormer.new(patient)
+        .logic(:records_count)
+        .logic(:active_record)
+        .data,
     }
     @extend_nav_data = {
       mobile_back_to: wizard_patients_path,
@@ -52,9 +55,46 @@ class Wizard::PatientsController < ApplicationController
     }
   end
 
+  def records_info
+    patient = Patient.find params[:id]
+
+    @page_name = 'wizard_patient_records'
+    @component_data = {
+      patient: DataFormer.new(patient)
+        .logic(:records_count)
+        .logic(:active_record)
+        .logic(:records)
+        .data
+    }
+    @extend_nav_data = {
+      mobile_back_to: wizard_patients_path,
+      current_title: "就诊记录：#{patient.name}"
+    }
+  end
+
+  def active_record_info
+    patient = Patient.find params[:id]
+
+    @page_name = 'wizard_patient_active_record_info'
+    @component_data = {
+      patient: DataFormer.new(patient)
+        .logic(:records_count)
+        .logic(:active_record)
+        .data
+    }
+    @extend_nav_data = {
+      mobile_back_to: wizard_patients_path,
+      current_title: "挂号信息：#{patient.name}"
+    }
+  end
+
   private
 
   def patient_params
-    params.require(:patient).permit(:name, :id_card, :mobile_phone, :symptom_desc, :personal_pathography, :family_pathography)
+    params.require(:patient).permit(
+      :name, :gender, :age,
+      :id_card, :mobile_phone, :symptom_desc, 
+      :personal_pathography, :family_pathography
+    )
   end
 end

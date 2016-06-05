@@ -6,6 +6,7 @@ class DataFormer
   include StoreFormer
   include PayDefineFormer
   include PeDefineFormer
+  include PeAndCureRecordFormer
 
   def self.paginate_data(models)
     begin

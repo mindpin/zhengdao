@@ -41,15 +41,15 @@ module UserFormer
                   url: manager_users_path
                 },
                 {
-                  name: '收费项目管理',
-                  icon: 'yen',
+                  name: '治疗项目管理',
+                  icon: 'add square',
                   url: manager_pay_defines_path
                 },
-                {
-                  name: '患者档案',
-                  icon: 'newspaper',
-                  url: manager_path
-                },
+                # {
+                #   name: '患者档案',
+                #   icon: 'newspaper',
+                #   url: manager_path
+                # },
                 {
                   name: '系统信息',
                   icon: 'configure',
@@ -72,7 +72,61 @@ module UserFormer
                   name: '患者档案',
                   url: wizard_patients_path,
                   icon: 'newspaper'
+                },
+                {
+                  name: '队列处理',
+                  url: wizard_queue_path,
+                  icon: 'flag'
                 }
+              ]
+            }
+          ]
+        when 'doctor'
+          [
+            {
+              name: '医师',
+              funcs: [
+                {
+                  name: '队列处理',
+                  url: doctor_queue_path,
+                  icon: 'flag'
+                },
+                # {
+                #   name: '工作日历',
+                #   url: doctor_calendar_path,
+                #   icon: 'calendar'
+                # },
+                # {
+                #   name: '工作记录',
+                #   url: doctor_activities_path,
+                #   icon: 'list'
+                # }
+              ]
+            }
+          ]
+        when 'pe'
+          [
+            {
+              name: '体检师',
+              funcs: [
+                {
+                  name: '队列处理',
+                  url: pe_queue_path,
+                  icon: 'flag'
+                },
+              ]
+            }
+          ]
+        when 'cure'
+          [
+            {
+              name: '治疗师',
+              funcs: [
+                {
+                  name: '队列处理',
+                  url: cure_queue_path,
+                  icon: 'flag'
+                },
               ]
             }
           ]

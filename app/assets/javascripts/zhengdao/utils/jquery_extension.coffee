@@ -24,6 +24,7 @@ jQuery.format_date = (date, fmt)->
     "s+" : date.getSeconds()
     "q+" : Math.floor((date.getMonth() + 3) / 3) # 季度
     "S"  : date.getMilliseconds()
+    "w"  : ['日', '一', '二', '三', '四', '五', '六'][date.getDay()]
 
   if /(y+)/.test fmt
     fmt = fmt.replace RegExp.$1, "#{date.getFullYear()}".substr(4 - RegExp.$1.length)

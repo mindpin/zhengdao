@@ -32,13 +32,22 @@ class User
 
   # -------------------
 
-  field :role
+  field :role # wizard, doctor, pe, cure, admin
   field :login
   validates :login, presence: true, uniqueness: { case_sensitive: false }
 
   def email_required?; false; end
   def email_changed?; false; end
 
-  has_one :worker_state
+  # has_one :worker_state
   belongs_to :store
+
+  def role_str
+    {
+      'wizard' => '导诊',
+      'doctor' => '医师',
+      'pe' => '体检师',
+      'cure' => '治疗师',
+    }[self.role]
+  end
 end

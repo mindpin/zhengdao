@@ -27,11 +27,59 @@ Rails.application.routes.draw do
 
   namespace :wizard do
     get '/' => 'index#index'
-    get "/search/(:query)" => 'index#search', as: 'search'
+    get '/search/(:query)' => 'index#search', as: 'search'
+    get 'queue' => 'index#queue'
 
     resources :patients do
-      resources :records
+      get :records_info, on: :member
+      get :active_record_info, on: :member
+
+      resources :records, shallow: true do 
+        get :receive, on: :member
+        put :do_receive, on: :member
+      end
     end
   end
+
+  namespace :doctor do
+    get '/' => 'index#index'
+    get 'queue' => 'index#queue'
+    get 'calendar' => 'index#calendar'
+
+    resources :records do
+      get :visit, on: :member
+      put :send_pe, on: :member
+      put :send_cure, on: :member
+      put :back_to, on: :member
+      put :finish, on: :member
+    end
+
+    resources :activities
+  end
+
+  namespace :pe do
+    get '/' => 'index#index'
+    get 'queue' => 'index#queue'
+
+    resources :records do
+      get :visit, on: :member
+    end
+  end
+
+  namespace :cure do
+    get '/' => 'index#index'
+    get 'queue' => 'index#queue'
+
+    resources :records do
+      get :visit, on: :member
+    end
+  end
+
   resources :pe_records
+  resources :records do
+    get :visit, on: :member
+  end
+
+  resources :patient_pe_records
+  resources :patient_cure_records
 end

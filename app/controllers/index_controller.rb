@@ -17,6 +17,18 @@ class IndexController < ApplicationController
       return
     end
 
+    if current_user.role == 'doctor'
+      redirect_to doctor_path
+    end
+
+    if current_user.role == 'pe'
+      redirect_to pe_path
+    end
+
+    if current_user.role == 'cure'
+      redirect_to cure_path
+    end
+
     @page_name = 'index'
     @component_data = {}
   end
