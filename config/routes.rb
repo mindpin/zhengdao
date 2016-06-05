@@ -75,6 +75,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :pe_records
   resources :records do
     get :visit, on: :member
   end
