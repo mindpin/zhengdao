@@ -1,20 +1,18 @@
 @PeRecorder = React.createClass
+  getInitialState: ->
+    records: @props.data.records
+
   render: ->
-    define_labels = []
-    for item in @props.data.define.data
-      define_labels.push item.label
-
-    for label, values of @props.data.record
-      if define_labels.indexOf(label) == -1
-        @props.data.define.data.push
-          label: label
-          values: values
-
     <div className='pe-recorder'>
       <div className='items'>
       {
-        for item, idx in @props.data.define.data
-          <PeRecorder.PeItemInput key={idx} data={item} pe={@props.data} />
+        for item, idx in @state.records
+          <PeRecorder.PeItemInput 
+            key={idx}
+            idx={idx}
+            item={item} 
+            parent={@} 
+          />
       }
       </div>
       <div className='add-item'>
@@ -25,60 +23,168 @@
     </div>
 
   add_field: ->
-    @props.data.define.data.push
-      label: "记录项"
-      values: []
+    records = @state.records
+    records.push
+      label: ''
+      option_values: []
+      saved_values: []
       disabled: false
-    @setState {}
+    @setState records: records
+
+  add_record_value: (idx, value)->
+    records = @state.records
+    record = records[idx]
+    record.saved_values ||= []
+    record.saved_values.push value
+    @setState records: records
+
+  remove_record_value: (idx, removed_value)->
+    records = @state.records
+    record = records[idx]
+    record.saved_values ||= []
+    record.saved_values = record.saved_values.filter (value)->
+      value != removed_value
+    @setState records: records
+
+  record_label_change: (idx, new_label)->
+    records = @state.records
+    record = records[idx]
+    record.label = new_label
+    @setState records: records
+
+  record_file_entity_id_change: (idx, file_entity_id)->
+    records = @state.records
+    record = records[idx]
+    record.file_entity_id = file_entity_id
+    @setState records: records
 
   get_values: ->
-    result = {}
-    for item in @props.data.define.data
-      result[item.label] = @props.data.record[item.label] || []
-    result
+    @state.records.map (x)->
+      label: x.label
+      saved_values: x.saved_values || []
+      file_entity_id: x.file_entity_id
 
   statics:
     PeItemInput: React.createClass
       componentDidMount: ->
-        $self = jQuery React.findDOMNode @
-        $self.find('.ui.dropdown').dropdown
-          allowAdditions: true
-          onAdd: (addedValue, addedText, $addedChoice)=>
-            @props.pe.record[@props.data.label] ||= []
-            @props.pe.record[@props.data.label].push addedValue
-          onRemove: (removedValue, removedText, $removedChoice)=>
-            @props.pe.record[@props.data.label] ||= []
-            @props.pe.record[@props.data.label] = @props.pe.record[@props.data.label].filter (value)->
-              value != removedValue
+        jQuery(React.findDOMNode @)
+          .find('.ui.dropdown').dropdown
+            allowAdditions: true
+            onAdd: (addedValue, addedText, $addedChoice)=>
+              @props.parent.add_record_value @props.idx, addedValue
+
+            onRemove: (removedValue, removedText, $removedChoice)=>
+              @props.parent.remove_record_value @props.idx, removedValue
               
       render: ->
+        item = @props.item
+        label = item.label
+        option_values = item.option_values || []
+        saved_values = item.saved_values || []
+
+        label_readonly = item.disabled != false
+        label_klass = new ClassName
+          'label': true
+          'readonly': label_readonly
+
+        label_props =
+          type: 'text'
+          value: label
+          readOnly: label_readonly
+          className: label_klass
+          onChange: @on_label_change
+          placeholder: '输入自定义记录项名'
+
         <div className='field'>
-          <div className="ui input">
-            <input type="text" name={@props.data.label} value={@props.data.label} disabled={@props.data.disabled == undefined} onChange={@on_lable_change}/>
-          </div>
-          <div className="ui selection search multiple dropdown">
+          <input {...label_props} />
+
+          <div className="ui fluid selection search multiple dropdown">
             {
-              default_values = @props.pe.record[@props.data.label]
-              if default_values
-                str = default_values.join(",")
-                <input type="hidden" name={@props.data.label} value={str} />
-              else
-                <input type="hidden" name={@props.data.label} />
+              <input type='hidden' value={saved_values.join(",")} />
             }
-            <i className="dropdown icon"></i>
-            <div className="default text"></div>
+
+            <div className="default text">输入记录内容</div>
             <div className="menu">
-              {
-                for value in @props.data.values
-                  <div className="item" data-value={value}>{value}</div>
-              }
+            {
+              for value, idx in option_values
+                <div className="item" key={idx} data-value={value}>{value}</div>
+            }
             </div>
           </div>
+
+          <Upload idx={@props.idx} parent={@props.parent} />
+
         </div>
 
-      on_lable_change: (evt)->
-        values = @props.pe.record[@props.data.label]
-        @props.pe.record[evt.target.value] = values
-        delete @props.pe.record[@props.data.label]
-        @props.data.label = evt.target.value
-        @setState {}
+      on_label_change: (evt)->
+        @props.parent.record_label_change @props.idx, evt.target.value
+
+Upload = React.createClass
+  getInitialState: ->
+    status: UploadStatus.READY
+    percent: 0
+    file_entity_id: @props.file_entity_id
+    download_url: @props.download_url
+
+  componentDidMount: ->
+    $browse_button = jQuery ReactDOM.findDOMNode @refs.browse_btn
+    new QiniuFilePartUploader
+      debug:                true
+      browse_button:        $browse_button
+      dragdrop_area:        null
+      file_progress_class:  UploadUtils.GenerateOneFileUploadProgress(@)
+      max_file_size:        '3MB'
+      mime_types :          [{ title: 'Archive files', extensions: 'zip,rar,tar,gz,bz2,7z,xz' }]
+
+  render: ->
+    <div className='upload-photo'>
+      <UploadProgress {...@state} />
+
+      <UploadWidget.BrowseButton ref='browse_btn' status={@state.status}>
+        <a href='javascript:;' className='ui button mini'>
+          <i className='icon photo' /> 拍照上传
+        </a>
+      </UploadWidget.BrowseButton>
+    </div>
+
+  componentDidMount: ->
+    # $browse_button = jQuery React.findDOMNode @refs.browse_btn
+    $browse_button = jQuery React.findDOMNode @refs.browse_btn
+    new QiniuFilePartUploader
+      debug:                true
+      browse_button:        $browse_button
+      dragdrop_area:        null
+      file_progress_class:  UploadUtils.GenerateOneFileUploadProgress(@)
+      max_file_size:        '10MB'
+      mime_types :          [{ title: 'photo', extensions: '*' }]
+
+  on_upload_event: (evt, params...)->
+    switch evt
+      when 'local_done'
+        response_info = params[0]
+        file_entity_id  = response_info.file_entity_id
+        download_url    = response_info.download_url
+        @setState
+          download_url: download_url
+          file_entity_id: file_entity_id
+
+        @props.parent.record_file_entity_id_change @props.idx, file_entity_id
+
+UploadProgress = React.createClass
+  render: ->
+    if @props.status != UploadStatus.READY
+      bar_style =
+        width: "#{@props.percent}%"
+
+      switch @props.status
+        when UploadStatus.LOCAL_DONE
+          <div className='photo-preview' style={backgroundImage: "url(#{@props.download_url})"}>
+            <div className='percent'><i className='icon check' /></div>
+          </div>
+        else
+          <div className='photo-preview'>
+            <div className='bar' style={bar_style}></div>
+            <div className='percent'>{@props.percent}%</div>
+          </div>
+    else
+      <div />

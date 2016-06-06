@@ -117,8 +117,13 @@ class PatientRecord
   # ----------------------
   # 导诊，预约队列
   def self.wizard_reg_queue
+    # PatientRecord
+      # .where(is_active: true, landing_status: 'NOT_HERE', :reg_date.gte => Date.today)
+      # .asc(:reg_date)
+      # .asc(:reg_number)
+      
     PatientRecord
-      .where(is_active: true, landing_status: 'NOT_HERE', :reg_date.gte => Date.today)
+      .where(is_active: true, landing_status: 'NOT_HERE')
       .asc(:reg_date)
       .asc(:reg_number)
   end

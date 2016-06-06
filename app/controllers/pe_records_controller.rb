@@ -4,12 +4,11 @@ class PeRecordsController < ApplicationController
   def new
     pe_define = PeDefine.find(params[:name])
 
-    @page_name = 'pe_records_new'
+    @page_name = 'pe_records_form'
     @component_data = {
-      pe: {
-        define: DataFormer.new(pe_define).data,
-        record: {}
-      },
+      records: DataFormer.new(pe_define)
+        .logic(:merge_records, nil)
+        .data[:merge_records],
       submit_url: pe_records_path,
       cancel_url: pe_records_path
     }
@@ -18,14 +17,18 @@ class PeRecordsController < ApplicationController
   def edit
     pe_define = PeDefine.find(params[:name])
 
-    @page_name = 'pe_records_new'
+    records = [
+      {
+        label: 'aaa',
+        values: ['123', '456']
+      }
+    ]
+
+    @page_name = 'pe_records_form'
     @component_data = {
-      pe: {
-        define: DataFormer.new(pe_define).data,
-        record: {
-          a: ["123","345"]
-        }
-      },
+      records: DataFormer.new(pe_define)
+        .logic(:merge_records, records)
+        .data[:merge_records],
       submit_url: pe_records_path,
       cancel_url: pe_records_path
     }

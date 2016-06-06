@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount FilePartUpload::Engine => '/file_part_upload', :as => 'file_part_upload'
+  
   get '/' => 'index#index', as: :root
 
   devise_for :users, :skip => :all

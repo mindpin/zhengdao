@@ -36,6 +36,10 @@ end
 gem "unicorn"
 gem "mongoid", "~> 5.1.0"
 gem "mina", "0.3.7"
+gem "figaro", "~> 1.1.1"
+
+gem 'file-part-upload', github: "mindpin/file-part-upload",
+                        tag: "3.2.0"
 
 # 通过 rails assets 服务加载前端包
 source 'https://rails-assets.org'

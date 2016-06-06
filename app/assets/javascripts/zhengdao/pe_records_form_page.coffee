@@ -1,7 +1,7 @@
-@PeRecordsNewPage = React.createClass
+@PeRecordsFormPage = React.createClass
   render: ->
     <div className='pe-records-page'>
-      <PeRecorder data={@props.data.pe} ref="pe_recorder" />
+      <PeRecorder data={@props.data} ref="pe_recorder" />
 
       <div className='page-save'>
         <a className='ui button green mini' href='javascript:;' onClick={@on_click}>
