@@ -10,8 +10,6 @@
       }
       {
         for record in records
-          console.log record
-
           worker_name = if record.worker? then record.worker.name else '未指定'
 
           patient = record.patient || {}

@@ -8,6 +8,9 @@ module PeAndCureRecordFormer
       field :name
       field :conclusion
 
+      field :edit_url, ->(instance) {
+        edit_patient_pe_record_path(instance)
+      }
       field :update_url, ->(instance) {
         patient_pe_record_path(instance)
       }

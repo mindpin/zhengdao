@@ -14,6 +14,21 @@ module PeDefineFormer
           x
         end
         return data if records.blank?
+
+        records.map { |idx, v|
+          a = {}
+          d = data[idx.to_i]
+
+          a['label'] = v['label']
+          a['option_values'] = d.blank? ? [] : d['option_values']
+          a['saved_values'] = v['saved_values']
+          file_entity_id = v['file_entity_id']
+          if file_entity_id.present?
+            a['file_entity_id'] = file_entity_id
+            a['file_url'] = FilePartUpload::FileEntity.find(file_entity_id).url
+          end
+          a
+        }
       }
 
     end

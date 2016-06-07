@@ -112,7 +112,12 @@
             </div>
           </div>
 
-          <Upload idx={@props.idx} parent={@props.parent} />
+          <Upload 
+            idx={@props.idx} 
+            parent={@props.parent} 
+            file_entity_id={@props.item.file_entity_id} 
+            download_url={@props.item.file_url}
+          />
 
         </div>
 
@@ -121,10 +126,16 @@
 
 Upload = React.createClass
   getInitialState: ->
-    status: UploadStatus.READY
-    percent: 0
-    file_entity_id: @props.file_entity_id
-    download_url: @props.download_url
+    if @props.download_url
+      status: UploadStatus.LOCAL_DONE
+      percent: 0
+      file_entity_id: @props.file_entity_id
+      download_url: @props.download_url
+    else
+      status: UploadStatus.READY
+      percent: 0
+      file_entity_id: null
+      download_url: null
 
   componentDidMount: ->
     $browse_button = jQuery ReactDOM.findDOMNode @refs.browse_btn
@@ -178,7 +189,9 @@ UploadProgress = React.createClass
 
       switch @props.status
         when UploadStatus.LOCAL_DONE
-          <div className='photo-preview' style={backgroundImage: "url(#{@props.download_url})"}>
+          img_url = "#{@props.download_url}?imageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100"
+
+          <div className='photo-preview' style={backgroundImage: "url(#{img_url})"}>
             <div className='percent'><i className='icon check' /></div>
           </div>
         else
