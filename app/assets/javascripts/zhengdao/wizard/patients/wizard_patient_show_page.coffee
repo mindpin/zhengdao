@@ -95,8 +95,9 @@ PatientTabs = React.createClass
         {
           for record in @props.data.patient.records
             worker_name = if record.worker? then record.worker.name else '未指定'
+            href = "/wizard/records/#{record.id}/visit"
 
-            <a key={record.id} className='record item' href='javascript:;'>
+            <a key={record.id} className='record item' href={href}>
               <i className='icon calendar left' />
               <i className='icon angle right' />
               <div className='content'>

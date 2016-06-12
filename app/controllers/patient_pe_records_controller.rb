@@ -35,6 +35,14 @@ class PatientPeRecordsController < ApplicationController
 
     saved_records = record.saved_records || []
 
+    back_to_url =
+      case current_user.role
+      when 'doctor'
+        "/doctor/records/#{record.patient_record.id}/visit"
+      when 'wizard'
+        "/wizard/records/#{record.patient_record.id}/visit" 
+      end
+      
     @page_name = 'pe_records_show'
     @component_data = {
       pe_name: name,
@@ -42,11 +50,12 @@ class PatientPeRecordsController < ApplicationController
         .logic(:merge_records, saved_records)
         .data[:merge_records],
       submit_url: "/patient_pe_records/#{record.id}",
-      cancel_url: "/doctor/records/#{record.patient_record.id}/visit"
+      cancel_url: back_to_url
     }
 
+
     @extend_nav_data = {
-      mobile_back_to: "/doctor/records/#{record.patient_record.id}/visit",
+      mobile_back_to: back_to_url,
       current_title: "体检记录查看"
     }
   end
