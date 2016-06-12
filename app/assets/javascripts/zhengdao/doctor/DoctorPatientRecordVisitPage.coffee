@@ -32,7 +32,7 @@
                   <div className='field' key={pe_record.id}>
                     <label>{pe_record.name}</label>
                     <div className='icontent'>
-                      {pe_record.conclusion}
+                      <a href="/patient_pe_records/#{pe_record.id}" className='ui button mini'>查看体检记录</a>
                     </div>
                   </div>
               }

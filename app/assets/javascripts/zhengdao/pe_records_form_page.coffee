@@ -4,6 +4,8 @@
 
   render: ->
     <div className='pe-records-page'>
+      <div className='ui message warning'>正在录入{@props.data.pe_name}项目</div>
+
       <PeRecorder data={@props.data} ref="pe_recorder" />
 
       <div className='page-save'>

@@ -137,16 +137,6 @@ Upload = React.createClass
       file_entity_id: null
       download_url: null
 
-  componentDidMount: ->
-    $browse_button = jQuery ReactDOM.findDOMNode @refs.browse_btn
-    new QiniuFilePartUploader
-      debug:                true
-      browse_button:        $browse_button
-      dragdrop_area:        null
-      file_progress_class:  UploadUtils.GenerateOneFileUploadProgress(@)
-      max_file_size:        '3MB'
-      mime_types :          [{ title: 'Archive files', extensions: 'zip,rar,tar,gz,bz2,7z,xz' }]
-
   render: ->
     <div className='upload-photo'>
       <UploadProgress {...@state} />
