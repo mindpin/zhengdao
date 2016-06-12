@@ -45,11 +45,11 @@ module UserFormer
                   icon: 'add square',
                   url: manager_pay_defines_path
                 },
-                # {
-                #   name: '患者档案',
-                #   icon: 'newspaper',
-                #   url: manager_path
-                # },
+                {
+                  name: '患者档案',
+                  icon: 'newspaper',
+                  url: manager_patients_path
+                },
                 {
                   name: '系统信息',
                   icon: 'configure',

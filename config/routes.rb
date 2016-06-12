@@ -21,10 +21,19 @@ Rails.application.routes.draw do
   namespace :manager do
     get '/' => 'index#index'
     get '/sysinfo' => 'index#sysinfo'
+    get '/search/(:query)' => 'index#search', as: 'search'
 
     resources :users
     resources :stores
     resources :pay_defines
+    resources :patients do
+      get :records_info, on: :member
+      get :active_record_info, on: :member
+
+      resources :records, shallow: true do 
+        get :visit, on: :member
+      end
+    end
   end
 
   namespace :wizard do

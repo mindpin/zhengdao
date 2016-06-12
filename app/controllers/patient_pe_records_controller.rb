@@ -40,7 +40,9 @@ class PatientPeRecordsController < ApplicationController
       when 'doctor'
         "/doctor/records/#{record.patient_record.id}/visit"
       when 'wizard'
-        "/wizard/records/#{record.patient_record.id}/visit" 
+        "/wizard/records/#{record.patient_record.id}/visit"
+      when 'admin'
+        "/manager/records/#{record.patient_record.id}/visit"
       end
       
     @page_name = 'pe_records_show'

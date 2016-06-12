@@ -17,14 +17,25 @@ module PatientFormer
       field :personal_pathography
       field :family_pathography
 
+      field :manager_show_url, ->(instance) {
+        manager_patient_path(instance)
+      }
       field :wizard_show_url, ->(instance) {
         wizard_patient_path(instance)
       }
+
       field :records_info_url, ->(instance) {
         records_info_wizard_patient_path(instance)
       }
       field :active_record_info_url, ->(instance) {
         active_record_info_wizard_patient_path(instance)
+      }
+
+      field :manager_records_info_url, ->(instance) {
+        records_info_manager_patient_path(instance)
+      }
+      field :manager_active_record_info_url, ->(instance) {
+        active_record_info_manager_patient_path(instance)
       }
 
       field :new_record_url, ->(instance) {
