@@ -147,4 +147,12 @@ PatientTabs = React.createClass
       <div className='info number'>
         <label>　就诊号({active_record.time_str})：</label> <span className='n'>{active_record.reg_number}</span>
       </div>
+
+      <div style={marginTop: '1rem', borderTop: 'solid 1px #ececec', paddingTop: '1rem'}>
+        <a className='ui button red fluid' onClick={@reset}>重置流程</a>
+      </div>
     </div>
+
+  reset: ->
+    jQuery.modal_confirm 
+      text: '是否要重置该挂号流程'

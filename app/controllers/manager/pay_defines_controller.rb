@@ -48,7 +48,7 @@ class Manager::PayDefinesController < ApplicationController
     }
     @extend_nav_data = {
       mobile_back_to: manager_pay_defines_path,
-      current_title: '修改收费项'
+      current_title: '修改治疗项'
     }
   end
 

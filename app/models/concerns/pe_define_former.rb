@@ -31,6 +31,10 @@ module PeDefineFormer
         }
       }
 
+      field :edit_url, ->(instance) {
+        "/manager/pe_defines/#{instance.name}/edit"
+      }
+
     end
 
   end

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :users
     resources :stores
     resources :pay_defines
+    resources :pe_defines
     resources :patients do
       get :records_info, on: :member
       get :active_record_info, on: :member

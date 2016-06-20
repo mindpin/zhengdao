@@ -41,9 +41,14 @@ module UserFormer
                   url: manager_users_path
                 },
                 {
-                  name: '治疗项目管理',
+                  name: '治疗项管理',
                   icon: 'add square',
                   url: manager_pay_defines_path
+                },
+                {
+                  name: '诊断项管理',
+                  icon: 'add square',
+                  url: manager_pe_defines_path
                 },
                 {
                   name: '患者档案',
