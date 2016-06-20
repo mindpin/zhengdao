@@ -35,6 +35,22 @@ class Manager::PatientsController < ApplicationController
     }
   end
 
+  def edit
+    patient = Patient.find params[:id]
+
+    @page_name = 'manager_patient_edit'
+    @component_data = {
+      patient: DataFormer.new(patient)
+        .logic(:records_count)
+        .logic(:active_record)
+        .data,
+    }
+    @extend_nav_data = {
+      mobile_back_to: manager_patient_path(patient),
+      current_title: "患者档案：#{patient.name}"
+    }
+  end
+
   def records_info
     patient = Patient.find params[:id]
 
