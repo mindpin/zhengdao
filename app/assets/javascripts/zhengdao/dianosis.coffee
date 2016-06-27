@@ -239,10 +239,10 @@ SVGToucher = React.createClass
   render: ->
     <div className='diagnosis-page'>
       <h2 className='ui header topbar'>
-        <TopbarBack href='zd-patient-info.html' />
+        <TopbarBack href='/manager' />
         <span>中医体检</span>
         <div className='buttons'>
-          <a className='ui button brown small' href='zd-zhenduan-result.html'>
+          <a className='ui button brown small' href='javascript:;'>
             <i className='icon checkmark' />
             <span>保存体检记录</span>
           </a>

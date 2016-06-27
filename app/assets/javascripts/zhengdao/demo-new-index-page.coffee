@@ -3,13 +3,13 @@
     period: 0
   render: ->
     <div className='demo-new-index-page-component'>
-      <a className='ui button mini' href='javascript:;' onClick={@show(1)}>过程一</a>
-      <a className='ui button mini' href='javascript:;' onClick={@show(2)}>过程二</a>
-      <a className='ui button mini' href='javascript:;' onClick={@show(3)}>过程三</a>
-      <a className='ui button mini' href='javascript:;' onClick={@show(4)}>过程四</a>
-      <a className='ui button mini' href='javascript:;' onClick={@show(5)}>过程五</a>
-      <a className='ui button mini' href='javascript:;' onClick={@show(6)}>过程六</a>
-      <a className='ui button mini' href='javascript:;' onClick={@show(7)}>过程七</a>
+      <a className='ui button mini' style={marginBottom: '4px'} href='javascript:;' onClick={@show(1)}>过程一</a>
+      <a className='ui button mini' style={marginBottom: '4px'} href='javascript:;' onClick={@show(2)}>过程二</a>
+      <a className='ui button mini' style={marginBottom: '4px'} href='javascript:;' onClick={@show(3)}>过程三</a>
+      <a className='ui button mini' style={marginBottom: '4px'} href='javascript:;' onClick={@show(4)}>过程四</a>
+      <a className='ui button mini' style={marginBottom: '4px'} href='javascript:;' onClick={@show(5)}>过程五</a>
+      <a className='ui button mini' style={marginBottom: '4px'} href='javascript:;' onClick={@show(6)}>过程六</a>
+      <a className='ui button mini' style={marginBottom: '4px'} href='javascript:;' onClick={@show(7)}>过程七</a>
       {
         if @state.period is 1
           <div className='desc'>

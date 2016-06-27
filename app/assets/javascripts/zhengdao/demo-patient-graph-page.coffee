@@ -58,7 +58,7 @@
           <div className='dangan-jiben j2'>体检记录</div>
           <div className='dangan-jiben j3'>治疗记录</div>
 
-          <a className='dangan-img' href='doctor-patient-info.html' target='_blank'/>
+          <a className='dangan-img' href='javascript:;' target='_blank'/>
         </div>
 
     Zhenduan: React.createClass
@@ -68,7 +68,7 @@
           <div className='zhenduan-line' />
 
           <div className='tijian-xitong'>体检记录系统</div>
-          <a className='tijian-xitong-img' href='zd-diagnosis.html' target='_blank' />
+          <a className='tijian-xitong-img' href='javascript:;' target='_blank' />
 
           <div className='zhenduan z1'>舌诊</div>
           <div className='zhenduan z2'>面诊</div>

@@ -44,4 +44,32 @@ class Manager::IndexController < ApplicationController
       current_title: '患者查找'
     }
   end
+
+  def business_graph
+    @extend_nav_data = {
+      mobile_back_to: manager_path,
+      current_title: '业务过程'
+    }
+    render template: 'mockup/index/graph.html.haml'
+  end
+
+  def patient_graph
+    @page_name = 'demo_patient_graph'
+    @component_data = {}
+    @extend_nav_data = {
+      mobile_back_to: manager_path,
+      current_title: '诊疗流程'
+    }
+  end
+
+  def pe_demo
+    @page_name = 'diagnosis'
+    @component_data = {}
+    @extend_nav_data = {
+      mobile_back_to: manager_path,
+      current_title: '诊疗流程'
+    }
+
+    render layout: 'layouts/diagnosis.html.haml', template: 'mockup/page'
+  end
 end

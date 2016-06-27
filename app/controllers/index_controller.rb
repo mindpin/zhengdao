@@ -16,11 +16,11 @@ class IndexController < ApplicationController
     when :wizard
       return redirect_to wizard_path
     when :doctor
-      return redirect_to doctor_path
+      return redirect_to doctor_queue_path
     when :pe
-      return redirect_to pe_path
+      return redirect_to pe_queue_path
     when :cure
-      return redirect_to cure_path
+      return redirect_to cure_queue_path
     end
 
     @page_name = 'index'

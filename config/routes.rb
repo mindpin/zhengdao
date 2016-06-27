@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     get '/sysinfo' => 'index#sysinfo'
     get '/search/(:query)' => 'index#search', as: 'search'
 
+    get '/business_graph' => 'index#business_graph', as: 'business_graph'
+    get '/patient_graph' => 'index#patient_graph', as: 'patient_graph'
+    get '/pe_demo' => 'index#pe_demo', as: 'pe_demo'
+
     resources :users
     resources :stores
     resources :pay_defines

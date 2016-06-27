@@ -62,6 +62,21 @@ module UserFormer
                       name: '系统信息',
                       icon: 'configure',
                       url: manager_sysinfo_path
+                    },
+                    {
+                      name: '业务过程',
+                      icon: 'checkered flag',
+                      url: manager_business_graph_path
+                    },
+                    {
+                      name: '诊疗流程',
+                      icon: 'checkered flag',
+                      url: manager_patient_graph_path
+                    },
+                    {
+                      name: '体检示例',
+                      icon: 'checkered flag',
+                      url: manager_pe_demo_path
                     }
                   ]
                 }
