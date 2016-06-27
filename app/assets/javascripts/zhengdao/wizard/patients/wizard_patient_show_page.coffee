@@ -154,10 +154,34 @@ PatientTabs = React.createClass
       </div>
 
       <div style={marginTop: '1rem', borderTop: 'solid 1px #ececec', paddingTop: '1rem'}>
-        <a className='ui button red fluid' onClick={@reset}>重置流程</a>
+        <a className='ui button red fluid' onClick={@reset}>
+          <i className='icon refresh' /> 重置流程
+        </a>
+      </div>
+
+      <div style={marginTop: '1rem', borderTop: 'solid 1px #ececec', paddingTop: '1rem'}>
+        <a className='ui button red fluid' onClick={@cancel}>
+          <i className='icon trash' /> 撤销流程
+        </a>
       </div>
     </div>
 
   reset: ->
     jQuery.modal_confirm 
-      text: '是否要重置该挂号流程'
+      text: '是否要重置该就诊流程到挂号状态？'
+      yes: =>
+        jQuery.ajax
+          type: 'post'
+          url: "/records/#{@props.record.id}/reset"
+        .done ->
+          location.reload()
+
+  cancel: ->
+    jQuery.modal_confirm 
+      text: '是否要撤销（作废）该流程？'
+      yes: =>
+        jQuery.ajax
+          type: 'post'
+          url: "/records/#{@props.record.id}/cancel"
+        .done ->
+          location.reload()

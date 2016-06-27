@@ -11,8 +11,10 @@ class PatientRecord
   belongs_to :next_visit_worker, class_name: "User" # 下一接待工作人员
   belongs_to :attending_doctor, class_name: "User" # 当前挂号记录主治医师（仅挂普通类型时）
 
+  field :is_cancel, type: Boolean, default: false # 是否已撤销
   field :is_active, type: Boolean, default: true # 该记录是否当前活动记录
   field :is_landing, type: Boolean, default: false # 是否在店
+  
   field :landing_status, type: String, default: 'NOT_HERE' 
   # 在店状态: 
   # 'NOT_HERE': 未在店
@@ -114,6 +116,21 @@ class PatientRecord
     self.save
   end
 
+  # 重置流程到挂号
+  def reset
+    self.is_active = true
+    self.landing_status = 'NOT_HERE'
+    self.pe_records = []
+    self.cure_records = []
+    self.save
+  end
+
+  def cancel
+    self.is_cancel = true
+    self.is_active = false
+    self.save
+  end
+
   # ----------------------
   # 导诊，预约队列
   def self.wizard_reg_queue
@@ -147,47 +164,61 @@ class PatientRecord
 
   # 医师，待诊队列
   def self.doctor_wait_queue(doctor)
-    PatientRecord.where(next_visit_worker: doctor, 
+    PatientRecord.where(
+      :is_active => true,
+      :next_visit_worker => doctor, 
       :landing_status.in => ['WAIT_FOR_DOCTOR', 'BACK_TO_DOCTOR']
     )
   end
 
   # 医师，体检中队列
   def self.doctor_send_pe_queue(doctor)
-    PatientRecord.where(attending_doctor_id: doctor, 
+    PatientRecord.where(
+      :is_active => true,
+      :attending_doctor_id => doctor.id, 
       :landing_status.in => ['WAIT_FOR_ASSIGN_PE', 'WAIT_FOR_PE'])
   end
 
   # 医师，治疗中队列
   def self.doctor_send_cure_queue(doctor)
-    PatientRecord.where(attending_doctor_id: doctor, 
+    PatientRecord.where(
+      :is_active => true,
+      :attending_doctor_id => doctor.id, 
       :landing_status.in => ['WAIT_FOR_ASSIGN_CURE', 'WAIT_FOR_CURE'])
   end
 
   # 体检师，等待队列
   def self.pe_wait_queue(pe)
-    PatientRecord.where(next_visit_worker: pe, 
+    PatientRecord.where(
+      :is_active => true,
+      :next_visit_worker => pe, 
       :landing_status.in => ['WAIT_FOR_PE'],
       :attending_doctor_id => nil)
   end
 
   # 体检师，医师推送队列
   def self.pe_send_queue(pe)
-    PatientRecord.where(next_visit_worker: pe, 
+    PatientRecord.where(
+      :is_active => true,
+      :next_visit_worker => pe, 
       :landing_status.in => ['WAIT_FOR_PE'],
       :attending_doctor_id.ne => nil)
   end
 
   # 治疗师，等待队列
   def self.cure_wait_queue(cure)
-    PatientRecord.where(next_visit_worker: cure, 
+    PatientRecord.where(
+      :is_active => true,
+      :next_visit_worker => cure, 
       :landing_status.in => ['WAIT_FOR_CURE'],
       :attending_doctor_id => nil)
   end
 
   # 治疗师，医师推送队列
   def self.cure_send_queue(cure)
-    PatientRecord.where(next_visit_worker: cure, 
+    PatientRecord.where(
+      :is_active => true,
+      :next_visit_worker => cure, 
       :landing_status.in => ['WAIT_FOR_CURE'],
       :attending_doctor_id.ne => nil)
   end

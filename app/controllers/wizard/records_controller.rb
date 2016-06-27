@@ -9,7 +9,7 @@ class Wizard::RecordsController < ApplicationController
       Time.new + x.day
     }
 
-    workers = User.where(:role.ne => 'admin').map {|x|
+    workers = User.without_role(:admin).map {|x|
       DataFormer.new(x).data
     }
 

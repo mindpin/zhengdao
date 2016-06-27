@@ -95,6 +95,9 @@ Rails.application.routes.draw do
   resources :pe_records
   resources :records do
     get :visit, on: :member
+
+    post :reset, on: :member
+    post :cancel, on: :member
   end
 
   resources :patient_pe_records

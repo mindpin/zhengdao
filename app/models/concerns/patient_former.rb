@@ -48,10 +48,10 @@ module PatientFormer
       }
 
       logic :records_count, ->(instance) {
-        instance.patient_records.count
+        instance.patient_records.where(is_active: false, is_cancel: false).count
       }
       logic :records, ->(instance) {
-        instance.patient_records.desc(:id).map {|x|
+        instance.patient_records.where(is_active: false, is_cancel: false).desc(:id).map {|x|
           DataFormer.new(x).data
         }
       }
@@ -111,7 +111,7 @@ module PatientFormer
       field :next_visit_worker_info_str, ->(instance) {
         next_visit_worker = instance.next_visit_worker
         return '' if next_visit_worker.blank?
-        return "接诊#{next_visit_worker.role_str}：#{next_visit_worker.name}"
+        return "接诊人：#{next_visit_worker.name}"
       }
 
       field :common_update_url, ->(instance) {

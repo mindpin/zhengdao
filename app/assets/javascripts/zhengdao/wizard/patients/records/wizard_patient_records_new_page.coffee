@@ -57,7 +57,7 @@
           }[@state.reg_kind]
 
           workers = @props.data.workers.filter (x)->
-            x.role == role
+            x.roles.indexOf(role) > -1
 
           <div className='step'>
             <h4><i className='icon angle down' /> 选择{worker_str}</h4>
