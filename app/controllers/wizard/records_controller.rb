@@ -21,7 +21,7 @@ class Wizard::RecordsController < ApplicationController
       submit_url: wizard_patient_records_path(patient)
     }
     @extend_nav_data = {
-      mobile_back_to: wizard_patient_path(patient),
+      mobile_back_to: active_record_info_wizard_patient_path(patient),
       current_title: "新增挂号：#{patient.name}"
     }
   end

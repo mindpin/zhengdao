@@ -19,14 +19,11 @@ PatientTabs = React.createClass
         <a className='label' href={patient.manager_show_url}>基本信息</a>
       </div>
       <div className={klass2}>
-        <a className='label' href={patient.manager_records_info_url}>就诊记录({patient.records_count})</a>
+        <a className='label' href={patient.manager_active_record_info_url}>就诊信息</a>
       </div>
-      {
-        if patient.active_record?
-          <div className={klass3}>
-            <a className='label' href={patient.manager_active_record_info_url}>挂号信息</a>
-          </div>
-      }
+      <div className={klass3}>
+        <a className='label' href={patient.manager_records_info_url}>病历档案({patient.records_count})</a>
+      </div>
     </div>
 
 
@@ -56,7 +53,7 @@ PatientTabs = React.createClass
     patient = @props.data.patient
 
     <div className='wizard-patient-show with-tabs'>
-      <PatientTabs data={patient} active={2} />
+      <PatientTabs data={patient} active={3} />
 
       <div className='patient-records'>
         <div className='records common-item-list'>
@@ -92,15 +89,21 @@ PatientTabs = React.createClass
 @ManagerPatientActiveRecordInfoPage = React.createClass
   render: ->
     patient = @props.data.patient
-    active_record = patient.active_record || {}
-
+    active_record = patient.active_record
+    
     <div className='wizard-patient-show with-tabs'>
-      <PatientTabs data={patient} active={3} />
-
-      <ActiveRecordInfo patient={patient} record={active_record} />
+      <PatientTabs data={patient} active={2} />
+      {
+        if active_record?
+          <ActiveRecordInfo patient={patient} record={active_record} />
+        else
+          <div className='tab-content'>
+            <div className='desc' style={padding: '1rem 0'}>
+              患者目前未就诊
+            </div>
+          </div>
+      }
     </div>
-
-
 
 @ManagerPatientEditPage = React.createClass
   render: ->
