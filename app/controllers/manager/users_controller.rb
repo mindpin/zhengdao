@@ -35,6 +35,7 @@ class Manager::UsersController < ApplicationController
 
   def create
     user = User.new user_params
+    user.roles = params[:user][:roles]
     save_model(user) do |_user|
       DataFormer.new(_user)
         .data
@@ -61,6 +62,7 @@ class Manager::UsersController < ApplicationController
 
   def update
     user = User.find params[:id]
+    user.roles = params[:user][:roles]
     update_model(user, user_params) do |_user|
       DataFormer.new(_user)
         .data
@@ -70,6 +72,6 @@ class Manager::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :login, :role, :password, :store_id)
+    params.require(:user).permit(:name, :login, :roles, :password, :store_id)
   end
 end

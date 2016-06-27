@@ -21,7 +21,13 @@
           data_set: @props.data.users.map (x)->
             id: x.id
             names: "#{x.name}(#{x.login})"
-            role_str: x.role_str
+            role_str: 
+              <div>
+              {
+                for role, str of x.role_strs
+                  <div key={role}>{str}</div>
+              }
+              </div>
             store: x.store.name || '无'
             ops:
               <a href={x.edit_url} className='ui button basic mini'><i className='icon edit' /> 修改</a>

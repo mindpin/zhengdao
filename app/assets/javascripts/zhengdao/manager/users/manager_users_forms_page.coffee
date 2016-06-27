@@ -4,6 +4,7 @@
       TextInputField
       PasswordField
       SelectField
+      MultipleSelectField
       Submit
     } = DataForm
 
@@ -30,7 +31,7 @@
         <TextInputField {...layout} label='姓名：' name='name' required />
         <TextInputField {...layout} label='登录名：' name='login' required />
         <PasswordField {...layout} label='密码：' name='password' required />
-        <SelectField {...layout} label='角色：' name='role' values={roles} />
+        <MultipleSelectField {...layout} label='角色：' name='roles' values={roles} required />
         <SelectField {...layout} label='店面：' name='store_id' values={stores_select_info} />
         <Submit {...layout} text='确定保存' with_cancel='取消' />
       </SimpleDataForm>
@@ -48,6 +49,7 @@
       TextInputField
       PasswordField
       SelectField
+      MultipleSelectField
       Submit
     } = DataForm
 
@@ -75,7 +77,7 @@
         <TextInputField {...layout} label='姓名：' name='name' required />
         <TextInputField {...layout} label='登录名：' name='login' required />
         <PasswordField {...layout} label='重设密码：' name='password' />
-        <SelectField {...layout} label='角色：' name='role' values={roles} />
+        <MultipleSelectField {...layout} label='角色：' name='roles' values={roles} required />
         <SelectField {...layout} label='店面：' name='store_id' values={stores_select_info} />
         <Submit {...layout} text='确定保存' with_cancel='取消' />
       </SimpleDataForm>
