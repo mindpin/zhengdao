@@ -32,7 +32,7 @@ class User
 
   # -------------------
 
-  field :role
+  # field :role
   field :roles, default: [] # wizard, doctor, pe, cure, admin
   field :login
   validates :login, presence: true, uniqueness: { case_sensitive: false }
