@@ -2,11 +2,16 @@ class Wizard::IndexController < ApplicationController
   layout 'manager'
 
   def index
+    funcs = DataFormer.new(current_user)
+      .logic(:role_scenes)
+      .data[:role_scenes]['wizard']
+      .map {|x|
+        x[:funcs]
+      }.flatten
+
     @page_name = 'wizard_index'
     @component_data = {
-      funcs: DataFormer.new(current_user).logic(:scenes).data()[:scenes].map {|x|
-        x[:funcs]
-      }.flatten,
+      funcs: funcs,
       search_url: wizard_search_path
     }
     @extend_nav_data = {

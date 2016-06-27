@@ -6,27 +6,21 @@ class IndexController < ApplicationController
       redirect_to sign_in_path
       return
     end
-    
-    if current_user.role == 'admin'
-      redirect_to manager_path
-      return
-    end
 
-    if current_user.role == 'wizard'
-      redirect_to wizard_path
-      return
-    end
+    role = (params[:role] || current_user.roles.first).to_sym
+    session[:current_role] = role
 
-    if current_user.role == 'doctor'
-      redirect_to doctor_path
-    end
-
-    if current_user.role == 'pe'
-      redirect_to pe_path
-    end
-
-    if current_user.role == 'cure'
-      redirect_to cure_path
+    case role
+    when :admin
+      return redirect_to manager_path
+    when :wizard
+      return redirect_to wizard_path
+    when :doctor
+      return redirect_to doctor_path
+    when :pe
+      return redirect_to pe_path
+    when :cure
+      return redirect_to cure_path
     end
 
     @page_name = 'index'

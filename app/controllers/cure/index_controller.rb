@@ -2,12 +2,16 @@ class Cure::IndexController < ApplicationController
   layout 'manager'
 
   def index
+    funcs = DataFormer.new(current_user)
+      .logic(:role_scenes)
+      .data[:role_scenes]['cure']
+      .map {|x|
+        x[:funcs]
+      }.flatten
+
     @page_name = 'cure_index'
     @component_data = {
-      funcs: DataFormer.new(current_user).logic(:scenes).data()[:scenes].map {|x|
-        x[:funcs]
-      }.flatten,
-      search_url: wizard_search_path
+      funcs: funcs,
     }
     @extend_nav_data = {
       current_title: '总控面板'

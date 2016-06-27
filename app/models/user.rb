@@ -32,22 +32,61 @@ class User
 
   # -------------------
 
-  field :role # wizard, doctor, pe, cure, admin
+  # field :role
+  field :roles, default: [] # wizard, doctor, pe, cure, admin
   field :login
   validates :login, presence: true, uniqueness: { case_sensitive: false }
 
   def email_required?; false; end
   def email_changed?; false; end
 
-  # has_one :worker_state
   belongs_to :store
 
-  def role_str
-    {
-      'wizard' => '导诊',
-      'doctor' => '医师',
-      'pe' => '体检师',
-      'cure' => '治疗师',
-    }[self.role]
+  scope :with_role, ->(role) {
+    where roles: role
+  }
+
+  scope :without_role, ->(role) {
+    where :roles.ne => role
+  }
+
+  def role_strs
+    re = {}
+
+    self.roles.each {|role|
+      re[role.to_sym] = {
+        admin:  '管理员',
+        wizard: '导诊',
+        doctor: '医师',
+        pe:     '体检师',
+        cure:   '治疗师',
+      }[role.to_sym]
+    }
+
+    re
+  end
+
+  def add_role!(role)
+    self.roles.push role
+    self.roles.uniq!
+    self.save
+  end
+
+  def add_roles!(roles)
+    roles.each {|role|
+      self.roles.push role
+    }
+    self.roles.uniq!
+    self.save
+  end
+
+  def set_roles!(roles)
+    self.roles = roles
+    self.roles.uniq!
+    self.save
+  end
+
+  def has_role?(role)
+    self.roles.map(&:to_s).include? role.to_s
   end
 end

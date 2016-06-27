@@ -2,20 +2,44 @@
   render: ->
     <div className='manager-sidebar'>
       <div className='sidebar-inner'>
+        <LayoutManagerSidebar.ToggleRole role_strs={@props.data.role_strs} />
+
         {
-         active = @props.data.current_func is @props.data.dashboard.id
-         <div>
-         <LayoutManagerSidebar.Item data={@props.data.dashboard} active={active} />
-         </div>
+          active = @props.data.current_func is @props.data.dashboard.id
+          <div>
+            <LayoutManagerSidebar.Item data={@props.data.dashboard} active={active} />
+          </div>
         }
+
         {
-          for scene, idx in @props.data.scenes || []
+          scenes = @props.data.role_scenes[@props.data.current_role]
+          for scene, idx in scenes || []
             <LayoutManagerSidebar.Scene key={idx} data={scene} parent={@} />
         }
       </div>
     </div>
 
   statics:
+    ToggleRole: React.createClass
+      render: ->
+        <div className='toggle-role'>
+          <select className='ui dropdown' ref='menu' onChange={@toggle}>
+            <option value=''>切换角色</option>
+            {
+              for role, str of @props.role_strs
+                <option key={role} value={role}>{str}</option>
+            }
+          </select>
+        </div>
+
+      componentDidMount: ->
+        jQuery React.findDOMNode(@refs.menu)
+          .dropdown()
+
+      toggle: (evt)->
+        role = evt.target.value
+        location.href = "/?role=#{role}"
+
     Scene: React.createClass
       getInitialState: ->
         open: true

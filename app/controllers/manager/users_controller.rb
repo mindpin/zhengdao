@@ -2,7 +2,7 @@ class Manager::UsersController < ApplicationController
   layout 'manager'
 
   def index
-    users = User.where(:role.ne => 'admin').map {|x|
+    users = User.without_role(:admin).map {|x|
       DataFormer.new(x).data
     }
 

@@ -20,9 +20,12 @@ gem 'react-rails', '1.2.0'
 gem 'sprockets-coffee-react', '3.0.1'
 gem 'non-stupid-digest-assets'
 
+group :development do
+  gem 'web-console', '~> 2.0'
+end
+
 group :development, :test do
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'pry-rails'
 end
@@ -34,7 +37,7 @@ group :test do
 end
 
 gem "unicorn"
-gem "mongoid", "~> 5.1.0"
+gem "mongoid", "~> 4.0.0"
 gem "mina", "0.3.7"
 gem "figaro", "~> 1.1.1"
 
