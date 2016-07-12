@@ -9,6 +9,7 @@ class DataFormer
   include PeAndCureRecordFormer
   include FactGroupFormer
   include FactTagFormer
+  include FactObjectFormer
 
   def self.paginate_data(models)
     begin
