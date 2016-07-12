@@ -8,7 +8,9 @@
       Form
     } = DataForm
 
-    <Form onSubmit={@on_submit} onCancel={@props.cancel} data={@props.data} errors={@state.errors} ref='form'>
+    submit = @props.on_submit || @on_submit
+
+    <Form onSubmit={submit} onCancel={@props.cancel} data={@props.data} errors={@state.errors} ref='form'>
     {@props.children}
     </Form>
 

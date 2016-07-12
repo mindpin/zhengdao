@@ -30,4 +30,5 @@ class PeDefine
 
   belongs_to :fact_object
   field :name # 体检项名称
+  field :desc
 end
