@@ -5,7 +5,9 @@ module PeAndCureRecordFormer
 
     former "PeRecord" do
       field :id, ->(instance) {instance.id.to_s}
-      field :name
+      field :name, ->(instance) {
+        instance.pe_define.name
+      }
       field :conclusion
 
       field :edit_url, ->(instance) {

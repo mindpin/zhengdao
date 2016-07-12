@@ -6,8 +6,8 @@ class Pe::RecordsController < ApplicationController
     patient = record.patient
 
     if record.pe_records.blank?
-      %w{脉诊 三部九侯诊 舌诊 面诊 腹诊 背诊 脊柱诊 经络诊}.each { |name|
-        record.pe_records.create(name: name)
+      PeDefine.all.each { |pe_define|
+        record.pe_records.create(pe_define: pe_define)
       }
     end
 

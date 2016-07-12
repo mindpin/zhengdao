@@ -3,18 +3,14 @@ class PatientPeRecordsController < ApplicationController
 
   def edit
     record = PeRecord.find params[:id]
-
-    name = record.name
-    pe_define = PeDefine.find name
+    pe_define = record.pe_define
 
     saved_records = record.saved_records || []
 
     @page_name = 'pe_records_form'
     @component_data = {
-      pe_name: name,
-      records: DataFormer.new(pe_define)
-        .logic(:merge_records, saved_records)
-        .data[:merge_records],
+      pe_name: pe_define.name,
+      records: [],
       submit_url: "/patient_pe_records/#{record.id}",
       cancel_url: "/pe/records/#{record.patient_record.id}/visit"
     }

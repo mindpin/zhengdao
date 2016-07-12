@@ -3,8 +3,9 @@ class PeRecord
   include Mongoid::Timestamps
 
   belongs_to :patient_record
+  belongs_to :pe_define
 
-  field :name # 体检大项名称
+  # field :name # 体检大项名称
   field :conclusion # 体检大项结论
   field :saved_records # 体检系统记录
   has_many :pe_items # 体检记录条目
