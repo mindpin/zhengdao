@@ -6,10 +6,10 @@ class SessionsController < Devise::SessionsController
 
   before_action :init_admin_user, only: :create
   def init_admin_user
-    cond = {role: 'admin', name: 'admin', login: 'admin'}
+    cond = {roles: ['admin'], name: 'admin', login: 'admin'}
 
     admin_user = User.where(cond).first
-    
+
     if admin_user.blank?
       admin_user = User.new(cond)
       admin_user.password = params[:user][:password]
@@ -28,7 +28,7 @@ class SessionsController < Devise::SessionsController
     end
   end
 
-  private 
+  private
   def common_user_sign_in
     @page_name = 'auth_sign_in'
     @component_data = {

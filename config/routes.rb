@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   mount FilePartUpload::Engine => '/file_part_upload', :as => 'file_part_upload'
-  
+
   get '/' => 'index#index', as: :root
 
   devise_for :users, :skip => :all
@@ -31,13 +31,15 @@ Rails.application.routes.draw do
     resources :stores
     resources :pay_defines
     resources :pe_defines
-    resources :fact_groups
+    resources :fact_groups do
+      get :list, on: :collection
+    end
 
     resources :patients do
       get :records_info, on: :member
       get :active_record_info, on: :member
 
-      resources :records, shallow: true do 
+      resources :records, shallow: true do
         get :visit, on: :member
       end
     end
@@ -52,7 +54,7 @@ Rails.application.routes.draw do
       get :records_info, on: :member
       get :active_record_info, on: :member
 
-      resources :records, shallow: true do 
+      resources :records, shallow: true do
         get :receive, on: :member
         put :do_receive, on: :member
         get :visit, on: :member

@@ -41,6 +41,8 @@ gem "mongoid", "~> 4.0.0"
 gem "mina", "0.3.7"
 gem "figaro", "~> 1.1.1"
 
+gem 'mongoid-tree', :require => 'mongoid/tree'
+
 gem 'file-part-upload', github: "mindpin/file-part-upload",
                         tag: "3.2.0"
 
