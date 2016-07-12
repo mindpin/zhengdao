@@ -23,6 +23,8 @@ class Manager::FactGroupsController < ApplicationController
     }
 
     if !params[:except_ids].blank?
+      expect_fact_groups = FactGroup.find params[:except_ids]
+      except_ids  = expect_fact_groups.map{|fg|fg.descendants_and_self}.flatten.map{|fg|fg.id.to_s}
       fact_groups = fact_groups.select{ |fg|
         !except_ids.include?(fg[:id])
       }
@@ -35,7 +37,8 @@ class Manager::FactGroupsController < ApplicationController
     @page_name = 'manager_fact_groups_new'
     @component_data = {
       submit_url: manager_fact_groups_path,
-      cancel_url: manager_fact_groups_path
+      cancel_url: manager_fact_groups_path,
+      group_list_url: list_manager_fact_groups_path
     }
     @extend_nav_data = {
       mobile_back_to: manager_fact_groups_path,

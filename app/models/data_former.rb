@@ -7,6 +7,8 @@ class DataFormer
   include PayDefineFormer
   include PeDefineFormer
   include PeAndCureRecordFormer
+  include FactGroupFormer
+  include FactTagFormer
 
   def self.paginate_data(models)
     begin
