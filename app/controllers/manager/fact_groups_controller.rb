@@ -62,6 +62,6 @@ class Manager::FactGroupsController < ApplicationController
   private
 
   def fact_group_params
-    params.require(:fact_group).permit(:name, fact_group_ids: [], tags: [])
+    params.require(:fact_group).permit(:name, child_ids: [], tags: [])
   end
 end

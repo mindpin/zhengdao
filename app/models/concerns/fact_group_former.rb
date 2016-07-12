@@ -6,8 +6,8 @@ module FactGroupFormer
     former "FactGroup" do
       field :id, ->(instance) {instance.id.to_s}
       field :name
-      field :fact_groups, ->(instance) {
-        instance.fact_groups.map do |fg|
+      field :children, ->(instance) {
+        instance.children.map do |fg|
           DataFormer.new(fg).data
         end
       }

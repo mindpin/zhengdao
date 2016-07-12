@@ -47,10 +47,10 @@ RSpec.describe FactGroup, type: :model do
       FactGroup.create(name: child)
     end
 
-    fact_group = FactGroup.create(name: name, fact_groups: children)
+    fact_group = FactGroup.create(name: name, children: children)
     fact_group = FactGroup.find fact_group.id
     expect(fact_group.valid?).to eq(true)
-    expect(fact_group.fact_groups.to_a).to match(children)
+    expect(fact_group.children.to_a).to match(children)
   end
 
   it "FactGroup name 不能为空" do
@@ -66,7 +66,7 @@ RSpec.describe FactGroup, type: :model do
     end
     tags = "刚入职，稳定,退休 失业 创业"
 
-    fact_group = FactGroup.create(name: name, fact_groups: children, tags: tags)
+    fact_group = FactGroup.create(name: name, children: children, tags: tags)
     expect(fact_group.valid?).to eq(false)
   end
 

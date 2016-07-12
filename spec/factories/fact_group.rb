@@ -10,7 +10,7 @@ FactoryGirl.define do
 
   factory :has_children_factory_group, class: FactGroup do
     sequence(:name){|n| "has_children_factory_group#{n}"}
-    sequence(:fact_groups) do |n|
+    sequence(:children) do |n|
       [create(:has_tags_factory_group)]
     end
   end

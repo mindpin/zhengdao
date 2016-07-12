@@ -1,13 +1,11 @@
 class FactGroup
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Tree
 
   field :name
 
-  has_many :fact_groups, class_name: "FactGroup"
   has_many :fact_tags
-
-  belongs_to :parent, class_name: "FactGroup"
 
   validates :name, presence: true
 
@@ -30,8 +28,8 @@ class FactGroup
 
   validate :only_have_fact_groups_or_have_fact_tags
   def only_have_fact_groups_or_have_fact_tags
-    has_error1 = @tags !=nil && !self.fact_groups.blank?
-    has_error2 = !self.fact_tags.blank? && !self.fact_groups.blank?
+    has_error1 = @tags !=nil && !self.children.blank?
+    has_error2 = !self.fact_tags.blank? && !self.children.blank?
 
     if has_error1 || has_error2
       errors.add(:base, "不能同时含有子特性和特征值")
