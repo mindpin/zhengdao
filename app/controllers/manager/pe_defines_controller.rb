@@ -17,6 +17,14 @@ class Manager::PeDefinesController < ApplicationController
     }
   end
 
+  def create
+    pe_define = PeDefine.new pe_define_params
+    save_model(pe_define) do |x|
+      DataFormer.new(x)
+        .data
+    end
+  end
+
   def edit
     pe_define = PeDefine.find params[:id]
 
@@ -30,5 +38,10 @@ class Manager::PeDefinesController < ApplicationController
       mobile_back_to: manager_pe_defines_path,
       current_title: '修改诊断项'
     }
+  end
+
+  private
+  def pe_define_params
+    params.require(:pe_define).permit(:name, fact_group_ids: [])
   end
 end
