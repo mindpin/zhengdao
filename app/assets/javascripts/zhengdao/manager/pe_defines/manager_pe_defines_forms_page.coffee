@@ -58,7 +58,7 @@
       url: @props.data.submit_url
       data:
         pe_define: data
-    .done (res)->
+    .done (res)=>
       Turbolinks.visit @props.data.cancel_url
 
   cancel: ->

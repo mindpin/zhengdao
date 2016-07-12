@@ -17,8 +17,17 @@ class Manager::PeDefinesController < ApplicationController
     }
   end
 
+  def create
+    pe_define = PeDefine.new pe_define_params
+    save_model(pe_define) do |x|
+      DataFormer.new(x)
+        .data
+    end
+  end
+
   def new
     @page_name = 'manager_pe_defines_new'
+
     @component_data = {
       submit_url: manager_pe_defines_path,
       cancel_url: manager_pe_defines_path,
@@ -44,4 +53,9 @@ class Manager::PeDefinesController < ApplicationController
   #     current_title: '修改诊断项'
   #   }
   # end
+
+  private
+  def pe_define_params
+    params.require(:pe_define).permit(:name, :desc, fact_group_ids: [])
+  end
 end
