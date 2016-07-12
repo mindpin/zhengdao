@@ -26,9 +26,15 @@ Table = React.createClass
 
     <div>
       <div className='ui segment basic ops'>
-        <a href={@props.data.new_urla} className='ui button green'>
+        <a href={@props.data.new_url} className='ui button green'>
           <i className='icon plus' /> 添加标签组
         </a>
       </div>
       <ManagerTable data={table_data} title='标签组管理' />
     </div>
+
+
+
+@ManagerFactGroupsNewPage = React.createClass
+  render: ->
+    <div />
