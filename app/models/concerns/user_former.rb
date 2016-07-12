@@ -46,23 +46,30 @@ module UserFormer
                     {
                       name: '治疗项管理',
                       icon: 'add square',
-                      url: manager_pay_defines_path
+                      url: manager_pay_defines_path,
                     },
                     {
-                      name: '诊断项管理',
+                      name: '体检项管理',
                       icon: 'add square',
-                      url: manager_pe_defines_path
+                      url: manager_pe_defines_path,
+                      icolor: '#0856a0'
+                    },
+                    {
+                      name: '标签组管理',
+                      icon: 'tags',
+                      url: manager_fact_groups_path,
+                      icolor: '#F36501'
                     },
                     {
                       name: '患者档案',
                       icon: 'newspaper',
                       url: manager_patients_path
                     },
-                    {
-                      name: '系统信息',
-                      icon: 'configure',
-                      url: manager_sysinfo_path
-                    },
+                    # {
+                    #   name: '系统信息',
+                    #   icon: 'configure',
+                    #   url: manager_sysinfo_path
+                    # },
                     {
                       name: '业务过程',
                       icon: 'checkered flag',
