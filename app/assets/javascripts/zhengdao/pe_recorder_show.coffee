@@ -1,18 +1,18 @@
 @PeRecorderShow = React.createClass
-  getInitialState: ->
-    records: @props.data.records
-
   render: ->
+    console.log @props.data.records
+
     <div className='pe-recorder pe-recorder-show'>
       <div className='items'>
       {
-        for item, idx in @state.records
-          <PeRecorderShow.PeItemShow 
-            key={idx}
-            idx={idx}
-            item={item} 
-            parent={@} 
-          />
+        for key, record of @props.data.records
+          rs = (v for k, v of record)
+
+          tags = rs.map (x)->
+            name: x.name
+            className: if x.type == 'tag' then 'tag-value' else null
+
+          <TagsBar key={key} tags={tags} />
       }
       </div>
     </div>

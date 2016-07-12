@@ -6,7 +6,7 @@
     <div className='pe-records-page'>
       <div className='ui message warning'>正在录入{@props.data.pe_name}项目</div>
 
-      <FactTagQuickRecorder />
+      <FactTagQuickRecorder object={@props.data.fact_object} ref='recorder'/>
 
       <div className='page-save'>
         {
@@ -26,7 +26,7 @@
     </div>
 
   save: ->
-    saved_records = @refs.pe_recorder.get_values()
+    saved_records = @refs.recorder.get_records()
 
     @setState saving: true
     jQuery.ajax

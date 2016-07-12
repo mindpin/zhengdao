@@ -11,6 +11,7 @@ class PatientPeRecordsController < ApplicationController
     @component_data = {
       pe_name: pe_define.name,
       records: [],
+      fact_object: DataFormer.new(pe_define.fact_object).data,
       submit_url: "/patient_pe_records/#{record.id}",
       cancel_url: "/pe/records/#{record.patient_record.id}/visit"
     }
@@ -25,14 +26,12 @@ class PatientPeRecordsController < ApplicationController
 
   def show
     record = PeRecord.find params[:id]
-
-    name = record.name
-    pe_define = PeDefine.find name
+    pe_define = record.pe_define
 
     saved_records = record.saved_records || []
 
     back_to_url =
-      case current_user.role
+      case session[:current_role].to_s
       when 'doctor'
         "/doctor/records/#{record.patient_record.id}/visit"
       when 'wizard'
@@ -43,10 +42,11 @@ class PatientPeRecordsController < ApplicationController
       
     @page_name = 'pe_records_show'
     @component_data = {
-      pe_name: name,
-      records: DataFormer.new(pe_define)
-        .logic(:merge_records, saved_records)
-        .data[:merge_records],
+      pe_name: pe_define.name,
+      # records: DataFormer.new(pe_define)
+      #   .logic(:merge_records, saved_records)
+      #   .data[:merge_records],
+      records: saved_records,
       submit_url: "/patient_pe_records/#{record.id}",
       cancel_url: back_to_url
     }

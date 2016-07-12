@@ -6,7 +6,11 @@ module PeAndCureRecordFormer
     former "PeRecord" do
       field :id, ->(instance) {instance.id.to_s}
       field :name, ->(instance) {
-        instance.pe_define.name
+        if instance.pe_define
+          return instance.pe_define.name
+        else
+          return ''
+        end
       }
       field :conclusion
 

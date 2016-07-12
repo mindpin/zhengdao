@@ -2,21 +2,17 @@
   render: ->
     object = @props.object
     <div className='fact-tag-quick-recorder ui segment'>
-      <Recorder object={object} />
+      <Recorder object={object} ref='re' />
     </div>
 
-StartUI = React.createClass
-  render: ->
-    <div className='start-ui'>
-      <div className='ui message warning'>
-        使用快速特征记录工具，能够以快捷的操作完成对客户，产品或任务特征的描述<br/>
-        从而记录，管理和分享工作经验
-      </div>
+  get_records: ->
+    @refs.re.state.records.map (record)->
+      record.map (x)->
+        type = if x.children? then 'group' else 'tag'
 
-      <a href='javascript:;' className='ui button fluid large green' onClick={@props.start}>
-        <i className='icon pencil' /> 开始记录
-      </a>
-    </div>
+        id: x.id
+        name: x.name
+        type: type
 
 
 Recorder = React.createClass
@@ -61,8 +57,8 @@ RecordsList = React.createClass
       {
         for record, idx in @props.records
           tags = record.map (x)->
-            name: x.fact_name || x.tag_name
-            className: if x.tag_name then 'tag-value' else null
+            name: x.name
+            className: if not x.children? then 'tag-value' else null
 
           <TagsBar key={idx} tags={tags} />
       }
@@ -77,13 +73,14 @@ FactSelector = React.createClass
     current: @props.object
 
   render: ->
+    console.log @props.object
+
     <div className='selector'>
       <SelectorTopbar object={@props.object} cancel={@props.cancel} />
 
       <StackTags stack={@state.stack} />
-      <CurrentFacts facts={@state.current.facts} select={@select_fact} />
-      <CurrentTags tags={@state.current.tags} select={@select_tag} />
-      <CustomForm />
+      <CurrentFacts fact_groups={@state.current.children} select={@select_fact} />
+      <CurrentTags fact_tags={@state.current.fact_tags} select={@select_tag} />
     </div>
 
   select_fact: (fact)->
@@ -105,11 +102,10 @@ FactSelector = React.createClass
 
 SelectorTopbar = React.createClass
   render: ->
-    <div className='selector-topbar'>
-      <a href='javascript:;' className='back' onClick={@back}>
-        <i className='icon chevron left' />
+    <div className='selector-topbar' style={paddingLeft: '0.5rem'}>
+      <a href='javascript:;' className='ui button mini' onClick={@back}>
+        <i className='icon chevron left' /> 后退
       </a>
-      <span>描述{@props.object.object_name}特征</span>
     </div>
 
   back: ->
@@ -120,8 +116,8 @@ StackTags = React.createClass
   render: ->
     if @props.stack.length
       tags = @props.stack.map (x)->
-        name: x.fact_name || x.tag_name
-        className: if x.tag_name then 'tag-value' else null
+        name: x.name
+        className: if not x.children? then 'tag-value' else null
 
       <TagsBar tags={tags} />
     else
@@ -129,15 +125,14 @@ StackTags = React.createClass
 
 CurrentFacts = React.createClass
   render: ->
-    if @props.facts
+    if @props.fact_groups?.length
       <div>
         <div className='tip'>选择要记录的特征：</div>
         <div className='facts'>
           {
-            for fact, idx in @props.facts
-              <Fact key={idx} fact={fact} select={@props.select} />
+            for fact_group in @props.fact_groups
+              <Fact key={fact_group.id} fact={fact_group} select={@props.select} />
           }
-          <AddFact />
         </div>
       </div>
     else
@@ -147,18 +142,22 @@ Fact = React.createClass
   render: ->
     fact = @props.fact
 
-    if fact.facts
-      selected_children = fact.facts.filter (x)->
+    if fact.children?.length
+      selected_children = fact.children.filter (x)->
         x.selected == true
-      fact.selected = true if selected_children.length == fact.facts.length
+      # console.log selected_children.length
+      # console.log fact.children.length
+      # console.log selected_children.length == fact.children.length
+
+      fact.selected = true if selected_children.length == fact.children.length
 
     if fact.selected
       name = 
-        <span>{fact.fact_name} <span className='ui label'>已选</span></span>
+        <span>{fact.name} <span className='ui label'>已选</span></span>
       klass = 'fact selected'
     else
       name =
-        <span>{fact.fact_name}</span>
+        <span>{fact.name}</span>
       klass = 'fact'
 
     <a className={klass} onClick={@select(fact)}>
@@ -182,13 +181,13 @@ AddFact = React.createClass
 
 CurrentTags = React.createClass
   render: ->
-    if @props.tags
+    if @props.fact_tags?.length
       <div>
         <div className='tip'>选择要记录的特征描述：</div>
         <div className='tags'>
           {
-            for tag, idx in @props.tags
-              <Tag key={idx} tag={tag} select={@props.select} />
+            for fact_tag in @props.fact_tags
+              <Tag key={fact_tag.id} tag={fact_tag} select={@props.select} />
           }
         </div>
       </div>
@@ -200,7 +199,7 @@ Tag = React.createClass
     tag = @props.tag
 
     <a className='tag' onClick={@select(tag)}>
-      <i className='icon tag' /> {tag.tag_name}
+      <i className='icon tag' /> {tag.name}
     </a>
 
   select: (tag)->

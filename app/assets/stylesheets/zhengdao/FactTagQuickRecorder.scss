@@ -1,0 +1,186 @@
+.fact-tag-quick-recorder {
+  padding: 1rem 0;
+
+  .recorder {
+    .react-tags-bar {
+      margin-bottom: 1rem;
+      padding-bottom: 0;
+
+      .tag {
+        font-size: 14px;
+        padding: 0 0.6rem;
+        height: 24px;line-height: 24px;
+        margin-bottom: 5px;
+
+        &:after {
+          top: 9px;
+        }
+      }
+
+      .tag.tag-value {
+        background-color: #F36501;
+        color: white;
+        border-right: 0 none;
+        &:after {display: none;}
+      }
+    }
+
+    .records-list {
+      margin: -1rem -1rem 1rem;
+      .react-tags-bar {
+        margin-bottom: 0;
+      }
+    }
+
+    .selector {
+      margin: -1rem -1rem 1rem;
+      background-color: #FAF8F7;
+
+      .selector-topbar {
+        height: 50px;
+        line-height: 50px;
+        background-color: #FFF;
+        border-bottom: solid 1px #ddd;
+        margin-bottom: 1rem;
+        font-size: 16px;
+
+        .back {
+          box-sizing: content-box;
+          width: 50px;
+          height: 50px;
+          line-height:50px;
+          border-right: solid 1px #ddd;
+          text-align: center;
+          float: left;
+          color: #333;
+          margin-right: 1rem;
+          i {margin-right: 0;}
+        }
+      }
+
+      .tip {
+        box-sizing: content-box;
+        padding: 0 1rem;
+        height: 30px;
+        line-height: 30px;
+        background-color: #FFFAF3;
+        border-bottom: solid 1px #D9D5CF;
+        border-top: solid 1px #D9D5CF;
+        color: #573a08;
+        font-size: 12px;
+      }
+
+      .facts {
+        margin-bottom: 1rem;
+        border-top: solid 1px #ececec;
+        margin-top: -1px;
+        background-color: white;
+        a.fact {
+          box-sizing: content-box;
+          display: block;
+          color: #333;
+          height: 40px;
+          line-height: 40px;
+          border-bottom: solid 1px #ececec;
+          padding: 0 1rem;
+          i{color: #C80000;}
+          &:active {
+            background-color: #FDF5DB;
+          }
+
+          &.selected {
+            opacity: 0.5;
+            pointer-events: none;
+          }
+        }
+        a.fact.add-fact {
+          i{color: #21BA45;}
+        }
+      }
+
+      .tags {
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+        border-top: solid 1px #ececec;
+        background-color: white;
+        a.tag {
+          display: block;
+          color: #333;
+          height: 40px;
+          line-height: 40px;
+          border-bottom: solid 1px #ececec;
+          padding: 0 1rem;
+          i{color: #F36501;}
+          &:active {
+            background-color: #FDF5DB;
+          }
+        }
+      }
+
+      .custom {
+        padding: 1rem;
+        .field.fact-name {
+          margin-bottom: 0;
+          input {
+            border-bottom: 0 none;
+            border-radius: 3px 3px 0 0;
+          }
+        }
+        textarea {
+          resize: none;
+          border-radius: 0 0 3px 3px;
+        }
+      }
+    }
+  }
+}
+
+
+.react-tags-bar {
+  background-color: #f7f7f7;
+  border: solid 1px #ececec;
+  box-sizing: content-box;
+  padding: 5px;
+  &:after {
+    content: "";
+    clear: both;
+    display: block;
+    height: 0;
+  }
+
+  .tag {
+    $h: 30px;
+    $fz: 16px;
+
+    margin-right: 5px;
+    font-size: $fz;
+    float: left;
+    background-color: #fff;
+    color: #444;
+    height: $h;
+    line-height: $h;
+    box-sizing: content-box;
+    padding: 0 $fz * 0.9;
+    // border: solid 1px #ddd;
+    box-shadow: 0 0 2px rgba(black, 0.3);
+    border-right: solid 3px #F36501;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background-color: #F36501;
+      border-radius: 6px 0 0 6px;
+      top: ($h - 6px) / 2;
+      right: -3px;
+    }
+  }
+
+  .tag.tag-value {
+    background-color: #F36501;
+    color: white;
+    border-right: 0 none;
+    &:after {display: none;}
+  }
+}
