@@ -1,13 +1,19 @@
 class FactGroup
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::Tree
 
   field :name
 
   has_many :fact_tags
+  has_and_belongs_to_many :children, class_name: 'FactGroup'
 
   validates :name, presence: true
+
+  def descendants_and_self
+    fgs = self.children.map{|child|child.descendants_and_self}.flatten
+    fgs.push self
+    fgs
+  end
 
   def tags=(tags)
     tags = tags.split(/，|,| /) if tags.is_a?(String)
