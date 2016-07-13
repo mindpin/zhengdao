@@ -27,27 +27,11 @@
       </div>
 
       <div className='patient-base-info'>
-      {
-        for pe_record in @state.record.pe_records
-          <div className='field' key={pe_record.id}>
-            <label>{pe_record.name}</label>
-            <div className='icontent'>
-              <a href="/patient_pe_records/#{pe_record.id}" className='ui button mini'>查看体检记录</a>
-            </div>
-          </div>
-      }
+        <PeRecordsList pe_records={@state.record.pe_records} />
       </div>
 
       <div className='patient-base-info'>
-      {
-        for cure_record in @state.record.cure_records
-          <div className='field' key={cure_record.id}>
-            <label>{cure_record.name}</label>
-            <div className='icontent'>
-              {cure_record.conclusion}
-            </div>
-          </div>
-      }
+        <CureRecordList cure_records={@state.record.cure_records} />
       </div>
 
       <div className='patient-base-info'>

@@ -63,59 +63,9 @@ SaveableRecord = React.createClass
     <div className='field'>
       <label>{@props.label}</label>
       <div className='icontent'>
+        <SavedPeRecordShow saved_records={@props.record.saved_records} />
         <a className='ui button mini' href={@props.record.edit_url}>
-          <i className='icon pencil' /> 编辑诊断记录
+          <i className='icon pencil' /> 编辑体检记录
         </a>
       </div>
     </div>
-
-
-
-
-# SaveableRecord = React.createClass
-#   getInitialState: ->
-#     conclusion: @props.record.conclusion
-#     editing: false
-
-#   render: ->
-#     <div className='field'>
-#       <label>{@props.label}</label>
-
-#       <div className='icontent'>
-#         {
-#           if not @state.editing
-#             <div>
-#             {
-#               if not jQuery.is_blank @state.conclusion
-#                 <div style={marginBottom: '0.5rem'}>{@state.conclusion}</div>
-#             }
-#             <a className='ui button mini' onClick={@open_textarea}><i className='icon pencil' /> 编辑</a>
-#             </div>
-#           else
-#             <div>
-#             <div className='ui form'>
-#             <textarea value={@state.conclusion} rows=5 onChange={@change} placeholder='填写治疗记录'></textarea>
-#             </div>
-#             <a className='ui button mini' onClick={@save}><i className='icon save' /> 保存</a>
-#             </div>
-
-#         }
-#       </div>
-#     </div>
-
-#   open_textarea: ->
-#     @setState editing: true
-
-#   save: ->
-#     @setState editing: false
-#     jQuery.ajax
-#       type: 'PUT'
-#       url: @props.record.update_url
-#       data:
-#         record:
-#           conclusion: @state.conclusion
-#     .done (res)->
-#       console.log res
-
-#   change: (evt)->
-#     @setState conclusion: evt.target.value

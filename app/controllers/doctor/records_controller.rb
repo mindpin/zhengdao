@@ -5,7 +5,11 @@ class Doctor::RecordsController < ApplicationController
     record = PatientRecord.find params[:id]
     patient = record.patient
 
-    cure_items = PayDefine.all.map {|x|
+    cure_items = PayDefine.all.map { |x|
+      DataFormer.new(x).data
+    }
+
+    pe_defines = PeDefine.all.map { |x|
       DataFormer.new(x).data
     }
 
@@ -20,7 +24,8 @@ class Doctor::RecordsController < ApplicationController
         .logic(:pe_records)
         .logic(:cure_records)
         .data,
-      cure_items: cure_items
+      cure_items: cure_items,
+      pe_defines: pe_defines
     }
     @extend_nav_data = {
       mobile_back_to: doctor_queue_path,
@@ -32,9 +37,11 @@ class Doctor::RecordsController < ApplicationController
     record = PatientRecord.find params[:id]
 
     if record.pe_records.blank?
-      items = params[:selected_items]
-      items.each do |name|
-        record.pe_records.create(name: name)
+      pe_defines = params[:selected_items].map { |id|
+        PeDefine.find id
+      }
+      pe_defines.each do |pe_define|
+        record.pe_records.create(pe_define: pe_define)
       end
     end
 

@@ -141,6 +141,7 @@
   border: solid 1px #ececec;
   box-sizing: content-box;
   padding: 5px;
+  padding-bottom: 0;
   &:after {
     content: "";
     clear: both;
@@ -174,6 +175,24 @@
       border-radius: 6px 0 0 6px;
       top: ($h - 6px) / 2;
       right: -3px;
+    }
+  }
+
+  .tag.tag-value {
+    background-color: #F36501;
+    color: white;
+    border-right: 0 none;
+    &:after {display: none;}
+  }
+
+  .tag {
+    font-size: 14px;
+    padding: 0 0.6rem;
+    height: 24px;line-height: 24px;
+    margin-bottom: 5px;
+
+    &:after {
+      top: 9px;
     }
   }
 

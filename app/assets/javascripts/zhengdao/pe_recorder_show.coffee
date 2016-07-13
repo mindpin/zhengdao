@@ -3,68 +3,29 @@
     console.log @props.data.records
 
     <div className='pe-recorder pe-recorder-show'>
-      <div className='items'>
-      {
-        for key, record of @props.data.records
-          rs = (v for k, v of record)
-
-          tags = rs.map (x)->
-            name: x.name
-            className: if x.type == 'tag' then 'tag-value' else null
-
-          <TagsBar key={key} tags={tags} />
-      }
-      </div>
+      <SavedPeRecordShow saved_records={@props.data.records} />
     </div>
 
-  statics:
-    PeItemShow: React.createClass
-      render: ->
-        item = @props.item
-        label = item.label
-        option_values = item.option_values || []
-        saved_values = item.saved_values || []
+@SavedPeRecordShow = React.createClass
+  render: ->
+    records = @props.saved_records
 
-        label_readonly = item.disabled != false
-        label_klass = new ClassName
-          'label': true
-          'readonly': label_readonly
+    if records? and Object.keys(records).length
+      <div className='saved_records' style={marginBottom: '1rem'}>
+        {
+          for key, record of records
+            rs = (v for k, v of record)
 
-        label_props =
-          type: 'text'
-          value: label
-          readOnly: label_readonly
-          className: label_klass
-          onChange: @on_label_change
-          placeholder: '输入自定义记录项名'
+            tags = rs.map (x)->
+              name: x.name
+              className: if x.type == 'tag' then 'tag-value' else null
 
-        <div className='field'>
-          <div className='item-name'>
-            <i className='icon asterisk' style={color: '#796138'} /> {label}
-          </div>
+            <TagsBar key={key} tags={tags} />
+        }
+      </div>
+    else
+      <div />
 
-          <div className='tags'>
-          {
-            if saved_values.length
-              for tag, idx in saved_values
-                <div className='tag' key={idx}>{tag}</div>
-            else
-              <div className='tag no'>没有记录内容</div>
-          }
-          </div>
-          {
-            if @props.item.file_entity_id?
-              <ImageShow 
-                idx={@props.idx} 
-                parent={@props.parent} 
-                file_entity_id={@props.item.file_entity_id} 
-                download_url={@props.item.file_url}
-              />
-          }
-        </div>
-
-      on_label_change: (evt)->
-        @props.parent.record_label_change @props.idx, evt.target.value
 
 ImageShow = React.createClass
   getInitialState: ->

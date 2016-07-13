@@ -27,15 +27,7 @@
           {
             if @state.record.pe_records.length > 0 or @state.record.landing_status == 'FINISH'
               <div className='patient-base-info'>
-              {
-                for pe_record in @state.record.pe_records
-                  <div className='field' key={pe_record.id}>
-                    <label>{pe_record.name}</label>
-                    <div className='icontent'>
-                      <a href="/patient_pe_records/#{pe_record.id}" className='ui button mini'>查看体检记录</a>
-                    </div>
-                  </div>
-              }
+                <PeRecordsList pe_records={@state.record.pe_records} />
               </div>
             else
               <div className='patient-base-info'>
@@ -44,14 +36,10 @@
                   <div className='icontent'>
                     <select multiple className='ui fluid dropdown' ref='select0' onChange={@pe_change}>
                       <option value=''>添加体检项</option>
-                      <option value='脉诊'>脉诊</option>
-                      <option value='三部九侯诊'>三部九侯诊</option>
-                      <option value='舌诊'>舌诊</option>
-                      <option value='面诊'>面诊</option>
-                      <option value='腹诊'>腹诊</option>
-                      <option value='背诊'>背诊</option>
-                      <option value='脊柱诊'>脊柱诊</option>
-                      <option value='经络诊'>经络诊</option>
+                      {
+                        for pe_define in @props.data.pe_defines
+                          <option key={pe_define.id} value={pe_define.id}>{pe_define.name}</option>
+                      }
                     </select>
                   </div>
                 </div>
@@ -71,15 +59,7 @@
           {
             if @state.record.cure_records.length > 0 or @state.record.landing_status == 'FINISH'
               <div className='patient-base-info'>
-              {
-                for cure_record in @state.record.cure_records
-                  <div className='field' key={cure_record.id}>
-                    <label>{cure_record.name}</label>
-                    <div className='icontent'>
-                      {cure_record.conclusion}
-                    </div>
-                  </div>
-              }
+                <CureRecordList cure_records={@state.record.cure_records} />
               </div>
             else
               <div className='patient-base-info'>
@@ -167,8 +147,13 @@
 
   confirm_pe: ->
     text = [
-      '确定安排体检吗？目前安排：'
-      @state.selected_pe_items.join(', ')
+      '确定安排体检吗？目前安排了：'
+      @props.data.pe_defines
+        .filter (pd)=>
+          @state.selected_pe_items.indexOf(pd.id) > -1
+        .map (pd)=>
+          pd.name
+        .join '，'
     ].join('<br/>')
 
     jQuery.modal_confirm

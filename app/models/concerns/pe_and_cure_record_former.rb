@@ -20,6 +20,7 @@ module PeAndCureRecordFormer
       field :update_url, ->(instance) {
         patient_pe_record_path(instance)
       }
+      field :saved_records
     end
 
     former "CureRecord" do
