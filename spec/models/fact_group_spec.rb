@@ -70,4 +70,22 @@ RSpec.describe FactGroup, type: :model do
     expect(fact_group.valid?).to eq(false)
   end
 
+  it "descendants_and_self" do
+    fg1 = create(:has_children_factory_group)
+    fg11 = create(:has_children_factory_group)
+    fg12 = create(:has_children_factory_group)
+    fg111 = create(:has_tags_factory_group)
+
+    fg1.children = [fg11, fg12]
+    fg1.save
+    fg11.children = [fg111]
+    fg11.save
+
+    expect(fg1.descendants_and_self.count).to eq(5)
+    expect(fg1.descendants_and_self.include?(fg1)).to eq(true)
+    expect(fg1.descendants_and_self.include?(fg11)).to eq(true)
+    expect(fg1.descendants_and_self.include?(fg12)).to eq(true)
+    expect(fg1.descendants_and_self.include?(fg111)).to eq(true)
+  end
+
 end
