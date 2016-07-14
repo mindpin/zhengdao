@@ -28,6 +28,8 @@
       {
         if record.landing_status == 'NOT_HERE'
           if record.is_today
+            # 接待挂号时，由导诊选择治疗师/体检师
+
             <div>
               <WizardPatientRecordReceivePage.Assign parent={@} data={record} constraint_workers={constraint_workers} />
 
@@ -36,8 +38,6 @@
                   klass = new ClassName
                     'ui button green': true
                     'disabled': jQuery.is_blank(@state.next_visit_worker_id)
-
-                  console.log @state.next_visit_worker_id
 
                   <a className={klass} onClick={@confirm_receive}><i className='icon check' /> 确定</a>
                 }
@@ -61,6 +61,8 @@
             </div>
           </div>
         else
+          # 医师分配治疗或体检时，由导诊选择治疗师/体检师
+
           <div>
             <div className='ui segment'>
               <div>当前状态：{record.landing_status_str}</div>
@@ -72,8 +74,6 @@
                   'ui button green': true
                   'disabled': jQuery.is_blank(@state.next_visit_worker_id)
 
-                console.log 111, @state.next_visit_worker_id
-
                 <a className={klass} onClick={@confirm_assign}><i className='icon check' /> 确定</a>
               }
             </div>
@@ -84,8 +84,10 @@
     </div>
 
   confirm_receive: ->
+    console.log "next_visit_worker_id:", @state.next_visit_worker_id
+
     jQuery.modal_confirm
-      text: '确定接待该挂号吗？'
+      text: '确定接待该挂号患者吗？'
       yes: =>
         jQuery.ajax
           type: 'PUT'
@@ -148,28 +150,25 @@
           </div>
         else
           <div className='ui segment select-workers'>
-            <div style={marginBottom: '1rem'}>请选择:</div>
-            <div>
+            <select className='ui dropdown' onChange={@select_worker_id} value={@state.worker_id} ref='select'>
+              <option value={'none'}>请选择</option>
             {
               for worker in constraint_workers
-                klass = new ClassName
-                  'worker': true
-                  'selected': @state.worker_id == worker.id
-
-                console.log @state.worker_id, worker.id
-
-                <div key={worker.id} className={klass} onClick={@select(worker.id)}>
-                  <i className='icon check green' />
-                  {worker.name}
-                </div>
+                <option key={worker.id} value={worker.id}>{worker.name}</option>
             }
-            </div>
+            </select>
           </div>
 
       open: ->
         @setState open: true
 
-      select: (worker_id)->
-        =>
-          @setState worker_id: worker_id
-          @props.parent.setState next_visit_worker_id: worker_id
+      select_worker_id: (evt)->
+        worker_id = evt.target.value
+        worker_id = null if worker_id == 'none'
+
+        @setState worker_id: worker_id
+        @props.parent.setState next_visit_worker_id: worker_id
+
+      componentDidUpdate: ->
+        $dom = jQuery React.findDOMNode @refs.select
+        $dom.dropdown()

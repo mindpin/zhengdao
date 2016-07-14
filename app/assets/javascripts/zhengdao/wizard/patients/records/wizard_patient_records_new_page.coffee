@@ -59,7 +59,7 @@
           workers = @props.data.workers.filter (x)->
             x.roles.indexOf(role) > -1
 
-          <div className='step'>
+          <div className='step' key={worker_str}>
             <h4><i className='icon angle down' /> 选择{worker_str}</h4>
 
             <div className='ct'>
@@ -67,7 +67,7 @@
                 <option value={'none'}>不指定</option>
               {
                 for worker in workers
-                  <option key={idx} value={worker.id}>{worker.name}</option>
+                  <option key={worker.id} value={worker.id}>{worker.name}</option>
               }
               </select>
             </div>

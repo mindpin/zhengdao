@@ -76,26 +76,26 @@ class PatientRecord
 
   def self.landing_statuses
     { 
-      'NOT_HERE' => '待接诊', 
-      'WAIT_FOR_ASSIGN_PE' => '待分配体检', 
-      'WAIT_FOR_ASSIGN_CURE' => '待分配治疗',
-      'WAIT_FOR_DOCTOR' => '待诊', 
-      'WAIT_FOR_PE' => '待体检', 
-      'WAIT_FOR_CURE' => '待治疗',
-      'BACK_TO_DOCTOR' => '待医师确认',
-      'FINISH' => '待离馆确认', 
-      'GO_AWAY' => '已离开'
+      'NOT_HERE'              => '待接诊', 
+      'WAIT_FOR_ASSIGN_PE'    => '待分配体检', 
+      'WAIT_FOR_ASSIGN_CURE'  => '待分配治疗',
+      'WAIT_FOR_DOCTOR'       => '待诊', 
+      'WAIT_FOR_PE'           => '待体检', 
+      'WAIT_FOR_CURE'         => '待治疗',
+      'BACK_TO_DOCTOR'        => '待医师确认',
+      'FINISH'                => '待离馆确认', 
+      'GO_AWAY'               => '已离开'
     }
   end
 
   # 该挂号记录的待选 worker
   def constraint_workers(wizard)
     if ['NOT_HERE'].include? self.landing_status
-      User.where(role: self.reg_kind.downcase, store: wizard.store)
+      User.where(roles: self.reg_kind.downcase.to_sym, store: wizard.store)
     elsif self.landing_status == 'WAIT_FOR_ASSIGN_PE'
-      User.where(role: 'pe', store: wizard.store)
+      User.where(roles: :pe, store: wizard.store)
     elsif self.landing_status == 'WAIT_FOR_ASSIGN_CURE'
-      User.where(role: 'cure', store: wizard.store)
+      User.where(roles: :cure, store: wizard.store)
     end
   end
 
