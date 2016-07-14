@@ -110,7 +110,7 @@ module PatientFormer
       }
       field :next_visit_worker_info_str, ->(instance) {
         next_visit_worker = instance.next_visit_worker
-        return '' if next_visit_worker.blank?
+        return '接诊人：无' if next_visit_worker.blank?
         return "接诊人：#{next_visit_worker.name}"
       }
 
