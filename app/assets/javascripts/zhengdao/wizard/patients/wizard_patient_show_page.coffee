@@ -147,11 +147,21 @@ PatientTabs = React.createClass
         <label>预约时间：</label> {active_record.time_weekday_str}, {active_record.period_str}
       </div>
       <div className='info'>
-        <label>指定{active_record.reg_worker_str}：</label> {active_record.reg_worker_name}
+        <label>挂号时指定{active_record.reg_worker_str}：</label> {active_record.reg_worker_name}
       </div>
+
+      {
+        if active_record.next_visit_worker_id?
+          <div className='info next-visit-worker'>
+            当前{active_record.next_visit_worker_info_str}
+          </div>
+      }
+
       <div className='info number'>
-        <label>　就诊号({active_record.time_str})：</label> <span className='n'>{active_record.reg_number}</span>
+        <label>　就诊号({active_record.time_str})：</label>
+        <span className='n'>{active_record.reg_number}</span>
       </div>
+
 
       <div style={marginTop: '1rem', borderTop: 'solid 1px #ececec', paddingTop: '1rem'}>
         <a className='ui button red fluid' onClick={@reset}>
