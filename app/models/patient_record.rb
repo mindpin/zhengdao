@@ -100,6 +100,8 @@ class PatientRecord
   end
 
   def assign_visit_worker(next_visit_worker_id)
+    return if next_visit_worker_id.blank?
+
     self.next_visit_worker_id = next_visit_worker_id
 
     self.landing_status = "WAIT_FOR_#{self.reg_kind}" if self.landing_status == 'NOT_HERE'
@@ -122,6 +124,7 @@ class PatientRecord
     self.landing_status = 'NOT_HERE'
     self.pe_records = []
     self.cure_records = []
+    self.reg_date = Date.today
     self.save
   end
 

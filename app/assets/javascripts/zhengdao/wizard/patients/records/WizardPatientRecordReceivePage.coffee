@@ -1,13 +1,19 @@
 @WizardPatientRecordReceivePage = React.createClass
   getInitialState: ->
     record = @props.data.record
+    reg_worker_id = record.reg_worker_id
+    
+    next_visit_worker_id = 
+      if record.landing_status == 'NOT_HERE'
+        record.reg_worker_id
+      else
+        record.next_visit_worker_id
 
-    if record.landing_status == 'NOT_HERE'
-      reg_worker_id: record.reg_worker_id
-      next_visit_worker_id: record.reg_worker_id
-    else
-      reg_worker_id: record.reg_worker_id
-      next_visit_worker_id: record.next_visit_worker_id
+    return {
+      reg_worker_id: reg_worker_id
+      next_visit_worker_id: next_visit_worker_id
+    }
+
 
   render: ->
     patient = @props.data.patient
@@ -26,76 +32,103 @@
       </div>
 
       {
-        if record.landing_status == 'NOT_HERE'
-          if record.is_today
-            # 接待挂号时，由导诊选择治疗师/体检师
+        status =
+          <div className='ui segment'>
+            <div>当前状态：{record.landing_status_str}</div>
+          </div>
 
-            <div>
-              <WizardPatientRecordReceivePage.Assign parent={@} data={record} constraint_workers={constraint_workers} />
+        assign_form = 
+          <WizardPatientRecordReceivePage.Assign 
+            parent={@} 
+            data={record} 
+            constraint_workers={constraint_workers} 
+          />
 
-              <div className='ui segment'>
-                {
-                  klass = new ClassName
-                    'ui button green': true
-                    'disabled': jQuery.is_blank(@state.next_visit_worker_id)
+        select_btn = (message)=>
+          <div className='ui segment'>
+            {
+              klass = new ClassName
+                'ui button green': true
+                'disabled': jQuery.is_blank(@state.next_visit_worker_id)
 
-                  <a className={klass} onClick={@confirm_receive}><i className='icon check' /> 确定</a>
-                }
-              </div>
-            </div>
-          else
-            <div className='ui segment'>预约日期未到，现在不能处理</div>
+              <a className={klass} onClick={@confirm_next_visit_worker(message)}>
+                <i className='icon check' /> 确定分配
+              </a>
+            }
+          </div>
 
-        else if record.landing_status == 'FINISH'
+
+        if record.landing_status == 'FINISH'
           <div>
-            <div className='ui segment'>
-              <div>当前状态：{record.landing_status_str}</div>
-            </div>
+            {status}
+
             <div className='ui segment'>
               {
                 klass = new ClassName
                   'ui button green mini': true
 
-                <a className={klass} onClick={@confirm_go_away}><i className='icon sign out' /> 确认离馆</a>
+                <a className={klass} onClick={@confirm_go_away}>
+                  <i className='icon sign out' /> 确认离馆
+                </a>
               }
             </div>
           </div>
+
+
+        else if record.landing_status == 'NOT_HERE'
+          if record.is_today
+            # 接待挂号时，由导诊选择治疗师/体检师
+
+            <div>
+              {status}
+              {assign_form}
+              {select_btn '确定接待该挂号患者吗？'}
+            </div>
+          else
+            <div className='ui segment'>不在预约日期，现在不能处理</div>
+
+
         else
           # 医师分配治疗或体检时，由导诊选择治疗师/体检师
 
           <div>
-            <div className='ui segment'>
-              <div>当前状态：{record.landing_status_str}</div>
-            </div>
-            <WizardPatientRecordReceivePage.Assign parent={@} data={record} constraint_workers={constraint_workers} />
-            <div className='ui segment'>
-              {
-                klass = new ClassName
-                  'ui button green': true
-                  'disabled': jQuery.is_blank(@state.next_visit_worker_id)
-
-                <a className={klass} onClick={@confirm_assign}><i className='icon check' /> 确定</a>
-              }
-            </div>
+            {status}
+            {assign_form}
+            {select_btn '确定这样指定吗？'}
           </div>
       }
-
-
     </div>
 
-  confirm_receive: ->
-    console.log "next_visit_worker_id:", @state.next_visit_worker_id
+
+  confirm_next_visit_worker: (message)->
+    =>
+      if jQuery('#next-visit-worker-select').length
+        next_visit_worker_id = jQuery('#next-visit-worker-select').val()
+        next_visit_worker_id = null if next_visit_worker_id == 'none'
+      else
+        next_visit_worker_id = @state.next_visit_worker_id
+
+      @_confirm_next_visit_worker message, next_visit_worker_id
+
+
+  _confirm_next_visit_worker: (message, next_visit_worker_id)->
+    console.log "next_visit_worker_id:", next_visit_worker_id
+
+    if jQuery.is_blank(next_visit_worker_id)
+      alert '错误：未选择任何接诊人'
+      return
 
     jQuery.modal_confirm
-      text: '确定接待该挂号患者吗？'
+      text: message
       yes: =>
         jQuery.ajax
           type: 'PUT'
           url: @props.data.record.wizard_do_receive_url
           data:
-            next_visit_worker_id: @state.next_visit_worker_id
+            next_visit_worker_id: next_visit_worker_id
         .done (res)->
           Turbolinks.visit '/wizard/queue'
+
 
   confirm_go_away: ->
     jQuery.modal_confirm
@@ -104,18 +137,6 @@
         jQuery.ajax
           type: 'PUT'
           url: @props.data.record.wizard_do_receive_url
-        .done (res)->
-          Turbolinks.visit '/wizard/queue'
-
-  confirm_assign: ->
-    jQuery.modal_confirm
-      text: '确定指定吗？'
-      yes: =>
-        jQuery.ajax
-          type: 'PUT'
-          url: @props.data.record.wizard_do_receive_url
-          data:
-            next_visit_worker_id: @state.next_visit_worker_id
         .done (res)->
           Turbolinks.visit '/wizard/queue'
 
@@ -150,7 +171,7 @@
           </div>
         else
           <div className='ui segment select-workers'>
-            <select className='ui dropdown' onChange={@select_worker_id} value={@state.worker_id} ref='select'>
+            <select id='next-visit-worker-select' className='ui dropdown' onChange={@select_worker_id} value={@state.worker_id} ref='select'>
               <option value={'none'}>请选择</option>
             {
               for worker in constraint_workers
