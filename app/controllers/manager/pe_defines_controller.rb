@@ -25,6 +25,16 @@ class Manager::PeDefinesController < ApplicationController
     end
   end
 
+  def update
+    pe_define = PeDefine.find params[:id]
+    p pe_define_params
+
+    update_model(pe_define, pe_define_params) do |x|
+      DataFormer.new(x)
+        .data
+    end
+  end
+
   def new
     @page_name = 'manager_pe_defines_new'
 
@@ -39,20 +49,21 @@ class Manager::PeDefinesController < ApplicationController
     }
   end
 
-  # def edit
-  #   pe_define = PeDefine.find params[:id]
+  def edit
+    pe_define = PeDefine.find params[:id]
 
-  #   @page_name = 'manager_pe_defines_edit'
-  #   @component_data = {
-  #     pe_define: DataFormer.new(pe_define).data,
-  #     submit_url: manager_pe_define_path(pe_define),
-  #     cancel_url: manager_pe_defines_path
-  #   }
-  #   @extend_nav_data = {
-  #     mobile_back_to: manager_pe_defines_path,
-  #     current_title: '修改诊断项'
-  #   }
-  # end
+    @page_name = 'manager_pe_defines_edit'
+    @component_data = {
+      pe_define: DataFormer.new(pe_define).data,
+      submit_url: manager_pe_define_path(pe_define),
+      cancel_url: manager_pe_defines_path,
+      group_list_url: list_manager_fact_groups_path
+    }
+    @extend_nav_data = {
+      mobile_back_to: manager_pe_defines_path,
+      current_title: '修改体检项'
+    }
+  end
 
   private
   def pe_define_params

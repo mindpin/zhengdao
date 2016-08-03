@@ -47,6 +47,7 @@ class PeDefine
     else
       fact_object = self.fact_object
       fact_object.fact_group_ids = @fact_group_ids
+      fact_object.save
       @fact_group_ids = nil
       self.save
     end

@@ -200,6 +200,9 @@ body.manager {
     a.item.mobile, div.item.mobile {
       display: none !important;
     }
+    a.item.mobile.mobile-back-to {
+      display: block !important;
+    }
   }
 
   @include respond(mobile) {

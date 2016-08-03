@@ -5,6 +5,7 @@
     is_adding_group: false
 
   render: ->
+    # console.log @state.groups
 
     if @state.is_adding_group
       <div className='ui segment'>
@@ -55,6 +56,88 @@
 
     jQuery.ajax
       type: 'POST'
+      url: @props.data.submit_url
+      data:
+        pe_define: data
+    .done (res)=>
+      Turbolinks.visit @props.data.cancel_url
+
+  cancel: ->
+    Turbolinks.visit @props.data.cancel_url
+
+  adding_group: ->
+    @setState is_adding_group: true
+
+  add_group: (group)->
+    groups = @state.groups
+    groups.push group
+    @setState groups: groups
+
+  remove_group: (group)->
+    groups = @state.groups
+    groups = groups.filter (x)-> x.id != group.id
+    @setState groups: groups
+
+
+@ManagerPeDefinesEditPage = React.createClass
+  getInitialState: ->
+    groups: @props.data?.pe_define?.fact_groups
+
+    is_adding_group: false
+
+  render: ->
+    console.log @state.groups
+
+    if @state.is_adding_group
+      <div className='ui segment'>
+        <AddingGroup 
+          cancel={=> @setState is_adding_group: false}
+          group_list_url={@props.data.group_list_url}
+          except_ids={@state.groups.map (x)-> x.id}
+          add_group={@add_group}
+        />
+      </div>
+
+    else
+      {
+        TextInputField
+        TextAreaField
+        Submit
+      } = DataForm
+
+      layout =
+        label_width: '6rem'
+
+      <div className='ui segment'>
+        <SimpleDataForm
+          model='pe_define'
+          put={@props.data.submit_url}
+          done={@done}
+          cancel={@cancel}
+          on_submit={@submit}
+          data={@props.data.pe_define}
+        >
+          <TextInputField {...layout} label='名称：' name='name' required />
+          <TextAreaField {...layout} label='描述：' name='desc' />
+
+          <IncludedGroupsField 
+            groups={@state.groups} 
+            adding_group={@adding_group}
+            remove_group={@remove_group}
+          />
+
+          <Submit {...layout} text='确定保存' with_cancel='取消' />
+        </SimpleDataForm>
+      </div>
+
+  submit: (_data)->
+    data = 
+      name: _data.name
+      desc: _data.desc
+      fact_group_ids: @state.groups.map (x)-> x.id
+
+    jQuery.ajax
+      type: 'PUT'
       url: @props.data.submit_url
       data:
         pe_define: data
