@@ -46,6 +46,22 @@ class Manager::FactGroupsController < ApplicationController
     }
   end
 
+  def edit
+    fact_group = FactGroup.find params[:id]
+
+    @page_name = 'manager_fact_groups_edit'
+    @component_data = {
+      fact_group: DataFormer.new(fact_group).data,
+      submit_url: manager_fact_group_path(fact_group),
+      cancel_url: manager_fact_groups_path,
+      group_list_url: list_manager_fact_groups_path
+    }
+    @extend_nav_data = {
+      mobile_back_to: manager_fact_groups_path,
+      current_title: '修改标签组'
+    }
+  end
+
   def create
     fact_group = FactGroup.new fact_group_params
     save_model(fact_group) do |x|

@@ -10,7 +10,7 @@ class PatientPeRecordsController < ApplicationController
     @page_name = 'pe_records_form'
     @component_data = {
       pe_name: pe_define.name,
-      records: [],
+      records: saved_records,
       fact_object: DataFormer.new(pe_define.fact_object).data,
       submit_url: "/patient_pe_records/#{record.id}",
       cancel_url: "/pe/records/#{record.patient_record.id}/visit"

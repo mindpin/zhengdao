@@ -1,12 +1,24 @@
 @PeRecordsFormPage = React.createClass
   getInitialState: ->
+    arr_records = []
+    for idx, r of @props.data.records
+      record = (r1 for idx1, r1 of r)
+      arr_records.push record
+
+    console.log arr_records
+
     saving: false
+    saved_records: arr_records
 
   render: ->
     <div className='pe-records-page'>
       <div className='ui message warning'>正在录入{@props.data.pe_name}项目</div>
 
-      <FactTagQuickRecorder object={@props.data.fact_object} ref='recorder'/>
+      <FactTagQuickRecorder 
+        object={@props.data.fact_object}
+        saved_records={@state.saved_records}
+        ref='recorder'
+      />
 
       <div className='page-save'>
         {
@@ -28,6 +40,8 @@
   save: ->
     saved_records = @refs.recorder.get_records()
 
+    console.log saved_records
+
     @setState saving: true
     jQuery.ajax
       url: @props.data.submit_url
@@ -36,3 +50,4 @@
         saved_records: saved_records
     .done (res)=>
       @setState saving: false
+      location.href = @props.data.cancel_url

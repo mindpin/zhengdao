@@ -45,7 +45,7 @@ class Manager::PeDefinesController < ApplicationController
     }
     @extend_nav_data = {
       mobile_back_to: manager_pe_defines_path,
-      current_title: '体检项目管理'
+      current_title: '新增体检项'
     }
   end
 

@@ -45,6 +45,10 @@ class FactGroup
   after_save :create_tags
   def create_tags
     return if @tags == nil
+
+    p 2222222222222
+    p @tags
+
     new_tags = @tags.map do |tag_name|
       ft = fact_tags.select{|t|t.name == tag_name}.first
       ft = FactTag.create(name: tag_name, fact_group: self) if ft.blank?

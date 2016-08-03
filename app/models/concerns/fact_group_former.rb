@@ -6,6 +6,14 @@ module FactGroupFormer
     former "FactGroup" do
       field :id, ->(instance) {instance.id.to_s}
       field :name
+      field :type, ->(instance) {
+        'group'
+      }
+
+      field :edit_url, ->(instance) {
+        edit_manager_fact_group_path(instance)
+      }
+
       field :children, ->(instance) {
         instance.children.map do |fg|
           DataFormer.new(fg).data

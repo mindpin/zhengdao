@@ -84,7 +84,7 @@
           border-bottom: solid 1px #ececec;
           padding: 0 1rem;
           i{color: #C80000;}
-          &:active {
+          &:active, &:hover {
             background-color: #FDF5DB;
           }
 
@@ -111,7 +111,7 @@
           border-bottom: solid 1px #ececec;
           padding: 0 1rem;
           i{color: #F36501;}
-          &:active {
+          &:active, &:hover {
             background-color: #FDF5DB;
           }
         }
