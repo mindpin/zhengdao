@@ -9,14 +9,19 @@
     # console.log @refs.re.state.records
 
     @refs.re.state.records.map (record)->
-      record.map (x)->
-        id: x.id
-        name: x.name
-        type: x.type
+      if record.type == 'photo'
+        record
+      else
+        record.map (x)->
+          id: x.id
+          name: x.name
+          type: x.type
 
 
 Recorder = React.createClass
   getInitialState: ->
+    # console.log @props.saved_records
+
     records: @props.saved_records || []
     adding: false
 
@@ -29,6 +34,9 @@ Recorder = React.createClass
           <a href='javascript:;' className='ui button fluid large green' onClick={@add}>
             <i className='icon plus' /> 增加一条记录
           </a>
+          <div className='ui divider' />
+
+          <Upload recorder={@} />
         </div>
       else
         <FactSelector 
@@ -43,6 +51,8 @@ Recorder = React.createClass
     @setState adding: true
 
   add_record: (record)->
+    console.log record
+
     records = @state.records
     records.push record
 
@@ -63,6 +73,74 @@ Recorder = React.createClass
     @setState
       adding: false
 
+Upload = React.createClass
+  getInitialState: ->
+    if @props.download_url
+      status: UploadStatus.LOCAL_DONE
+      percent: 0
+      file_entity_id: @props.file_entity_id
+      download_url: @props.download_url
+    else
+      status: UploadStatus.READY
+      percent: 0
+      file_entity_id: null
+      download_url: null
+
+  render: ->
+    <div>
+      <UploadProgress {...@state} />
+
+      <UploadWidget.BrowseButton ref='browse_btn' status={@state.status}>
+        <a href='javascript:;' className='ui button fluid large'>
+          <i className='icon photo' /> 拍照上传
+        </a>
+      </UploadWidget.BrowseButton>
+    </div>
+
+  componentDidMount: ->
+    # $browse_button = jQuery React.findDOMNode @refs.browse_btn
+    $browse_button = jQuery React.findDOMNode @refs.browse_btn
+    new QiniuFilePartUploader
+      debug:                true
+      browse_button:        $browse_button
+      dragdrop_area:        null
+      file_progress_class:  UploadUtils.GenerateOneFileUploadProgress(@)
+      max_file_size:        '10MB'
+      mime_types :          [{ title: 'photo', extensions: '*' }]
+
+  on_upload_event: (evt, params...)->
+    switch evt
+      when 'local_done'
+        response_info = params[0]
+        file_entity_id  = response_info.file_entity_id
+        download_url    = response_info.download_url
+        @setState
+          download_url: download_url
+          file_entity_id: file_entity_id
+
+        @props.recorder.add_record {
+          type: 'photo'
+          url: download_url.split('?')[0]
+        }
+
+UploadProgress = React.createClass
+  render: ->
+    if @props.status != UploadStatus.READY
+      bar_style =
+        width: "#{@props.percent}%"
+
+      switch @props.status
+        when UploadStatus.LOCAL_DONE
+          <div />
+        else
+          <div className='photo-preview'>
+            <div className='bar' style={bar_style}></div>
+            <div className='percent'>{@props.percent}%</div>
+          </div>
+    else
+      <div />
+
+
 RecordsList = React.createClass
   render: ->
     # console.log @props.records
@@ -71,28 +149,63 @@ RecordsList = React.createClass
       <div className='records-list'>
       {
         for idx, record of @props.records
-          tags = record.map (x)->
-            name: x.name
-            className: if x.type == 'tag' then 'tag-value' else null
+          if record.type == 'photo'
+            <div key={idx} style={
+              position: 'relative', 
+              backgroundColor:'#F7F7F7', 
+              padding: 5
+              border: 'solid 1px #ececec'
+            }>
+              <a 
+                style={
+                  width: 80
+                  height: 80
+                  backgroundImage: "url(#{record.url})"
+                  backgroundSize: 'cover'
+                  display: 'block'
+                }
+                href={record.url} target='_blank'
+              ></a>
 
-          <div key={idx} style={position: 'relative'}>
-            <TagsBar tags={tags} />
-            <a 
-              href='javascript:;' 
-              onClick={@remove(record)}
-              style={
-                position: 'absolute',
-                top: 5,
-                right: 5,
-                height: 26,
-                lineHeight: '26px',
-                color: 'white'
-                backgroundColor: '#666'
-                padding: '0 10px'
-                borderRadius: 3
-              }
-            >删除</a>
-          </div>
+              <a 
+                href='javascript:;' 
+                onClick={@remove(record)}
+                style={
+                  position: 'absolute',
+                  top: 5,
+                  right: 5,
+                  height: 26,
+                  lineHeight: '26px',
+                  color: 'white'
+                  backgroundColor: '#666'
+                  padding: '0 10px'
+                  borderRadius: 3
+                }
+              >删除</a>
+            </div>
+          else
+            tags = record.map (x)->
+              name: x.name
+              className: if x.type == 'tag' then 'tag-value' else null
+
+            <div key={idx} style={position: 'relative'}>
+              <TagsBar tags={tags} />
+              <a 
+                href='javascript:;' 
+                onClick={@remove(record)}
+                style={
+                  position: 'absolute',
+                  top: 5,
+                  right: 5,
+                  height: 26,
+                  lineHeight: '26px',
+                  color: 'white'
+                  backgroundColor: '#666'
+                  padding: '0 10px'
+                  borderRadius: 3
+                }
+              >删除</a>
+            </div>
       }
       </div>
     else

@@ -14,13 +14,32 @@
       <div className='saved_records' style={marginBottom: '1rem'}>
         {
           for key, record of records
-            rs = (v for k, v of record)
+            if record.type == 'photo'
+              <div style={
+                position: 'relative', 
+                backgroundColor:'#F7F7F7', 
+                padding: 5
+                border: 'solid 1px #ececec'
+              }>
+                <a 
+                  style={
+                    width: 80
+                    height: 80
+                    backgroundImage: "url(#{record.url})"
+                    backgroundSize: 'cover'
+                    display: 'block'
+                  }
+                  href={record.url} target='_blank'
+                ></a>
+              </div>
+            else
+              rs = (v for k, v of record)
 
-            tags = rs.map (x)->
-              name: x.name
-              className: if x.type == 'tag' then 'tag-value' else null
+              tags = rs.map (x)->
+                name: x.name
+                className: if x.type == 'tag' then 'tag-value' else null
 
-            <TagsBar key={key} tags={tags} />
+              <TagsBar key={key} tags={tags} />
         }
       </div>
     else

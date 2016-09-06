@@ -32,6 +32,31 @@
       }
     }
 
+    .photo-preview {
+      width: 5rem; height: 5rem;
+      border: solid 1px #DEDEDE;
+      margin-bottom: 0.5rem;
+      position: relative;
+      background-size: cover;
+      box-sizing: content-box;
+
+      .bar {
+        position: absolute;
+        top:0;bottom:0;left:0;
+        background-color: #F9FAFB;
+      }
+      .percent {
+        font-size: 16px;
+        font-weight: bold;
+        position: absolute;
+        pointer-events: none;
+        top:0;left:0;right:0;bottom:0;
+        line-height: 5rem;
+        text-align: center;
+        opacity: 0.6;
+      }
+    }
+
     .selector {
       margin: -1rem -1rem 1rem;
       background-color: #FAF8F7;

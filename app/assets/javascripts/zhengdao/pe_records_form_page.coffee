@@ -2,7 +2,10 @@
   getInitialState: ->
     arr_records = []
     for idx, r of @props.data.records
-      record = (r1 for idx1, r1 of r)
+      if r.type == 'photo'
+        record = r
+      else
+        record = (r1 for idx1, r1 of r)
       arr_records.push record
 
     console.log arr_records
