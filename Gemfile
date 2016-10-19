@@ -1,6 +1,6 @@
 source 'https://gems.ruby-china.org'
 
-gem "rails", "4.2.3"
+gem "rails", "4.2.7.1"
 gem "uglifier", ">= 1.3.0"
 gem "turbolinks"
 gem 'jbuilder', '~> 2.0'
