@@ -1,16 +1,20 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  # 覆盖 rails 默认的 render :template => params[:action] 行为
-  # 改为
-  # 如果 @page_name @component_data 存在就 render "/layouts/page"
-  # 如果 @page_name @component_data 不存在就使用 rails 默认的 render :template => params[:action] 行为
-  def default_render(*args)
-    if @page_name.present? and not @component_data.nil?
-      return render "/layouts/page"
+  def default_render
+    if @component_name.present?
+      @component_name = @component_name.camelize
+      
+      respond_to do |format|
+        format.html { render text: nil, layout: true }
+        format.json { render json: @component_data }
+      end
+    else
+      super
     end
-    super
   end
+
+  # -----------------------
 
   def save_model(model, wrap = nil, &block)
     if model.save

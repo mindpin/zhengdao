@@ -6,7 +6,7 @@ class Manager::StoresController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'manager_stores'
+    @component_name = 'manager_stores'
     @component_data = {
       stores: stores,
       new_url: new_manager_store_path
@@ -18,7 +18,7 @@ class Manager::StoresController < ApplicationController
   end
 
   def new
-    @page_name = 'manager_stores_new'
+    @component_name = 'manager_stores_new'
     @component_data = {
       submit_url: manager_stores_path,
       cancel_url: manager_stores_path
@@ -40,7 +40,7 @@ class Manager::StoresController < ApplicationController
   def edit
     store = Store.find params[:id]
 
-    @page_name = 'manager_stores_edit'
+    @component_name = 'manager_stores_edit'
     @component_data = {
       store: DataFormer.new(store).data,
       submit_url: manager_store_path(store),

@@ -6,7 +6,7 @@ class Manager::PeDefinesController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'manager_pe_defines'
+    @component_name = 'manager_pe_defines'
     @component_data = {
       pe_defines: pe_defines,
       new_url: new_manager_pe_define_path
@@ -36,7 +36,7 @@ class Manager::PeDefinesController < ApplicationController
   end
 
   def new
-    @page_name = 'manager_pe_defines_new'
+    @component_name = 'manager_pe_defines_new'
 
     @component_data = {
       submit_url: manager_pe_defines_path,
@@ -52,7 +52,7 @@ class Manager::PeDefinesController < ApplicationController
   def edit
     pe_define = PeDefine.find params[:id]
 
-    @page_name = 'manager_pe_defines_edit'
+    @component_name = 'manager_pe_defines_edit'
     @component_data = {
       pe_define: DataFormer.new(pe_define).data,
       submit_url: manager_pe_define_path(pe_define),

@@ -13,7 +13,7 @@ class Doctor::RecordsController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'doctor_patient_record_visit'
+    @component_name = 'doctor_patient_record_visit'
     @component_data = {
       patient: DataFormer.new(patient).data,
       record: DataFormer.new(record)

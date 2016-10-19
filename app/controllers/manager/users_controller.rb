@@ -6,7 +6,7 @@ class Manager::UsersController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'manager_users'
+    @component_name = 'manager_users'
     @component_data = {
       users: users,
       new_url: new_manager_user_path
@@ -21,7 +21,7 @@ class Manager::UsersController < ApplicationController
     stores = Store.all.map {|x|
       DataFormer.new(x).data
     }
-    @page_name = 'manager_users_new'
+    @component_name = 'manager_users_new'
     @component_data = {
       submit_url: manager_users_path,
       cancel_url: manager_users_path,
@@ -47,7 +47,7 @@ class Manager::UsersController < ApplicationController
     stores = Store.all.map {|x|
       DataFormer.new(x).data
     }
-    @page_name = 'manager_users_edit'
+    @component_name = 'manager_users_edit'
     @component_data = {
       user: DataFormer.new(user).data,
       submit_url: manager_user_path(user),

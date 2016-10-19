@@ -9,7 +9,7 @@ class Pe::IndexController < ApplicationController
         x[:funcs]
       }.flatten
 
-    @page_name = 'pe_index'
+    @component_name = 'pe_index'
     @component_data = {
       funcs: funcs,
     }
@@ -28,7 +28,7 @@ class Pe::IndexController < ApplicationController
       records = PatientRecord.pe_send_queue(current_user)
     end
 
-    @page_name = 'pe_queue'
+    @component_name = 'pe_queue'
     @component_data = {
       queue: queue,
       wait_queue_count: PatientRecord.pe_wait_queue(current_user).count,

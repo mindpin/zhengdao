@@ -7,7 +7,7 @@ class Wizard::PatientsController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'wizard_patients'
+    @component_name = 'wizard_patients'
     @component_data = {
       patients: patients_data,
       paginate: DataFormer.paginate_data(patients),
@@ -20,7 +20,7 @@ class Wizard::PatientsController < ApplicationController
   end
 
   def new
-    @page_name = 'wizard_patients_new'
+    @component_name = 'wizard_patients_new'
     @component_data = {
       submit_url: wizard_patients_path,
       cancel_url: wizard_path
@@ -42,7 +42,7 @@ class Wizard::PatientsController < ApplicationController
   def show
     patient = Patient.find params[:id]
 
-    @page_name = 'wizard_patient_show'
+    @component_name = 'wizard_patient_show'
     @component_data = {
       patient: DataFormer.new(patient)
         .logic(:records_count)
@@ -58,7 +58,7 @@ class Wizard::PatientsController < ApplicationController
   def records_info
     patient = Patient.find params[:id]
 
-    @page_name = 'wizard_patient_records'
+    @component_name = 'wizard_patient_records'
     @component_data = {
       patient: DataFormer.new(patient)
         .logic(:records_count)
@@ -75,7 +75,7 @@ class Wizard::PatientsController < ApplicationController
   def active_record_info
     patient = Patient.find params[:id]
 
-    @page_name = 'wizard_patient_active_record_info'
+    @component_name = 'wizard_patient_active_record_info'
     @component_data = {
       patient: DataFormer.new(patient)
         .logic(:records_count)

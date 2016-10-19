@@ -6,8 +6,7 @@ module.exports = YieldComponent = React.createClass
 
     try
       console.debug "render content component: ", name
-      component = window.AppComponents[name]
-      throw "组件 #{name} 没有注册" unless component?
+      component = eval(name)
       React.createElement component, data
     catch e
       <Alert

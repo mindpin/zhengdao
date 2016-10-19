@@ -6,7 +6,7 @@ class Manager::FactGroupsController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'manager_fact_groups'
+    @component_name = 'manager_fact_groups'
     @component_data = {
       fact_groups: fact_groups,
       new_url: new_manager_fact_group_path
@@ -34,7 +34,7 @@ class Manager::FactGroupsController < ApplicationController
   end
 
   def new
-    @page_name = 'manager_fact_groups_new'
+    @component_name = 'manager_fact_groups_new'
     @component_data = {
       submit_url: manager_fact_groups_path,
       cancel_url: manager_fact_groups_path,
@@ -49,7 +49,7 @@ class Manager::FactGroupsController < ApplicationController
   def edit
     fact_group = FactGroup.find params[:id]
 
-    @page_name = 'manager_fact_groups_edit'
+    @component_name = 'manager_fact_groups_edit'
     @component_data = {
       fact_group: DataFormer.new(fact_group).data,
       submit_url: manager_fact_group_path(fact_group),
