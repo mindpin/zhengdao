@@ -1,5 +1,5 @@
 @ManagerTable = React.createClass
-  displayName: 'DemoAdminTable'
+  displayName: 'ManagerTable'
   render: ->
     <div className='manager-table'>
       {
