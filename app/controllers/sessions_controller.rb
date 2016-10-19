@@ -38,7 +38,7 @@ class SessionsController < Devise::SessionsController
       manager_sign_in_url: sign_in_path(role: 'manager'),
       manager_submit_url: api_sign_in_path(role: 'manager')
     }
-    render "/mockup/page", layout: 'auth'
+    render "/layouts/page", layout: 'auth'
   end
 
   def manager_sign_in
@@ -50,6 +50,6 @@ class SessionsController < Devise::SessionsController
       manager_sign_in_url: sign_in_path(role: 'manager'),
       manager_submit_url: api_sign_in_path
     }
-    render "/mockup/page", layout: "auth"
+    render "/layouts/page", layout: "auth"
   end
 end

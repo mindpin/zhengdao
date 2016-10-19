@@ -50,7 +50,7 @@ class Manager::IndexController < ApplicationController
       mobile_back_to: manager_path,
       current_title: '业务过程'
     }
-    render template: 'mockup/index/graph.html.haml'
+    render template: 'layouts/graph'
   end
 
   def patient_graph
@@ -70,6 +70,6 @@ class Manager::IndexController < ApplicationController
       current_title: '诊疗流程'
     }
 
-    render layout: 'layouts/diagnosis.html.haml', template: 'mockup/page'
+    render layout: 'layouts/diagnosis.html.haml', template: 'layouts/page'
   end
 end
