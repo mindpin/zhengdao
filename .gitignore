@@ -29,3 +29,5 @@ public/assets/
 /config/application.yml
 .floo
 .flooignore
+
+node_modules

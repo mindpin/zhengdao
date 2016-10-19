@@ -98,8 +98,8 @@ Upload = React.createClass
     </div>
 
   componentDidMount: ->
-    # $browse_button = jQuery React.findDOMNode @refs.browse_btn
-    $browse_button = jQuery React.findDOMNode @refs.browse_btn
+    # $browse_button = jQuery ReactDOM.findDOMNode @refs.browse_btn
+    $browse_button = jQuery ReactDOM.findDOMNode @refs.browse_btn
     new QiniuFilePartUploader
       debug:                true
       browse_button:        $browse_button

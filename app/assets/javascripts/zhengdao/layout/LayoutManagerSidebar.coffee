@@ -33,7 +33,7 @@
         </div>
 
       componentDidMount: ->
-        jQuery React.findDOMNode(@refs.menu)
+        jQuery ReactDOM.findDOMNode(@refs.menu)
           .dropdown()
 
       toggle: (evt)->

@@ -6,6 +6,8 @@ gem "turbolinks"
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'puma', '~> 3.0'
+
 gem 'sass-rails', '~> 5.0'
 gem "coffee-rails", "~> 4.1.0"
 gem "jquery-rails"
@@ -17,9 +19,19 @@ gem "devise", "3.5.2"
 gem 'sprockets', '3.4.0'
 gem 'sprockets-rails', '2.3.3'
 
-gem 'react-rails', '1.2.0'
-gem 'sprockets-coffee-react', '3.0.1'
+# 修正 assets 的冗余 digest 问题
 gem 'non-stupid-digest-assets'
+
+
+# https://github.com/reactjs/react-rails
+# 引入 reactjs
+gem 'react-rails', '~> 1.8.2'
+# https://github.com/browserify-rails/browserify-rails
+# https://github.com/mindpin/knowledge-camp/issues/170
+gem 'browserify-rails'
+# 支持 asset require coffee 文件
+gem 'sprockets-coffee-react', '3.0.1'
+
 
 group :development do
   gem 'web-console', '~> 2.0'
@@ -44,9 +56,3 @@ gem "figaro", "~> 1.1.1"
 
 gem 'file-part-upload', github: "mindpin/file-part-upload",
                         tag: "3.2.0"
-
-# 通过 rails assets 服务加载前端包
-source 'https://rails-assets.org'
-
-gem 'rails-assets-semantic'
-gem 'rails-assets-URIjs'

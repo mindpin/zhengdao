@@ -167,7 +167,7 @@ TagsField = React.createClass
   componentDidMount: ->
     # console.log @state.tags
 
-    jQuery(React.findDOMNode @)
+    jQuery(ReactDOM.findDOMNode @)
       .find('.ui.dropdown').dropdown
         allowAdditions: true
         onAdd: (addedValue, addedText, $addedChoice)=>

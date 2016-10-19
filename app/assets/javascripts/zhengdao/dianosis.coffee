@@ -125,7 +125,7 @@ SVGToucher = React.createClass
     evt.stopPropagation()
 
   do_scale: (evt)->
-    $toucher = jQuery React.findDOMNode @
+    $toucher = jQuery ReactDOM.findDOMNode @
     offset = $toucher.offset()
     px = evt.pageX - offset.left
     py = evt.pageY - offset.top
@@ -179,7 +179,7 @@ SVGToucher = React.createClass
         @aim_to_center()
 
       aim_to_center: ->
-        $toucher = jQuery React.findDOMNode @props.toucher
+        $toucher = jQuery ReactDOM.findDOMNode @props.toucher
         tw = $toucher.width()
         th = $toucher.height()
 

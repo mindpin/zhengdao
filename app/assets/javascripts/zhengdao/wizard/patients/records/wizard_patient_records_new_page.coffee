@@ -87,20 +87,20 @@
     </div>
 
   componentDidMount: ->
-    $dom = jQuery React.findDOMNode @refs.select0
+    $dom = jQuery ReactDOM.findDOMNode @refs.select0
     $dom.dropdown()
     @setState reg_kind: $dom.val()
 
-    $dom = jQuery React.findDOMNode @refs.sd1
+    $dom = jQuery ReactDOM.findDOMNode @refs.sd1
     $dom.dropdown()
     @setState reg_period: $dom.val()
 
-    $dom = jQuery React.findDOMNode @refs.sd3
+    $dom = jQuery ReactDOM.findDOMNode @refs.sd3
     $dom.dropdown()
     @setState reg_period: $dom.val()
 
   componentDidUpdate: ->
-    $dom = jQuery React.findDOMNode @refs.select2
+    $dom = jQuery ReactDOM.findDOMNode @refs.select2
     $dom.dropdown()
 
   change_kind: (evt)->

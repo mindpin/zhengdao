@@ -226,7 +226,7 @@
       </DataForm.Form.Field>
 
     componentDidMount: ->
-      $dom = jQuery React.findDOMNode @refs.select
+      $dom = jQuery ReactDOM.findDOMNode @refs.select
       $dom.dropdown()
       @props._set_value $dom.val()
 
@@ -242,13 +242,13 @@
       </DataForm.Form.Field>
 
     componentDidMount: ->
-      $dom = jQuery React.findDOMNode @refs.select
+      $dom = jQuery ReactDOM.findDOMNode @refs.select
       $dom.dropdown()
       value = @props._value || []
       $dom.dropdown('set selected', value)
 
     change: ->
-      $dom = jQuery React.findDOMNode @refs.select
+      $dom = jQuery ReactDOM.findDOMNode @refs.select
       values = $dom.dropdown('get value')
       values = values[values.length - 1]
       @props._set_value(values || [])
