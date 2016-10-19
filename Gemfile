@@ -1,4 +1,5 @@
-source "https://ruby.taobao.org"
+source 'https://gems.ruby-china.org'
+
 gem "rails", "4.2.3"
 gem "uglifier", ">= 1.3.0"
 gem "turbolinks"
@@ -46,5 +47,6 @@ gem 'file-part-upload', github: "mindpin/file-part-upload",
 
 # 通过 rails assets 服务加载前端包
 source 'https://rails-assets.org'
+
 gem 'rails-assets-semantic'
 gem 'rails-assets-URIjs'
