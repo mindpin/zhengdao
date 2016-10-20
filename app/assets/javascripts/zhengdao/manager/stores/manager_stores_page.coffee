@@ -32,11 +32,12 @@
           unstackable: true
         }
 
+        { AddButton } = ManagerOps
+
         <div>
-          <div className='ui segment basic ops'>
-            <a href={@props.data.new_url} className='ui button green'>
-              <i className='icon plus' /> 添加店面
-            </a>
-          </div>
+          <ManagerOps>
+            <AddButton href={@props.data.new_url} text='添加店面' />
+          </ManagerOps>
+          
           <ManagerTable data={table_data} title='店面管理' />
         </div>
