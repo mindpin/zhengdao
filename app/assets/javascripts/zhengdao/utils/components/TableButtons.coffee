@@ -19,3 +19,20 @@
         <Tag key={key}>{value}</Tag>
     }
     </div>
+
+{ Tag, Icon } = antd
+
+@TableIDTags = React.createClass
+  render: ->
+    <div className='table-tags'>
+    {
+      for x in @props.data
+        <Tag key={x.id}>
+          {
+            if @props.icon?
+              <Icon type={@props.icon} />
+          }
+          <span style={marginLeft: '0.2rem'}>{x.name}</span>
+        </Tag>
+    }
+    </div>
