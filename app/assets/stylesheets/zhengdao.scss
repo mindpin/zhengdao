@@ -56,13 +56,14 @@ $number-font-family: "Helvetica Neue", "Arial", "Helvetica", "sans-serif" !impor
 @import 'zhengdao/widget';
 @import 'zhengdao/wizard';
 @import 'zhengdao/FactTagQuickRecorder';
+@import 'zhengdao/antd';
 
-a {
-  color: #94634a;
-  &:hover {
-    color: darken(#94634a, 10%);
-  }
-}
+// a {
+//   color: #94634a;
+//   &:hover {
+//     color: darken(#94634a, 10%);
+//   }
+// }
 
 body,
 
