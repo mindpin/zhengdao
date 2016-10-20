@@ -1,48 +1,41 @@
+{ Table } = antd
+
 @ManagerUsersPage = React.createClass
   render: ->
+    { AddButton } = ManagerOps
+
     <div className='manager-users-page'>
       <PageDesc text='管理工作人员角色信息与登录信息' />
 
-      <ManagerUsersPage.Table data={@props.data} />
+      <ManagerOps>
+        <AddButton href={@props.data.new_url} text='添加人员' />
+      </ManagerOps>
+
+      {@table()}
     </div>
 
-  statics:
-    Table: React.createClass
-      render: ->
-        table_data = {
-          fields:
-            names: '用户名'
-            role_str: '角色'
-            store: '店面'
-            ops: '操作'
-          data_set: @props.data.users.map (x)->
-            id: x.id
-            names: "#{x.name}(#{x.login})"
-            role_str: 
-              <div>
-              {
-                for role, str of x.role_strs
-                  <div key={role}>{str}</div>
-              }
-              </div>
-            store: x.store.name || '无'
-            ops:
-              <a href={x.edit_url} className='ui button basic mini'><i className='icon edit' /> 修改</a>
-          th_classes: {
-          }
-          td_classes: {
-            role_str: 'collapsing'
-            ops: 'collapsing'
-          }
-          unstackable: true
-        }
+  table: ->
+    data_source = @props.data.users
 
-        { AddButton } = ManagerOps
-
-        <div>
-          <ManagerOps>
-            <AddButton href={@props.data.new_url} text='添加人员' />
-          </ManagerOps>
-
-          <ManagerTable data={table_data} title='人员管理' />
-        </div>
+    columns = [
+      {title: '用户名', key: 'names', render: (x)->
+        "#{x.name}(#{x.login})"
+      }
+      {title: '角色', key: 'role_str', render: (x)->
+        <TableTags data={x.role_strs} />
+      }
+      {title: '店面', key: 'store', render: (x)->
+        x.store?.name || <span style={color: '#ccc'}>无</span>
+      }
+      {title: '操作', key: 'ops', render: (x)->
+        <TableEditButton href={x.edit_url} text='修改' />
+      }
+    ]
+    
+    <Table
+      columns={columns}
+      dataSource={data_source}
+      bordered
+      size='middle'
+      rowKey='id'
+    />

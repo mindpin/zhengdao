@@ -32,4 +32,5 @@
       dataSource={data_source}
       bordered
       size='middle'
+      rowKey='id'
     />
