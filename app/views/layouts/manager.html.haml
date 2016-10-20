@@ -66,6 +66,7 @@
     :javascript
       window.current_user = #{current_user_info.to_json}
       window.content_component = #{content_component.to_json}
+      window.current_role = #{session[:current_role].to_json}
 
     = react_component 'LayoutManagerSidebar', data: manager_sidebar_data
     .manager-sidebar-pusher
