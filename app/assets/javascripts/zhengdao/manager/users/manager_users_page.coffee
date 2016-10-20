@@ -1,10 +1,7 @@
 @ManagerUsersPage = React.createClass
   render: ->
     <div className='manager-users-page'>
-      <div className='ui icon message warning'>
-        <i className='icon doctor' />
-        管理工作人员角色信息与登录信息
-      </div>
+      <PageDesc text='管理工作人员角色信息与登录信息' />
 
       <ManagerUsersPage.Table data={@props.data} />
     </div>

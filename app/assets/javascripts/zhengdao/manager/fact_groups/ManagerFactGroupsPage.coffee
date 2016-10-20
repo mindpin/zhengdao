@@ -1,10 +1,7 @@
 @ManagerFactGroupsPage = React.createClass
   render: ->
     <div className='manager-fact-groups-page'>
-      <div className='ui icon message warning'>
-        <i className='icon tags' />
-        管理体检记录用标签组
-      </div>
+      <PageDesc text='管理体检记录用标签组' />
 
       <Table data={@props.data} />
     </div>

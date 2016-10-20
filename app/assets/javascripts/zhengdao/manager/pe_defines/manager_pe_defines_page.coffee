@@ -1,10 +1,7 @@
 @ManagerPeDefinesPage = React.createClass
   render: ->
     <div className='manager-pe-defines-page'>
-      <div className='ui icon message warning'>
-        <i className='icon add square' />
-        管理体检项定义
-      </div>
+      <PageDesc text='管理体检项定义' />
 
       <ManagerPeDefinesPage.Table data={@props.data} />
     </div>

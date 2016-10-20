@@ -1,10 +1,7 @@
 @ManagerStoresPage = React.createClass
   render: ->
     <div className='manager-stores-page'>
-      <div className='ui icon message warning'>
-        <i className='icon hospital' />
-        管理店面信息
-      </div>
+      <PageDesc text='管理店面信息' />
 
       <ManagerStoresPage.Table data={@props.data} />
     </div>

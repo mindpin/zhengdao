@@ -1,11 +1,7 @@
 @ManagerPayDefinesPage = React.createClass
   render: ->
     <div className='manager-pay-defines-page'>
-      <div className='ui icon message warning'>
-        <i className='icon add square' />
-        管理治疗项目定义
-      </div>
-
+      <PageDesc text='管理治疗项目定义' />
       <ManagerPayDefinesPage.Table data={@props.data} />
     </div>
 
