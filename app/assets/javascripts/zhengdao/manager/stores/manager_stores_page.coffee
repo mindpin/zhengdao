@@ -1,5 +1,3 @@
-{ Table } = antd
-
 @ManagerStoresPage = React.createClass
   render: ->
     { AddButton } = ManagerOps
@@ -15,6 +13,8 @@
     </div>
 
   table: ->
+    { Table } = antd
+
     data_source = @props.data.stores
 
     columns = [

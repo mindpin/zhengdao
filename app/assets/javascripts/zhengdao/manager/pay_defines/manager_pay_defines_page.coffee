@@ -1,5 +1,3 @@
-{ Table } = antd
-
 @ManagerPayDefinesPage = React.createClass
   render: ->
     { AddButton } = ManagerOps
@@ -15,15 +13,18 @@
     </div>
 
   table: ->
+    { Table } = antd
+
     data_source = @props.data.pay_defines
 
     columns = [
       {title: '治疗项名称', dataIndex: 'name', key: 'name'}
+      {title: '描述', dataIndex: 'desc', key: 'desc'}
       {title: '操作', key: 'ops', render: (x)->
         <TableEditButton href={x.edit_url} text='修改' />
       }
     ]
-    
+
     <Table
       columns={columns}
       dataSource={data_source}

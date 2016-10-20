@@ -1,5 +1,3 @@
-{ Table } = antd
-
 @ManagerUsersPage = React.createClass
   render: ->
     { AddButton } = ManagerOps
@@ -15,6 +13,8 @@
     </div>
 
   table: ->
+    { Table } = antd
+
     data_source = @props.data.users
 
     columns = [
@@ -31,7 +31,7 @@
         <TableEditButton href={x.edit_url} text='修改' />
       }
     ]
-    
+
     <Table
       columns={columns}
       dataSource={data_source}

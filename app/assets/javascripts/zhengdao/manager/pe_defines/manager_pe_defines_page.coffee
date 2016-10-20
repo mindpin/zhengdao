@@ -1,42 +1,37 @@
 @ManagerPeDefinesPage = React.createClass
   render: ->
+    { AddButton } = ManagerOps
+    
     <div className='manager-pe-defines-page'>
       <PageDesc text='管理体检项定义' />
 
-      <ManagerPeDefinesPage.Table data={@props.data} />
+      <ManagerOps>
+        <AddButton href={@props.data.new_url} text='添加体检项' />
+      </ManagerOps>
+
+      {@table()}
     </div>
 
-  statics:
-    Table: React.createClass
-      render: ->
-        table_data = {
-          fields:
-            name: '体检项名称'
-            desc: '描述'
-            fact_groups_count: '标签组'
-            ops: '操作'
-          data_set: @props.data.pe_defines.map (x)->
-            id: Math.random()
-            name: x.name
-            desc: x.desc
-            fact_groups_count: x.fact_groups.length
-            unit_price: x.unit_price
-            ops:
-              <a href={x.edit_url} className='ui button basic mini'><i className='icon edit' /> 修改</a>
-          th_classes: {
-          }
-          td_classes: {
-            ops: 'collapsing'
-          }
-          unstackable: true
-        }
+  table: ->
+    { Table } = antd
 
-        { AddButton } = ManagerOps
+    data_source = @props.data.pe_defines
 
-        <div>
-          <ManagerOps>
-            <AddButton href={@props.data.new_url} text='添加体检项' />
-          </ManagerOps>
+    columns = [
+      {title: '体检项名称', dataIndex: 'name', key: 'name'}
+      {title: '描述', dataIndex: 'desc', key: 'desc'}
+      {title: '标签组', key: 'fact_groups_count', render: (x)->
+        x.fact_groups.length
+      }
+      {title: '操作', key: 'ops', render: (x)->
+        <TableEditButton href={x.edit_url} text='修改' />
+      }
+    ]
 
-          <ManagerTable data={table_data} title='体检项目管理' />
-        </div>
+    <Table
+      columns={columns}
+      dataSource={data_source}
+      bordered
+      size='middle'
+      rowKey='id'
+    />
