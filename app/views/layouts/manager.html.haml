@@ -50,10 +50,28 @@
         sign_out_to_url: root_path
       }
 
+    :ruby
+      content_component = {
+        name: @component_name,
+        data: {data: @component_data || {}},
+        layout: @component_layout || 'AppLayout'
+      }
+
+      current_user_info = current_user.blank? ? {} : {
+        id: current_user.id.to_s,
+        email: current_user.login,
+        name: current_user.name
+      }
+
+    :javascript
+      window.current_user = #{current_user_info.to_json}
+      window.content_component = #{content_component.to_json}
+
     = react_component 'LayoutManagerSidebar', data: manager_sidebar_data
     .manager-sidebar-pusher
       = react_component 'LayoutManagerTopMenu', data: top_menu_data, current_user_data: nil, extend_nav_data: @extend_nav_data
 
       .manager-page-content
         .func-content.ui.segment.basic
+          = react_component content_component[:layout]
           = yield

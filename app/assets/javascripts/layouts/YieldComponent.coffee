@@ -5,8 +5,14 @@ module.exports = YieldComponent = React.createClass
     { name, data } = @props.component
 
     try
-      console.debug "render content component: ", name
+      if name?
+        console.debug "render content component: ", name
+      else
+        console.debug 'not assign ant component'
+        return <div />
+
       component = eval(name)
+      throw "组件 #{name} 没有注册" unless component?
       React.createElement component, data
     catch e
       <Alert

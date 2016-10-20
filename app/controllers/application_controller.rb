@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   def default_render
     if @component_name.present?
       @component_name = @component_name.camelize
+
+      # 针对 zhengdao 的旧代码特殊处理
+      @component_name = "#{@component_name}Page" if @component_name[-4..-1] != 'Page'
       
       respond_to do |format|
         format.html { render text: nil, layout: true }

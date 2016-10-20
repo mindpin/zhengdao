@@ -1,5 +1,5 @@
 class Manager::IndexController < ApplicationController
-  layout 'manager'
+  layout 'manager', except: [:pe_demo]
 
   def index
     funcs = DataFormer.new(current_user)
@@ -69,7 +69,5 @@ class Manager::IndexController < ApplicationController
       mobile_back_to: manager_path,
       current_title: '诊疗流程'
     }
-
-    render layout: 'layouts/diagnosis.html.haml', template: 'layouts/page'
   end
 end

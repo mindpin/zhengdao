@@ -86,7 +86,7 @@ SVGToucher = React.createClass
 
       onTouchStart={@drag_start}
       onTouchMove={@drag_move}
-      onTouchEn={@drag_end}
+      onTouchEnd={@drag_end}
     >
       <SVGToucher.PointsArea ref='area' template={@props.template} toucher={@} points={@points}/>
     </div>
