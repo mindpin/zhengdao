@@ -6,4 +6,6 @@ class Store
   field :location
   field :phone_number
   field :principal # 负责人
+
+  default_scope -> { asc(:id) }
 end

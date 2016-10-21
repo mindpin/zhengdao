@@ -2,7 +2,7 @@
   render: ->
     { AddButton } = ManagerOps
 
-    <div className='manager-stores-page'>
+    <div>
       <PageDesc text='管理店面信息' />
 
       <ManagerOps>
@@ -38,6 +38,8 @@
 # ----------------------------------------
 
 ModelForm = React.createClass
+  mixins: [CRUDMixin]
+
   render: ->
     { Form, Input, Button, Icon } = antd
     FormItem  = Form.Item
@@ -48,77 +50,56 @@ ModelForm = React.createClass
       wrapperCol: { span: 16 }
     }
 
-    store = @props.data.store
+    model = @props.data[@props.model]
 
     <div style={padding: '2rem 1rem 1rem', backgroundColor: 'white'}>
       <Form onSubmit={@submit}>
         <FormItem {...iprops} label='店面名称'>
-        {getFieldDecorator('name', {initialValue: store?.name, rules: [
-          {required: true, message: '店面名称必须要填'}
+        {getFieldDecorator('name', {initialValue: model?.name, rules: [
+          {required: true, message: '必须要填'}
         ]})(
           <Input />
         )}
         </FormItem>
 
         <FormItem {...iprops} label='地址'>
-        {getFieldDecorator('location', {initialValue: store?.location, rules: [
-          {required: true, message: '地址必须要填'}
+        {getFieldDecorator('location', {initialValue: model?.location, rules: [
+          {required: true, message: '必须要填'}
         ]})(
           <Input />
         )}
         </FormItem>
 
-        <FormItem {...iprops} label='电话' required>
-        {getFieldDecorator('phone_number', {initialValue: store?.phone_number, rules: [
-          {required: true, message: '电话必须要填'}
+        <FormItem {...iprops} label='电话'>
+        {getFieldDecorator('phone_number', {initialValue: model?.phone_number, rules: [
+          {required: true, message: '必须要填'}
         ]})(
           <Input />
         )}
         </FormItem>
 
-        <FormItem {...iprops} label='负责人' required>
-        {getFieldDecorator('principal', {initialValue: store?.principal, rules: [
-          {required: true, message: '负责人必须要填'}
+        <FormItem {...iprops} label='负责人'>
+        {getFieldDecorator('principal', {initialValue: model?.principal, rules: [
+          {required: true, message: '必须要填'}
         ]})(
           <Input />
         )}
         </FormItem>
 
-        <FormItem wrapperCol={ span: 16, offset: 4 }>
-          <Button type="primary" htmlType="submit">
-            <Icon type='check' /> 确定保存
-          </Button>
-          <a className='ant-btn ant-btn-lg' style={marginLeft: 8} href={@props.data.cancel_url}>
-            取消
-          </a>
-        </FormItem>
+        {@submit_btns()}
       </Form>
     </div>
-
-  submit: (evt)->
-    evt.preventDefault()
-
-    @props.form.validateFields (errors, data) => 
-      return if errors
-
-      jQuery.ajax
-        type: @props.method
-        url: @props.data.submit_url
-        data:
-          store: data
-      .done (res)=>
-        location.href = @props.data.cancel_url
 
 
 @ManagerStoresNewPage = antd.Form.create()(
   React.createClass
     render: ->
-      <ModelForm {...@props} method='POST' />
+      <ModelForm {...@props} method='POST' model='store' />
 )
 
 
 @ManagerStoresEditPage = antd.Form.create()(
   React.createClass
     render: ->
-      <ModelForm {...@props} method='PUT' />
+      <ModelForm {...@props} method='PUT' model='store' />
 )

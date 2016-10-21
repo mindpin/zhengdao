@@ -92,7 +92,7 @@ ToggleRole = React.createClass
         {
           for role, str of @props.role_strs
             <Option key={role} value={role}>
-              <Icon type='user' /> {str}
+              <Icon type='solution' /> {str}
             </Option>
         }
       </Select>

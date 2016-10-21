@@ -11,6 +11,7 @@
 # --------------------------
 
 #= require file_part_upload/uploader
+#= require_tree ./zhengdao/utils
 #= require_tree ./zhengdao
 
 # --------------------------

@@ -42,6 +42,8 @@ class User
 
   belongs_to :store
 
+  default_scope -> { asc(:id) }
+
   scope :with_role, ->(role) {
     where roles: role
   }
