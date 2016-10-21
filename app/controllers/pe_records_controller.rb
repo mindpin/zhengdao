@@ -4,7 +4,7 @@ class PeRecordsController < ApplicationController
   def new
     pe_define = PeDefine.find(params[:name])
 
-    @page_name = 'pe_records_form'
+    @component_name = 'pe_records_form'
     @component_data = {
       records: DataFormer.new(pe_define)
         .logic(:merge_records, nil)
@@ -24,7 +24,7 @@ class PeRecordsController < ApplicationController
       }
     ]
 
-    @page_name = 'pe_records_form'
+    @component_name = 'pe_records_form'
     @component_data = {
       records: DataFormer.new(pe_define)
         .logic(:merge_records, records)

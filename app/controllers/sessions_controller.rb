@@ -29,27 +29,27 @@ class SessionsController < Devise::SessionsController
   end
 
   private
-  def common_user_sign_in
-    @page_name = 'auth_sign_in'
-    @component_data = {
-      common_sign_in_url: sign_in_path,
-      common_submit_url: api_sign_in_path,
+    def common_user_sign_in
+      @component_layout = 'AuthLayout'
+      @component_name = 'AuthSignInPage'
+      @component_data = {
+        common_sign_in_url: sign_in_path,
+        common_submit_url: api_sign_in_path,
 
-      manager_sign_in_url: sign_in_path(role: 'manager'),
-      manager_submit_url: api_sign_in_path(role: 'manager')
-    }
-    render "/mockup/page", layout: 'auth'
-  end
+        manager_sign_in_url: sign_in_path(role: 'manager'),
+        manager_submit_url: api_sign_in_path(role: 'manager')
+      }
+    end
 
-  def manager_sign_in
-    @page_name = 'auth_manager_sign_in'
-    @component_data = {
-      common_sign_in_url: sign_in_path,
-      common_submit_url: api_sign_in_path,
+    def manager_sign_in
+      @component_layout = 'AuthLayout'
+      @component_name = 'AuthManagerSignInPage'
+      @component_data = {
+        common_sign_in_url: sign_in_path,
+        common_submit_url: api_sign_in_path,
 
-      manager_sign_in_url: sign_in_path(role: 'manager'),
-      manager_submit_url: api_sign_in_path
-    }
-    render "/mockup/page", layout: "auth"
-  end
+        manager_sign_in_url: sign_in_path(role: 'manager'),
+        manager_submit_url: api_sign_in_path
+      }
+    end
 end

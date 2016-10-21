@@ -32,5 +32,8 @@ module KnowledgeCamp
     config.to_prepare do
       DeviseController.respond_to :html, :json
     end
+
+    ### browserify coffee 引用
+    config.browserify_rails.commandline_options = "-t coffee-reactify --extension='.coffee'"
   end
 end

@@ -45,20 +45,20 @@
     </div>
 
   componentDidMount: ->
-    jQuery(React.findDOMNode @refs.select0)
+    jQuery(ReactDOM.findDOMNode @refs.select0)
       .dropdown()
 
-    jQuery(React.findDOMNode @refs.select1)
+    jQuery(ReactDOM.findDOMNode @refs.select1)
       .dropdown()
 
   pe_change: (evt)->
-    value = jQuery(React.findDOMNode @refs.select0)
+    value = jQuery(ReactDOM.findDOMNode @refs.select0)
       .dropdown('get value')
     value = value[value.length - 1] || []
     @setState selected_pe_items: value
 
   cure_change: (evt)->
-    value = jQuery(React.findDOMNode @refs.select1)
+    value = jQuery(ReactDOM.findDOMNode @refs.select1)
       .dropdown('get value')
     value = value[value.length - 1] || []
     @setState selected_cure_items: value

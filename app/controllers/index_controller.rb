@@ -23,7 +23,7 @@ class IndexController < ApplicationController
       return redirect_to cure_queue_path
     end
 
-    @page_name = 'index'
+    @component_name = 'index'
     @component_data = {}
   end
 end

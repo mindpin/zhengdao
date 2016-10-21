@@ -9,7 +9,7 @@ class Wizard::IndexController < ApplicationController
         x[:funcs]
       }.flatten
 
-    @page_name = 'wizard_index'
+    @component_name = 'wizard_index'
     @component_data = {
       funcs: funcs,
       search_url: wizard_search_path
@@ -24,7 +24,7 @@ class Wizard::IndexController < ApplicationController
     patients_data = Patient.or({name: /#{query}/}, {id_card: query}, {mobile_phone: query}).map {|p|
       DataFormer.new(p).data
     }
-    @page_name = 'wizard_search'
+    @component_name = 'wizard_search'
     @component_data = {
       patients: patients_data,
       search_url: wizard_search_path,
@@ -49,7 +49,7 @@ class Wizard::IndexController < ApplicationController
     end
 
 
-    @page_name = 'wizard_queue'
+    @component_name = 'wizard_queue'
     @component_data = {
       queue: queue,
       reg_queue_url: wizard_queue_path(queue: 'reg'),

@@ -7,4 +7,6 @@ class PayDefine
   field :name # 收费项名称
   field :desc # 收费项描述
   field :unit_price # 收费项单价  
+
+  default_scope -> { asc(:id) }
 end

@@ -86,7 +86,7 @@ SVGToucher = React.createClass
 
       onTouchStart={@drag_start}
       onTouchMove={@drag_move}
-      onTouchEn={@drag_end}
+      onTouchEnd={@drag_end}
     >
       <SVGToucher.PointsArea ref='area' template={@props.template} toucher={@} points={@points}/>
     </div>
@@ -125,7 +125,7 @@ SVGToucher = React.createClass
     evt.stopPropagation()
 
   do_scale: (evt)->
-    $toucher = jQuery React.findDOMNode @
+    $toucher = jQuery ReactDOM.findDOMNode @
     offset = $toucher.offset()
     px = evt.pageX - offset.left
     py = evt.pageY - offset.top
@@ -179,7 +179,7 @@ SVGToucher = React.createClass
         @aim_to_center()
 
       aim_to_center: ->
-        $toucher = jQuery React.findDOMNode @props.toucher
+        $toucher = jQuery ReactDOM.findDOMNode @props.toucher
         tw = $toucher.width()
         th = $toucher.height()
 
@@ -238,16 +238,6 @@ SVGToucher = React.createClass
 @DiagnosisPage = React.createClass
   render: ->
     <div className='diagnosis-page'>
-      <h2 className='ui header topbar'>
-        <TopbarBack href='/manager' />
-        <span>中医体检</span>
-        <div className='buttons'>
-          <a className='ui button brown small' href='javascript:;'>
-            <i className='icon checkmark' />
-            <span>保存体检记录</span>
-          </a>
-        </div>
-      </h2>
       <DiagnosisPage.Paper page={@}/>
       <DiagnosisPage.Sidebar ref='sidebar'/>
       <DiagnosisPage.Popbox page={@} ref='popbox'/>

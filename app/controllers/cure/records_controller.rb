@@ -15,7 +15,7 @@ class Cure::RecordsController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'cure_patient_record_visit'
+    @component_name = 'cure_patient_record_visit'
     @component_data = {
       patient: DataFormer.new(patient).data,
       record: DataFormer.new(record)

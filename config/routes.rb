@@ -13,11 +13,6 @@ Rails.application.routes.draw do
     post   "/api/sign_up"  => "registrations#create"
   end
 
-  # get '/index' => 'mockup/index#index'
-  # get '/graph' => 'mockup/index#graph'
-
-  # get '/:page' => 'mockup/index#page', as: 'zhengdao'
-
   namespace :manager do
     get '/' => 'index#index'
     get '/sysinfo' => 'index#sysinfo'

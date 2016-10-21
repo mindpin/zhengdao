@@ -191,5 +191,5 @@
         @props.parent.setState next_visit_worker_id: worker_id
 
       componentDidUpdate: ->
-        $dom = jQuery React.findDOMNode @refs.select
+        $dom = jQuery ReactDOM.findDOMNode @refs.select
         $dom.dropdown()

@@ -1,63 +1,44 @@
 @ManagerFactGroupsPage = React.createClass
   render: ->
+    { AddButton } = ManagerOps
+
     <div className='manager-fact-groups-page'>
-      <div className='ui icon message warning'>
-        <i className='icon tags' />
-        管理体检记录用标签组
-      </div>
+      <PageDesc text='管理体检记录用标签组' />
 
-      <Table data={@props.data} />
+      <ManagerOps>
+        <AddButton href={@props.data.new_url} text='添加标签组' />
+      </ManagerOps>
+
+      {@table()}
     </div>
 
-Table = React.createClass
-  render: ->
-    table_data = {
-      fields:
-        name: '组名'
-        children: '子级组/标签'
-        ops: '操作'
-      data_set: @props.data.fact_groups.map (x)->
-        if x.children.length > 0
-          children =
-            <div>
-            {
-              for child in x.children
-                <div key={child.id}><i className='icon circle thin' /> {child.name}</div>
-            }
-            </div>
+  table: ->
+    { Table } = antd
 
-        if x.fact_tags.length > 0
-          children =
-            <div>
-            {
-              for tag in x.fact_tags
-                <div key={tag.id}><i className='icon tag' /> {tag.name}</div>
-            }
-            </div>
+    data_source = @props.data.fact_groups.map (x)->
+      Object.assign({}, x, {
+        children: null
+        child_groups: x.children
+        child_tags: x.fact_tags
+      })
 
-        id: x.id
-        name: x.name
-        children: children
-        ops:
-          <div>
-            <a href={x.edit_url} className='ui button mini basic'>
-              <i className='icon pencil' /> 编辑
-            </a>
-          </div>
-
-      th_classes: {
+    columns = [
+      {title: '组名', dataIndex: 'name', key: 'name'}
+      {title: '子级组/标签', key: 'child_facts', render: (x)->
+        if x.child_groups.length
+          return <TableIDTags data={x.child_groups} icon='tags-o' />
+        if x.child_tags.length
+          return <TableIDTags data={x.child_tags} icon='tag' />
       }
-      td_classes: {
-        ops: 'collapsing'
+      {title: '操作', key: 'ops', render: (x)->
+        <TableEditButton href={x.edit_url} text='修改' />
       }
-      unstackable: true
-    }
-
-    <div>
-      <div className='ui segment basic ops'>
-        <a href={@props.data.new_url} className='ui button green'>
-          <i className='icon plus' /> 添加标签组
-        </a>
-      </div>
-      <ManagerTable data={table_data} title='标签组管理' />
-    </div>
+    ]
+    
+    <Table
+      columns={columns}
+      dataSource={data_source}
+      bordered
+      size='middle'
+      rowKey='id'
+    />

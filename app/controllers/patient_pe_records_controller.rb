@@ -7,7 +7,7 @@ class PatientPeRecordsController < ApplicationController
 
     saved_records = record.saved_records || []
 
-    @page_name = 'pe_records_form'
+    @component_name = 'pe_records_form'
     @component_data = {
       pe_name: pe_define.name,
       records: saved_records,
@@ -40,7 +40,7 @@ class PatientPeRecordsController < ApplicationController
         "/manager/records/#{record.patient_record.id}/visit"
       end
       
-    @page_name = 'pe_records_show'
+    @component_name = 'pe_records_show'
     @component_data = {
       pe_name: pe_define.name,
       # records: DataFormer.new(pe_define)

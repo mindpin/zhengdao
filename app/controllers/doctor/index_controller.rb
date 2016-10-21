@@ -9,7 +9,7 @@ class Doctor::IndexController < ApplicationController
         x[:funcs]
       }.flatten
 
-    @page_name = 'doctor_index'
+    @component_name = 'doctor_index'
     @component_data = {
       funcs: funcs,
     }
@@ -30,7 +30,7 @@ class Doctor::IndexController < ApplicationController
       records = PatientRecord.doctor_send_cure_queue(current_user)
     end
 
-    @page_name = 'doctor_queue'
+    @component_name = 'doctor_queue'
     @component_data = {
       queue: queue,
       wait_queue_count: PatientRecord.doctor_wait_queue(current_user).count,

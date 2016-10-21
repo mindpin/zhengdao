@@ -7,7 +7,7 @@ class Manager::PatientsController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'manager_patients'
+    @component_name = 'manager_patients'
     @component_data = {
       patients: patients_data,
       paginate: DataFormer.paginate_data(patients),
@@ -22,7 +22,7 @@ class Manager::PatientsController < ApplicationController
   def show
     patient = Patient.find params[:id]
 
-    @page_name = 'manager_patient_show'
+    @component_name = 'manager_patient_show'
     @component_data = {
       patient: DataFormer.new(patient)
         .logic(:records_count)
@@ -38,7 +38,7 @@ class Manager::PatientsController < ApplicationController
   def edit
     patient = Patient.find params[:id]
 
-    @page_name = 'manager_patient_edit'
+    @component_name = 'manager_patient_edit'
     @component_data = {
       patient: DataFormer.new(patient)
         .logic(:records_count)
@@ -54,7 +54,7 @@ class Manager::PatientsController < ApplicationController
   def records_info
     patient = Patient.find params[:id]
 
-    @page_name = 'manager_patient_records'
+    @component_name = 'manager_patient_records'
     @component_data = {
       patient: DataFormer.new(patient)
         .logic(:records_count)
@@ -71,7 +71,7 @@ class Manager::PatientsController < ApplicationController
   def active_record_info
     patient = Patient.find params[:id]
 
-    @page_name = 'manager_patient_active_record_info'
+    @component_name = 'manager_patient_active_record_info'
     @component_data = {
       patient: DataFormer.new(patient)
         .logic(:records_count)

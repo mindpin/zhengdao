@@ -15,7 +15,7 @@ class Pe::RecordsController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'pe_patient_record_visit'
+    @component_name = 'pe_patient_record_visit'
     @component_data = {
       patient: DataFormer.new(patient).data,
       record: DataFormer.new(record)

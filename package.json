@@ -1,0 +1,13 @@
+{
+  "name": "im-core",
+  "dependencies": {
+    "browserify": "~> 10.2.4",
+    "browserify-incremental": "^3.0.1",
+    "coffee-reactify": "~> 5.0.0",
+    "urijs": "^1.18.1"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10"
+  }
+}

@@ -6,7 +6,7 @@ class Manager::PayDefinesController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'manager_pay_defines'
+    @component_name = 'manager_pay_defines'
     @component_data = {
       pay_defines: pay_defines,
       new_url: new_manager_pay_define_path
@@ -18,7 +18,7 @@ class Manager::PayDefinesController < ApplicationController
   end
 
   def new
-    @page_name = 'manager_pay_defines_new'
+    @component_name = 'manager_pay_defines_new'
     @component_data = {
       submit_url: manager_pay_defines_path,
       cancel_url: manager_pay_defines_path
@@ -40,7 +40,7 @@ class Manager::PayDefinesController < ApplicationController
   def edit
     pay_define = PayDefine.find params[:id]
 
-    @page_name = 'manager_pay_defines_edit'
+    @component_name = 'manager_pay_defines_edit'
     @component_data = {
       pay_define: DataFormer.new(pay_define).data,
       submit_url: manager_pay_define_path(pay_define),

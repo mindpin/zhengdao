@@ -1,4 +1,5 @@
-// *= require zhengdao/semantic
+// *= require semantic/semantic-2.2.4.min
+// *= require antd/antd-2.0.1.min
 
 @import 'patient-graph';
 
@@ -55,13 +56,14 @@ $number-font-family: "Helvetica Neue", "Arial", "Helvetica", "sans-serif" !impor
 @import 'zhengdao/widget';
 @import 'zhengdao/wizard';
 @import 'zhengdao/FactTagQuickRecorder';
+@import 'zhengdao/antd';
 
-a {
-  color: #94634a;
-  &:hover {
-    color: darken(#94634a, 10%);
-  }
-}
+// a {
+//   color: #94634a;
+//   &:hover {
+//     color: darken(#94634a, 10%);
+//   }
+// }
 
 body,
 
@@ -443,7 +445,7 @@ body.admin {
 
   .page-paper {
     position: absolute;
-    top:50px;left:0;bottom:0;
+    top:0;left:0;bottom:0;
     right:$sidebar-w + $bdw;
     overflow:hidden;
     background-color: rgba(white, 0.4);

@@ -2,7 +2,7 @@
   render: ->
     <div className='manager-sidebar'>
       <div className='sidebar-inner'>
-        <LayoutManagerSidebar.ToggleRole role_strs={@props.data.role_strs} />
+        <ToggleRole role_strs={@props.data.role_strs} />
 
         {
           active = @props.data.current_func is @props.data.dashboard.id
@@ -20,25 +20,7 @@
     </div>
 
   statics:
-    ToggleRole: React.createClass
-      render: ->
-        <div className='toggle-role'>
-          <select className='ui dropdown' ref='menu' onChange={@toggle}>
-            <option value=''>切换角色</option>
-            {
-              for role, str of @props.role_strs
-                <option key={role} value={role}>{str}</option>
-            }
-          </select>
-        </div>
 
-      componentDidMount: ->
-        jQuery React.findDOMNode(@refs.menu)
-          .dropdown()
-
-      toggle: (evt)->
-        role = evt.target.value
-        location.href = "/?role=#{role}"
 
     Scene: React.createClass
       getInitialState: ->
@@ -92,3 +74,29 @@
             <span>{@props.data.name}</span>
           </a>
         </div>
+
+
+
+ToggleRole = React.createClass
+  render: ->
+    { Select, Icon } = antd
+    { Option } = Select
+    
+    <div style={margin: '5px'}>
+      <Select
+        style={width: '100%'}
+        placeholder='切换角色'
+        onChange={@toggle}
+        defaultValue={window.current_role}
+      >
+        {
+          for role, str of @props.role_strs
+            <Option key={role} value={role}>
+              <Icon type='solution' /> {str}
+            </Option>
+        }
+      </Select>
+    </div>
+
+  toggle: (role)->
+    location.href = "/?role=#{role}"

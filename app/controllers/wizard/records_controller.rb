@@ -13,7 +13,7 @@ class Wizard::RecordsController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'wizard_patient_records_new'
+    @component_name = 'wizard_patient_records_new'
     @component_data = {
       reg_kinds: PatientRecord.reg_kinds,
       dates: dates,
@@ -44,7 +44,7 @@ class Wizard::RecordsController < ApplicationController
 
     constraint_workers = record.constraint_workers(current_user) || []
 
-    @page_name = 'wizard_patient_record_receive'
+    @component_name = 'wizard_patient_record_receive'
     @component_data = {
       patient: DataFormer.new(patient).data,
       record: DataFormer.new(record).data,
@@ -76,7 +76,7 @@ class Wizard::RecordsController < ApplicationController
       DataFormer.new(x).data
     }
 
-    @page_name = 'wizard_patient_record_visit'
+    @component_name = 'wizard_patient_record_visit'
     @component_data = {
       patient: DataFormer.new(patient).data,
       record: DataFormer.new(record)
