@@ -35,6 +35,7 @@
       rowKey='id'
     />
 
+# ----------------------------------------
 
 ModelForm = React.createClass
   render: ->
@@ -47,10 +48,12 @@ ModelForm = React.createClass
       wrapperCol: { span: 16 }
     }
 
+    store = @props.data.store
+
     <div style={padding: '2rem 1rem 1rem', backgroundColor: 'white'}>
       <Form onSubmit={@submit}>
         <FormItem {...iprops} label='店面名称'>
-        {getFieldDecorator('name', {rules: [
+        {getFieldDecorator('name', {initialValue: store?.name, rules: [
           {required: true, message: '店面名称必须要填'}
         ]})(
           <Input />
@@ -58,7 +61,7 @@ ModelForm = React.createClass
         </FormItem>
 
         <FormItem {...iprops} label='地址'>
-        {getFieldDecorator('location', {rules: [
+        {getFieldDecorator('location', {initialValue: store?.location, rules: [
           {required: true, message: '地址必须要填'}
         ]})(
           <Input />
@@ -66,7 +69,7 @@ ModelForm = React.createClass
         </FormItem>
 
         <FormItem {...iprops} label='电话' required>
-        {getFieldDecorator('phone_number', {rules: [
+        {getFieldDecorator('phone_number', {initialValue: store?.phone_number, rules: [
           {required: true, message: '电话必须要填'}
         ]})(
           <Input />
@@ -74,7 +77,7 @@ ModelForm = React.createClass
         </FormItem>
 
         <FormItem {...iprops} label='负责人' required>
-        {getFieldDecorator('principal', {rules: [
+        {getFieldDecorator('principal', {initialValue: store?.principal, rules: [
           {required: true, message: '负责人必须要填'}
         ]})(
           <Input />
@@ -99,46 +102,23 @@ ModelForm = React.createClass
       return if errors
 
       jQuery.ajax
-        type: 'POST'
+        type: @props.method
         url: @props.data.submit_url
         data:
           store: data
       .done (res)=>
         location.href = @props.data.cancel_url
 
-@ManagerStoresNewPage = antd.Form.create()(ModelForm)
+
+@ManagerStoresNewPage = antd.Form.create()(
+  React.createClass
+    render: ->
+      <ModelForm {...@props} method='POST' />
+)
 
 
-
-
-@ManagerStoresEditPage = React.createClass
-  render: ->
-    {
-      TextInputField
-      Submit
-    } = DataForm
-
-    layout =
-      label_width: '6rem'
-
-    <div className='ui segment'>
-      <SimpleDataForm
-        model='store'
-        data={@props.data.store}
-        put={@props.data.submit_url}
-        done={@done}
-        cancel={@cancel}
-      >
-        <TextInputField {...layout} label='店面名称：' name='name' required />
-        <TextInputField {...layout} label='地址：' name='location' required />
-        <TextInputField {...layout} label='电话：' name='phone_number' required />
-        <TextInputField {...layout} label='负责人：' name='principal' required />
-        <Submit {...layout} text='确定保存' with_cancel='取消' />
-      </SimpleDataForm>
-    </div>
-
-  done: (res)->
-    Turbolinks.visit @props.data.cancel_url
-
-  cancel: ->
-    Turbolinks.visit @props.data.cancel_url
+@ManagerStoresEditPage = antd.Form.create()(
+  React.createClass
+    render: ->
+      <ModelForm {...@props} method='PUT' />
+)
