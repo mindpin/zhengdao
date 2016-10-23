@@ -51,7 +51,6 @@ ModelForm = React.createClass
     }
 
     model = @props.data[@props.model]
-    console.log model
 
     <div style={padding: '2rem 1rem 1rem', backgroundColor: 'white'}>
       <Form onSubmit={@submit}>

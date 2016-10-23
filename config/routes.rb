@@ -25,7 +25,9 @@ Rails.application.routes.draw do
     resources :users
     resources :stores
     resources :pay_defines
-    resources :pe_defines
+    resources :pe_defines do
+      get :search_facts, on: :member
+    end
 
     # 体检记录相关
     resources :pe_facts
