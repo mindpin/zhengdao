@@ -55,9 +55,9 @@ module UserFormer
                       icolor: '#0856a0'
                     },
                     {
-                      name: '标签组管理',
-                      icon: 'tags',
-                      url: manager_fact_groups_path,
+                      name: '体检字典维护',
+                      icon: 'tag',
+                      url: manager_pe_facts_path,
                       icolor: '#F36501'
                     },
                     {

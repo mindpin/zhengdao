@@ -26,9 +26,9 @@ Rails.application.routes.draw do
     resources :stores
     resources :pay_defines
     resources :pe_defines
-    resources :fact_groups do
-      get :list, on: :collection
-    end
+
+    # 体检记录相关
+    resources :pe_facts
 
     resources :patients do
       get :records_info, on: :member
