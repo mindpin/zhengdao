@@ -32,6 +32,7 @@ class Manager::PeFactsController < ApplicationController
 
   def create
     pe_fact = PeFact.new pe_fact_params
+    p pe_fact_params
     save_model(pe_fact) do |x|
       DataFormer.new(x)
         .data
@@ -64,6 +65,6 @@ class Manager::PeFactsController < ApplicationController
   private
 
   def pe_fact_params
-    params.require(:pe_fact).permit(:name)
+    params.require(:pe_fact).permit(:name, tag_names: [])
   end
 end

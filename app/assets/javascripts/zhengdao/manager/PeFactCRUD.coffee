@@ -41,7 +41,7 @@ ModelForm = React.createClass
   mixins: [CRUDMixin]
 
   render: ->
-    { Form, Input, Button, Icon } = antd
+    { Form, Input, Button, Icon, Select } = antd
     FormItem  = Form.Item
     { getFieldDecorator } = @props.form
 
@@ -51,6 +51,7 @@ ModelForm = React.createClass
     }
 
     model = @props.data[@props.model]
+    console.log model
 
     <div style={padding: '2rem 1rem 1rem', backgroundColor: 'white'}>
       <Form onSubmit={@submit}>
@@ -59,6 +60,17 @@ ModelForm = React.createClass
           {required: true, message: '必须要填'}
         ]})(
           <Input />
+        )}
+        </FormItem>
+
+        <FormItem {...iprops} label='可选特征值'>
+        {getFieldDecorator('tag_names', {initialValue: model?.tag_names, rules: [
+          {type: 'array', required: true, message: '必须要填'}
+        ]})(
+          <Select 
+            tags
+            placeholder='请输入标签'
+          />
         )}
         </FormItem>
 

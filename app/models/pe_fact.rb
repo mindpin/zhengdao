@@ -12,7 +12,7 @@ class PeFact
 
   def tag_names=(names)
     self.tags = names.map {|name|
-      PeTag.new(name: name)
+      PeTag.create(name: name, fact: self)
     }
   end
 end

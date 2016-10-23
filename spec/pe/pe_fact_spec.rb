@@ -26,14 +26,15 @@ describe PeFact, type: :model do
     end
 
     it 'create_from_tag_names' do
-      fact = PeFact.create({
+      fact = PeFact.new({
         name: '形状', 
         tag_names: %w{三角形 正方形 矩形 五角形 六边形 圆形}
       })
+      fact.save
 
       expect(PeFact.count).to eq(1)
       expect(PeTag.count).to eq(6)
-      expect(fact.tag_names).to match_array(%w{三角形 正方形 矩形 五角形 六边形 圆形})
+      expect(PeFact.last.tag_names).to match_array(%w{三角形 正方形 矩形 五角形 六边形 圆形})
     end
 
     it 'change tag_names' do
