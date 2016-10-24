@@ -5,18 +5,17 @@ class IndexController < ApplicationController
       return
     end
 
-    # 获取当前角色
-    role = (params[:role] || current_user.roles.first).to_sym
-    session[:current_role] = role
-
-    case role
-    when :doctor
-      return redirect_to doctor_queue_path
-    when :pe
-      return redirect_to pe_queue_path
-    when :cure
-      return redirect_to cure_queue_path
+    # 检查传入角色是否可用
+    params_role = params[:role]
+    if not current_user.roles.include? params_role
+      params_role = nil
     end
+
+    # 获取当前角色
+    role = params_role || current_user.last_used_role || current_user.roles.first
+
+    current_user.update_attributes(last_used_role: role)
+    session[:current_role] = role
 
     @component_name = 'RoleIndexPage'
     @component_data = {}
