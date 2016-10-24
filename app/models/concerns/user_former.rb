@@ -44,20 +44,20 @@ module UserFormer
                       url: manager_users_path
                     },
                     {
-                      name: '治疗项管理',
-                      icon: 'add square',
+                      name: '治疗项目维护',
+                      icon: 'book',
                       url: manager_pay_defines_path,
                     },
                     {
-                      name: '体检项管理',
-                      icon: 'add square',
+                      name: '体检项目维护',
+                      icon: 'book',
                       url: manager_pe_defines_path,
                       icolor: '#0856a0'
                     },
                     {
-                      name: '标签组管理',
-                      icon: 'tags',
-                      url: manager_fact_groups_path,
+                      name: '体检字典维护',
+                      icon: 'tag',
+                      url: manager_pe_facts_path,
                       icolor: '#F36501'
                     },
                     {

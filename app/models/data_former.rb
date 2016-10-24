@@ -5,12 +5,11 @@ class DataFormer
   include PatientFormer
   include StoreFormer
   include PayDefineFormer
-  include PeDefineFormer
   include PeAndCureRecordFormer
-  include FactGroupFormer
-  include FactTagFormer
-  include FactObjectFormer
 
+  include PeDefineFormer
+  include PeFactFormer
+  
   def self.paginate_data(models)
     begin
       {

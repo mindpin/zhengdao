@@ -27,8 +27,6 @@ class Manager::PeDefinesController < ApplicationController
 
   def update
     pe_define = PeDefine.find params[:id]
-    p pe_define_params
-
     update_model(pe_define, pe_define_params) do |x|
       DataFormer.new(x)
         .data
@@ -41,7 +39,6 @@ class Manager::PeDefinesController < ApplicationController
     @component_data = {
       submit_url: manager_pe_defines_path,
       cancel_url: manager_pe_defines_path,
-      group_list_url: list_manager_fact_groups_path
     }
     @extend_nav_data = {
       mobile_back_to: manager_pe_defines_path,
@@ -57,7 +54,6 @@ class Manager::PeDefinesController < ApplicationController
       pe_define: DataFormer.new(pe_define).data,
       submit_url: manager_pe_define_path(pe_define),
       cancel_url: manager_pe_defines_path,
-      group_list_url: list_manager_fact_groups_path
     }
     @extend_nav_data = {
       mobile_back_to: manager_pe_defines_path,
@@ -65,8 +61,23 @@ class Manager::PeDefinesController < ApplicationController
     }
   end
 
+  def search_facts
+    pe_define = PeDefine.find params[:id]
+
+    if params[:q].blank?
+      facts = []
+    else
+      facts = PeFact.where(name: /#{params[:q]}/)
+    end
+
+    data = facts.map {|fact|
+      DataFormer.new(fact).data
+    }
+    render json: data
+  end
+
   private
   def pe_define_params
-    params.require(:pe_define).permit(:name, :desc, fact_group_ids: [])
+    params.require(:pe_define).permit(:name, :desc, fact_ids: [])
   end
 end

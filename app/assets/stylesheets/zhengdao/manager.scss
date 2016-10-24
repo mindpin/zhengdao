@@ -761,3 +761,25 @@ body.manager {
     }
   }
 }
+
+
+.pe-define-form .linked-fact {
+  margin-top: 7px;
+  padding-bottom: 7px;
+  margin-bottom: 7px;
+  border-bottom: dashed 1px #ddd;
+}
+
+.linked-fact {
+  line-height: 1.5;
+
+  strong {
+    margin-left: 0.2rem;
+  }
+
+  .tag-names {
+    margin-left: 0.5rem;
+    font-size: 13px;
+    color: #999;
+  }
+}

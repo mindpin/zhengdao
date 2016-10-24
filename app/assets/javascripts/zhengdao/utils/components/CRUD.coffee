@@ -3,6 +3,10 @@ FormItem = Form.Item
 
 @CRUDMixin = {
   submit: (evt)->
+    if @_submit
+      @_submit(evt)
+      return
+
     evt.preventDefault()
 
     @props.form.validateFields (errors, data) => 
