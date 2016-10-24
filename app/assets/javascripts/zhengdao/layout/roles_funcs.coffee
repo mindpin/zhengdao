@@ -2,7 +2,7 @@
   render: ->
     <div className='roles-funcs'>
     {
-      for func, idx in @props.data
+      for func, idx in @props.data || []
         style = 
           if func.icolor
           then {color: func.icolor}

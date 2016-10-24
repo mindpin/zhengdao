@@ -1,6 +1,4 @@
 class Manager::PeFactsController < ApplicationController
-  layout 'manager'
-
   def index
     pe_facts = PeFact.all.map{ |x|
       DataFormer.new(x).data

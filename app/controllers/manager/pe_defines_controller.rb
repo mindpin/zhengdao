@@ -1,6 +1,4 @@
 class Manager::PeDefinesController < ApplicationController
-  layout 'manager'
-
   def index
     pe_defines = PeDefine.all.map{ |x|
       DataFormer.new(x).data

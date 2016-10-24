@@ -1,6 +1,4 @@
 class Manager::StoresController < ApplicationController
-  layout 'manager'
-
   def index
     stores = Store.all.map{|x|
       DataFormer.new(x).data

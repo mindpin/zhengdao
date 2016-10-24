@@ -1,21 +1,8 @@
 class Manager::IndexController < ApplicationController
-  layout 'manager', except: [:pe_demo]
-
   def index
-    funcs = DataFormer.new(current_user)
-      .logic(:role_scenes)
-      .data[:role_scenes]['admin']
-      .map {|x|
-        x[:funcs]
-      }.flatten
-
     @component_name = 'manager_index'
     @component_data = {
-      funcs: funcs,
       search_url: manager_search_path
-    }
-    @extend_nav_data = {
-      current_title: '总控面板'
     }
   end
 
@@ -46,11 +33,11 @@ class Manager::IndexController < ApplicationController
   end
 
   def business_graph
+    @component_name = 'demo_new_index'
     @extend_nav_data = {
       mobile_back_to: manager_path,
       current_title: '业务过程'
     }
-    render template: 'layouts/graph'
   end
 
   def patient_graph

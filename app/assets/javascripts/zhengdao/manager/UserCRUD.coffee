@@ -58,7 +58,7 @@ ModelForm = React.createClass
 
     model = @props.data[@props.model]
 
-    <div style={padding: '2rem 1rem 1rem', backgroundColor: 'white'}>
+    <div style={@form_style()}>
       <Form onSubmit={@submit}>
         <FormItem {...iprops} label='姓名'>
         {getFieldDecorator('name', {initialValue: model?.name, rules: [

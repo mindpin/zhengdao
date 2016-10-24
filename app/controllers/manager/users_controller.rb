@@ -1,6 +1,4 @@
 class Manager::UsersController < ApplicationController
-  layout 'manager'
-
   def index
     users = User.without_role(:admin).map {|x|
       DataFormer.new(x).data

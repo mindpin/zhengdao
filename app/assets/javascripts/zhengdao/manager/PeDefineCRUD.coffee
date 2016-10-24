@@ -44,7 +44,7 @@ ModelForm = React.createClass
   mixins: [CRUDMixin]
 
   getInitialState: ->
-    facts: @props.data[@props.model].facts
+    facts: @props.data[@props.model]?.facts || []
 
   render: ->
     { Form, Input, Button, Icon, Col, Select} = antd
@@ -58,7 +58,7 @@ ModelForm = React.createClass
 
     model = @props.data[@props.model]
 
-    <div className='pe-define-form' style={padding: '2rem 1rem 1rem', backgroundColor: 'white'}>
+    <div className='pe-define-form' style={@form_style()}>
       <Form onSubmit={@submit}>
         <FormItem {...iprops} label='名称'>
         {getFieldDecorator('name', {initialValue: model?.name, rules: [
