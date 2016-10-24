@@ -1,0 +1,98 @@
+.aside-layout {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
+
+
+$sider-width: 180px;
+$sider-bgc: #252C36;
+$sider-line-height: 42px;
+.aside-layout {
+  .layout-sider {
+    width: $sider-width;
+    background: $sider-bgc;
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+
+    > .ant-menu {
+      background-color: transparent;
+
+      > .ant-menu-submenu {
+        background-color: transparent;
+
+        > .ant-menu-sub {
+          background-color: transparent;
+        }
+      }
+
+      > .ant-menu-item, > .ant-menu-submenu > .ant-menu-sub > .ant-menu-item {
+        height: $sider-line-height; line-height: $sider-line-height;
+        &:hover { background-color: rgba(white, 0.1); }
+
+        span.nav-text {
+          vertical-align: baseline;
+          display: inline-block;
+        }
+
+        > a { color: rgba(white, 0.7); }
+        &:hover > a { color: white; }
+      }
+
+      > .ant-menu-submenu > .ant-menu-submenu-title {
+        color: rgba(white, 0.7);
+        border-bottom: solid 1px rgba(black, 0.2);
+        border-top: solid 1px rgba(white, 0.06);
+        height: $sider-line-height; line-height: $sider-line-height - 2px;
+      }
+      > .ant-menu-submenu:hover > .ant-menu-submenu-title {
+        color: white;
+      }
+
+      > .ant-menu-submenu:last-child {
+        border-bottom: solid 1px rgba(white, 0.06);
+      }
+      > .ant-menu-submenu > .ant-menu-sub {
+        background-color: rgba(black, 0.2);
+      }
+
+      > .ant-menu-item-selected, > .ant-menu-submenu > .ant-menu-sub > .ant-menu-item-selected {
+        position: relative;
+        &:after {
+          position: absolute;
+          content: "";
+          top:0;right:0;bottom:0;width:3px;
+          background-color: rgba(white, 0.5);
+        }
+        &:hover {
+          background-color: #2db7f5;
+        }
+
+        > a { color: white; }
+      }
+    }
+  }
+
+  .layout-main {
+    position: absolute;
+    top:0;right:0;bottom:0;left:$sider-width;
+
+    .top-menu {
+      position: absolute;
+      top:0;left:0;right:0;
+      height: $sider-line-height;
+      line-height: $sider-line-height;
+      background-color: #fafafa;
+      padding: 0 1.5rem;
+    }
+
+    .layout-content {
+      position: absolute;
+      top: $sider-line-height;
+      left:0;right:0;bottom:0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 1.5rem;
+      background-color: #FFF;
+    }
+  }
+}

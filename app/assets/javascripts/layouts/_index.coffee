@@ -1,3 +1,6 @@
 window.YieldComponent = require 'layouts/YieldComponent'
-window.AppLayout = require 'layouts/AppLayout'
+
+# 登录界面布局
 window.AuthLayout = require 'layouts/AuthLayout'
+# 左侧栏布局
+window.AsideLayout = require 'layouts/AsideLayout'

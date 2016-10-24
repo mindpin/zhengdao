@@ -1,5 +1,5 @@
 // *= require semantic/semantic-2.2.4.min
-// *= require antd/antd-2.0.1.min
+// *= require antd/antd-2.1.0.min
 
 @import 'patient-graph';
 
@@ -56,7 +56,8 @@ $number-font-family: "Helvetica Neue", "Arial", "Helvetica", "sans-serif" !impor
 @import 'zhengdao/widget';
 @import 'zhengdao/wizard';
 @import 'zhengdao/FactTagQuickRecorder';
-@import 'zhengdao/antd';
+@import 'zhengdao/antd-reset';
+@import 'zhengdao/layouts';
 
 // a {
 //   color: #94634a;

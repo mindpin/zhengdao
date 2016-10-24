@@ -1,6 +1,4 @@
 class Manager::PayDefinesController < ApplicationController
-  layout 'manager'
-
   def index
     pay_defines = PayDefine.all.map{|x|
       DataFormer.new(x).data
