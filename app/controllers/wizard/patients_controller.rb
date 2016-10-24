@@ -1,6 +1,4 @@
 class Wizard::PatientsController < ApplicationController
-  layout 'manager'
-
   def index
     patients = Patient.all.page(params[:page]).per(15)
     patients_data = patients.map {|x|

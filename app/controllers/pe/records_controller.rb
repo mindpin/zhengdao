@@ -1,6 +1,4 @@
 class Pe::RecordsController < ApplicationController
-  layout 'manager'
-
   def visit
     record = PatientRecord.find params[:id]
     patient = record.patient

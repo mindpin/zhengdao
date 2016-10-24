@@ -1,6 +1,4 @@
 class PatientPeRecordsController < ApplicationController
-  layout 'manager'
-
   def edit
     record = PeRecord.find params[:id]
     pe_define = record.pe_define

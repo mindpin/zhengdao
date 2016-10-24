@@ -1,6 +1,4 @@
 class IndexController < ApplicationController
-  layout 'manager'
-
   def index
     if not user_signed_in?
       redirect_to sign_in_path

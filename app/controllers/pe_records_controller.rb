@@ -1,6 +1,4 @@
 class PeRecordsController < ApplicationController
-  layout 'manager'
-
   def new
     pe_define = PeDefine.find(params[:name])
 
