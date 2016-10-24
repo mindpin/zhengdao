@@ -57,77 +57,49 @@ module UserFormer
             when 'wizard'
               [
                 {
-                  name: '导诊',
-                  funcs: [
-                    {
-                      name: '患者登记',
-                      url: new_wizard_patient_path,
-                      icon: 'plus circle'
-                    },
-                    {
-                      name: '患者档案',
-                      url: wizard_patients_path,
-                      icon: 'newspaper'
-                    },
-                    {
-                      name: '队列处理',
-                      url: wizard_queue_path,
-                      icon: 'flag'
-                    }
+                  subkey: 'sub-dz',
+                  subicon: 'setting',
+                  subname: '导诊功能',
+                  menus: [
+                    {name: '患者登记', icon: 'plus circle', href: new_wizard_patient_path},
+                    {name: '患者档案', icon: 'newspaper', href: wizard_patients_path},
+                    {name: '队列处理', icon: 'flag', href: wizard_queue_path},
                   ]
                 }
               ]
             when 'doctor'
               [
                 {
-                  name: '医师',
-                  funcs: [
-                    {
-                      name: '队列处理',
-                      url: doctor_queue_path,
-                      icon: 'flag'
-                    },
-                    # {
-                    #   name: '工作日历',
-                    #   url: doctor_calendar_path,
-                    #   icon: 'calendar'
-                    # },
-                    # {
-                    #   name: '工作记录',
-                    #   url: doctor_activities_path,
-                    #   icon: 'list'
-                    # }
+                  subkey: 'sub-ys',
+                  subicon: 'setting',
+                  subname: '医师功能',
+                  menus: [
+                    {name: '队列处理', icon: 'flag', href: doctor_queue_path},
                   ]
                 }
               ]
             when 'pe'
               [
                 {
-                  name: '体检师',
-                  funcs: [
-                    {
-                      name: '队列处理',
-                      url: pe_queue_path,
-                      icon: 'flag'
-                    },
+                  subkey: 'sub-tjs',
+                  subicon: 'setting',
+                  subname: '医师功能',
+                  menus: [
+                    {name: '队列处理', icon: 'flag', href: pe_queue_path},
                   ]
                 }
               ]
             when 'cure'
               [
                 {
-                  name: '治疗师',
-                  funcs: [
-                    {
-                      name: '队列处理',
-                      url: cure_queue_path,
-                      icon: 'flag'
-                    },
+                  subkey: 'sub-zls',
+                  subicon: 'setting',
+                  subname: '医师功能',
+                  menus: [
+                    {name: '队列处理', icon: 'flag', href: cure_queue_path},
                   ]
                 }
               ]
-            else
-              []
             end
         }
         re

@@ -1,6 +1,4 @@
 class Pe::IndexController < ApplicationController
-  layout 'manager'
-
   def index
     funcs = DataFormer.new(current_user)
       .logic(:role_scenes)
