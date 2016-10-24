@@ -34,5 +34,5 @@ FormItem = Form.Item
   form_style: ->
     padding: '2rem 1rem 1rem' 
     backgroundColor: 'white'
-    maxWidth: 600
+    maxWidth: 800
 }

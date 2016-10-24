@@ -1,16 +1,4 @@
 module.exports = AppLayoutAside = React.createClass
-  render: ->
-    <div className='aside-layout'>
-      <Aside />
-      <Main />
-    </div>
-
-# ---------
-
-{ Menu, Icon, Breadcrumb, Alert} = antd
-{ SubMenu } = Menu
-
-Aside = React.createClass
   getInitialState: ->
     path = new URI(location.href).path()
     # 新增操作
@@ -20,7 +8,22 @@ Aside = React.createClass
 
     path = '/' if ['/manager'].indexOf(path) > -1
 
-    selected_url: path
+    current_path: path
+
+  render: ->
+    <div className='aside-layout'>
+      <Aside current_path={@state.current_path} />
+      <Main current_path={@state.current_path} />
+    </div>
+
+# ---------
+
+{ Menu, Icon, Breadcrumb, Alert} = antd
+{ SubMenu } = Menu
+
+Aside = React.createClass
+  getInitialState: ->
+    selected_url: @props.current_path
 
   render: ->
     menudata = window.role_menus_data
@@ -75,24 +78,49 @@ MenuLink = React.createClass
 Main = React.createClass
   render: ->
     <div className='layout-main'>
-      <TopMenu />
-      <div className='layout-content' style={maxWidth: 1200 - 180}>
-        <YieldComponent component={window.content_component} />
+      <TopMenu {...@props} />
+      <div className='layout-content'>
+        <div style={maxWidth: 1200 - 180}>
+          <YieldComponent component={window.content_component} />
+        </div>
       </div>
     </div>
 
 TopMenu = React.createClass
   render: ->
     <div className='top-menu'>
-      <BC />
+      <BC {...@props} />
       <SignOut />
     </div>
 
 
 BC = React.createClass
   render: ->
-    <div />
+    Item = Breadcrumb.Item
 
+    menus = []
+    window.role_menus_data.forEach (x)->
+      x.menus.forEach (y)-> menus.push y
+
+    path = @props.current_path
+
+    menu = menus.filter((x)-> x.href == path)[0]
+
+    console.log menu
+
+    <div style={float: 'left'}>
+    {
+      if menu?
+        <Breadcrumb>
+          <Item href='/'><Icon type="home" /> 首页</Item>
+          <Item href={menu.href}>{menu.name}</Item>
+        </Breadcrumb>
+      else
+        <Breadcrumb>
+          <Item href='/'><Icon type="home" /> 首页</Item>
+        </Breadcrumb>
+    }
+    </div>
 
 SignOut = React.createClass
   render: ->
@@ -113,7 +141,7 @@ ToggleRole = React.createClass
     { Select, Icon } = antd
     { Option } = Select
     
-    <div style={margin: '5px'}>
+    <div style={margin: '7px 5px'}>
       <Select
         style={width: '100%'}
         placeholder='切换角色'
