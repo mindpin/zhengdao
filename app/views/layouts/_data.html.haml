@@ -9,7 +9,7 @@
 
   current_role = session[:current_role].to_s
 
-  role_menus_data = DataFormer.new(current_user)
+  role_menus_data = current_user.blank? ? {} : DataFormer.new(current_user)
     .logic(:role_menus)
     .data[:role_menus][current_role]
 

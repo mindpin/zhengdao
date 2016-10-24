@@ -30,4 +30,9 @@ FormItem = Form.Item
         取消
       </a>
     </FormItem>
+
+  form_style: ->
+    padding: '2rem 1rem 1rem' 
+    backgroundColor: 'white'
+    maxWidth: 600
 }

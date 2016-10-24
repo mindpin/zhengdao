@@ -83,6 +83,18 @@ $sider-line-height: 42px;
       line-height: $sider-line-height;
       background-color: #fafafa;
       padding: 0 1.5rem;
+
+      .sign-out {
+        float: right;
+        color: #666;
+        height: $sider-line-height;
+        border-left: solid 1px #ddd;
+        padding: 0 1.5rem;
+        margin-right: -1.5rem;
+        &:hover {
+          background-color: rgba(black, 0.05);
+        }
+      }
     }
 
     .layout-content {

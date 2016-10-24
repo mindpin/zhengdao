@@ -13,6 +13,13 @@ module.exports = AppLayoutAside = React.createClass
 Aside = React.createClass
   getInitialState: ->
     path = new URI(location.href).path()
+    # 新增操作
+    path = path.replace(/\/new$/, '')
+    # 编辑操作
+    path = path.replace(/\/[a-f0-9]+\/edit$/, '')
+
+    path = '/' if ['/manager'].indexOf(path) > -1
+
     selected_url: path
 
   render: ->
@@ -27,6 +34,12 @@ Aside = React.createClass
         defaultOpenKeys={menudata.map (x)-> x.subkey}
         defaultSelectedKeys={[@state.selected_url]}
       >
+        {
+          href = "/?role=#{window.current_role}"
+          <Menu.Item key="/">
+            <MenuLink href={href} icon='home'>总控面板</MenuLink>
+          </Menu.Item>
+        }
         {
           for sub in menudata
             <SubMenu key={sub.subkey} title={<span><Icon type={sub.subicon} /> {sub.subname}</span>}>
@@ -47,7 +60,9 @@ MenuLink = React.createClass
     {href, icon} = @props
 
     <a href={href} onClick={@click}>
-      <span className='nav-text'>{@props.children}</span>
+      <span className='nav-text'>
+        {@props.children}
+      </span>
     </a>
 
   click: (evt)->
@@ -69,7 +84,28 @@ Main = React.createClass
 TopMenu = React.createClass
   render: ->
     <div className='top-menu'>
+      <BC />
+      <SignOut />
     </div>
+
+
+BC = React.createClass
+  render: ->
+    <div />
+
+
+SignOut = React.createClass
+  render: ->
+    <a className='sign-out' onClick={@sign_out}>
+      <Icon type='logout' /> 登出
+    </a>
+
+  sign_out: ->
+    jQuery.ajax
+      url: '/api/sign_out'
+      type: 'delete'
+    .done =>
+      location.href = '/'
 
 
 ToggleRole = React.createClass
