@@ -26,9 +26,7 @@
           <div>
           {
             if @state.record.pe_records.length > 0 or @state.record.landing_status == 'FINISH'
-              <div className='patient-base-info'>
-                <PeRecordsList pe_records={@state.record.pe_records} />
-              </div>
+              <PeRecordsList pe_records={@state.record.pe_records} />
             else
               <div className='patient-base-info'>
                 <div className='field'>
@@ -58,9 +56,7 @@
 
           {
             if @state.record.cure_records.length > 0 or @state.record.landing_status == 'FINISH'
-              <div className='patient-base-info'>
-                <CureRecordList cure_records={@state.record.cure_records} />
-              </div>
+              <CureRecordList cure_records={@state.record.cure_records} />
             else
               <div className='patient-base-info'>
                 <SaveableField label='治疗建议' field='cure_advice' record={@state.record} />
