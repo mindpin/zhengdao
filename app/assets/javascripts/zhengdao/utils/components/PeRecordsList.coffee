@@ -2,19 +2,18 @@
   render: ->
     pe_records = @props.pe_records
 
-    <div>
+    <div className='patient-base-info'>
       {
         for pe_record in pe_records
           <div className='field' key={pe_record.id}>
             <label>{pe_record.name}</label>
             {
-              saved_records = pe_record.saved_records
-              if saved_records? and Object.keys(saved_records).length
+              if pe_record.sentences.length
                 <div className='icontent'>
-                  <SavedPeRecordShow saved_records={pe_record.saved_records} />
-                  <a href="/patient_pe_records/#{pe_record.id}" className='ui button mini'>
-                    查看体检记录
-                  </a>
+                {
+                  pe_record.sentences.map (s, idx)->
+                    <SentenceShow key={s.id} sentence={s} />
+                }
                 </div>
               else
                 <div className='icontent'>
@@ -30,7 +29,7 @@
   render: ->
     cure_records = @props.cure_records
 
-    <div>
+    <div className='patient-base-info'>
       {
         for cure_record in cure_records
           <div className='field' key={cure_record.id}>

@@ -1,6 +1,4 @@
 class Wizard::PatientsController < ApplicationController
-  layout 'manager'
-
   def index
     patients = Patient.all.page(params[:page]).per(15)
     patients_data = patients.map {|x|
@@ -23,11 +21,7 @@ class Wizard::PatientsController < ApplicationController
     @component_name = 'wizard_patients_new'
     @component_data = {
       submit_url: wizard_patients_path,
-      cancel_url: wizard_path
-    }
-    @extend_nav_data = {
-      mobile_back_to: wizard_path,
-      current_title: '患者登记'
+      cancel_url: root_path
     }
   end
 

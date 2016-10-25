@@ -1,0 +1,93 @@
+.role-index-page {
+  .funcs {
+    @include clearfix;
+    .func {
+      border: solid 1px #ececec;
+      color: #666;
+      width: 12rem;
+      height: 10rem;
+      background-color: #f7f7f7;
+      display: block;
+      text-align: center;
+      padding-top: 1rem;
+      float: left;
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+      &:hover, &:active {
+        background-color: #FFFAF3;
+      }
+      i.anticon {
+        font-size: 5.5rem;
+        height: 6rem;
+        line-height: 6rem;
+        display: block;
+        margin: 0;
+        padding: 0;
+        width: auto;
+        color: #666;
+      }
+      span.name {
+        font-size: 16px;
+        display: block;
+        height: 3rem;
+        line-height: 3rem;
+      }
+    }
+
+    @include respond(mobile) {
+      margin-right: -1px;
+      .func {
+        box-sizing: border-box;
+        margin: 0;
+        width: percentage(1/3);
+        height: 9rem;
+        // border-left:0 none;
+        i.anticon {
+          font-size: 4rem;
+          height: 5rem;
+          line-height: 5rem;
+        }
+      }
+    }
+  }
+}
+
+.key-value-table {
+  margin-bottom: 1rem;
+
+  .table-title {
+    border-left: 3px solid #96dbfa;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .rows {
+    background-color: #FFF;
+    border-top: solid 1px #eee;
+  }
+
+  $row-lh: 22px;
+  $row-h: 50px;
+  .rows .row {
+    @include clearfix;
+    border-bottom: solid 1px #ECECEC;
+
+    .title, .text {
+      min-height: $row-h;
+      line-height: $row-lh;
+      padding: ($row-h - $row-lh) / 2 1rem;
+    }
+
+    .title {
+      float: left;
+      width: 6rem;
+      text-align: right;
+      font-weight: bold;
+    }
+    .text {
+      border-left: solid 1px #eee;
+      margin-left: 6rem;
+      word-break: break-all;
+    }
+  }
+}

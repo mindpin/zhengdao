@@ -1,11 +1,4 @@
 class Manager::IndexController < ApplicationController
-  def index
-    @component_name = 'manager_index'
-    @component_data = {
-      search_url: manager_search_path
-    }
-  end
-
   def sysinfo
     @component_name = 'manager_func_developing'
     @component_data = {}

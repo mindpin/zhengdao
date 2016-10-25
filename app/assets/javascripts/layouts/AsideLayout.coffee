@@ -1,8 +1,19 @@
 module.exports = AppLayoutAside = React.createClass
+  getInitialState: ->
+    path = new URI(location.href).path()
+    # 新增操作
+    path = path.replace(/\/new$/, '') if path != '/wizard/patients/new'
+    # 编辑操作
+    path = path.replace(/\/[a-f0-9]+\/edit$/, '')
+
+    path = '/' if ['/manager'].indexOf(path) > -1
+
+    current_path: path
+
   render: ->
     <div className='aside-layout'>
-      <Aside />
-      <Main />
+      <Aside current_path={@state.current_path} />
+      <Main current_path={@state.current_path} />
     </div>
 
 # ---------
@@ -12,15 +23,7 @@ module.exports = AppLayoutAside = React.createClass
 
 Aside = React.createClass
   getInitialState: ->
-    path = new URI(location.href).path()
-    # 新增操作
-    path = path.replace(/\/new$/, '')
-    # 编辑操作
-    path = path.replace(/\/[a-f0-9]+\/edit$/, '')
-
-    path = '/' if ['/manager'].indexOf(path) > -1
-
-    selected_url: path
+    selected_url: @props.current_path
 
   render: ->
     menudata = window.role_menus_data
@@ -35,10 +38,12 @@ Aside = React.createClass
         defaultSelectedKeys={[@state.selected_url]}
       >
         {
-          href = "/?role=#{window.current_role}"
-          <Menu.Item key="/">
-            <MenuLink href={href} icon='home'>总控面板</MenuLink>
-          </Menu.Item>
+          current_role = window.current_role
+          if ['admin', 'wizard'].indexOf(current_role) > -1
+            href = "/?role=#{window.current_role}"
+            <Menu.Item key="/">
+              <MenuLink href={href} icon='home'>总控面板</MenuLink>
+            </Menu.Item>
         }
         {
           for sub in menudata
@@ -75,24 +80,47 @@ MenuLink = React.createClass
 Main = React.createClass
   render: ->
     <div className='layout-main'>
-      <TopMenu />
-      <div className='layout-content' style={maxWidth: 1200 - 180}>
-        <YieldComponent component={window.content_component} />
+      <TopMenu {...@props} />
+      <div className='layout-content'>
+        <div style={maxWidth: 1200 - 180}>
+          <YieldComponent component={window.content_component} />
+        </div>
       </div>
     </div>
 
 TopMenu = React.createClass
   render: ->
     <div className='top-menu'>
-      <BC />
+      <BC {...@props} />
       <SignOut />
     </div>
 
 
 BC = React.createClass
   render: ->
-    <div />
+    Item = Breadcrumb.Item
 
+    menus = []
+    window.role_menus_data.forEach (x)->
+      x.menus.forEach (y)-> menus.push y
+
+    path = @props.current_path
+
+    menu = menus.filter((x)-> x.href == path)[0]
+
+    <div style={float: 'left'}>
+    {
+      if menu?
+        <Breadcrumb>
+          <Item href='/'><Icon type="home" /> 首页</Item>
+          <Item href={menu.href}>{menu.name}</Item>
+        </Breadcrumb>
+      else
+        <Breadcrumb>
+          <Item href='/'><Icon type="home" /> 首页</Item>
+        </Breadcrumb>
+    }
+    </div>
 
 SignOut = React.createClass
   render: ->
@@ -113,7 +141,7 @@ ToggleRole = React.createClass
     { Select, Icon } = antd
     { Option } = Select
     
-    <div style={margin: '5px'}>
+    <div style={margin: '7px 5px'}>
       <Select
         style={width: '100%'}
         placeholder='切换角色'

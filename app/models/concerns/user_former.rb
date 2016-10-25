@@ -28,8 +28,8 @@ module UserFormer
                   subicon: 'setting',
                   subname: '基本项',
                   menus: [
-                    {name: '店面管理', icon: 'hospital', href: manager_stores_path},
-                    {name: '人员管理', icon: 'doctor', href: manager_users_path},
+                    {name: '店面管理', icon: 'environment', href: manager_stores_path},
+                    {name: '人员管理', icon: 'user', href: manager_users_path},
                   ]
                 },
                 {
@@ -40,7 +40,7 @@ module UserFormer
                     {name: '治疗项目维护', icon: 'book', href: manager_pay_defines_path},
                     {name: '体检项目维护', icon: 'book', href: manager_pe_defines_path},
                     {name: '体检字典维护', icon: 'tag', href: manager_pe_facts_path},
-                    {name: '患者档案', icon: 'newspaper', href: manager_patients_path},
+                    {name: '患者档案', icon: 'file-text', href: manager_patients_path},
                   ]
                 },
                 {
@@ -48,9 +48,9 @@ module UserFormer
                   subicon: 'setting',
                   subname: '演示',
                   menus: [
-                    {name: '业务过程', icon: 'checkered flag', href: manager_business_graph_path},
-                    {name: '诊疗流程', icon: 'checkered flag', href: manager_patient_graph_path},
-                    {name: '体检示例', icon: 'checkered flag', href: manager_pe_demo_path},
+                    {name: '业务过程', icon: 'eye', href: manager_business_graph_path},
+                    {name: '诊疗流程', icon: 'eye', href: manager_patient_graph_path},
+                    {name: '体检示例', icon: 'eye', href: manager_pe_demo_path},
                   ]
                 }
               ]
@@ -61,9 +61,9 @@ module UserFormer
                   subicon: 'setting',
                   subname: '导诊功能',
                   menus: [
-                    {name: '患者登记', icon: 'plus circle', href: new_wizard_patient_path},
-                    {name: '患者档案', icon: 'newspaper', href: wizard_patients_path},
-                    {name: '队列处理', icon: 'flag', href: wizard_queue_path},
+                    {name: '患者登记', icon: 'plus', href: new_wizard_patient_path},
+                    {name: '患者档案', icon: 'file-text', href: wizard_patients_path},
+                    {name: '队列处理', icon: 'clock-circle-o', href: wizard_queue_path},
                   ]
                 }
               ]
@@ -74,7 +74,7 @@ module UserFormer
                   subicon: 'setting',
                   subname: '医师功能',
                   menus: [
-                    {name: '队列处理', icon: 'flag', href: doctor_queue_path},
+                    {name: '队列处理', icon: 'clock-circle-o', href: doctor_queue_path},
                   ]
                 }
               ]
@@ -85,7 +85,7 @@ module UserFormer
                   subicon: 'setting',
                   subname: '医师功能',
                   menus: [
-                    {name: '队列处理', icon: 'flag', href: pe_queue_path},
+                    {name: '队列处理', icon: 'clock-circle-o', href: pe_queue_path},
                   ]
                 }
               ]
@@ -96,7 +96,7 @@ module UserFormer
                   subicon: 'setting',
                   subname: '医师功能',
                   menus: [
-                    {name: '队列处理', icon: 'flag', href: cure_queue_path},
+                    {name: '队列处理', icon: 'clock-circle-o', href: cure_queue_path},
                   ]
                 }
               ]

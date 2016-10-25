@@ -1,29 +1,27 @@
 class IndexController < ApplicationController
-  layout 'manager'
-
   def index
     if not user_signed_in?
       redirect_to sign_in_path
       return
     end
 
-    role = (params[:role] || current_user.roles.first).to_sym
-    session[:current_role] = role
-
-    case role
-    when :admin
-      return redirect_to manager_path
-    when :wizard
-      return redirect_to wizard_path
-    when :doctor
-      return redirect_to doctor_queue_path
-    when :pe
-      return redirect_to pe_queue_path
-    when :cure
-      return redirect_to cure_queue_path
+    # 检查传入角色是否可用
+    params_role = params[:role]
+    if not current_user.roles.include? params_role
+      params_role = nil
     end
 
-    @component_name = 'index'
+    # 获取当前角色
+    role = params_role || current_user.last_used_role || current_user.roles.first
+
+    current_user.update_attributes(last_used_role: role)
+    session[:current_role] = role
+
+    return redirect_to doctor_queue_path if role == 'doctor'
+    return redirect_to pe_queue_path if role == 'pe'
+    return redirect_to cure_queue_path if role == 'cure'
+
+    @component_name = 'RoleIndexPage'
     @component_data = {}
   end
 end

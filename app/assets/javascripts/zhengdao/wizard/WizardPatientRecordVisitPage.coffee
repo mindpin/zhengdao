@@ -26,13 +26,8 @@
         </div>
       </div>
 
-      <div className='patient-base-info'>
-        <PeRecordsList pe_records={@state.record.pe_records} />
-      </div>
-
-      <div className='patient-base-info'>
-        <CureRecordList cure_records={@state.record.cure_records} />
-      </div>
+      <PeRecordsList pe_records={@state.record.pe_records} />
+      <CureRecordList cure_records={@state.record.cure_records} />
 
       <div className='patient-base-info'>
         <div className='field'>

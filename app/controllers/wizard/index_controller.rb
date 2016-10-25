@@ -1,14 +1,4 @@
 class Wizard::IndexController < ApplicationController
-  def index
-    @component_name = 'wizard_index'
-    @component_data = {
-      search_url: wizard_search_path
-    }
-    @extend_nav_data = {
-      current_title: '总控面板'
-    }
-  end
-
   def search
     query = params[:query]
     patients_data = Patient.or({name: /#{query}/}, {id_card: query}, {mobile_phone: query}).map {|p|
