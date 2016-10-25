@@ -2,7 +2,7 @@ module.exports = AppLayoutAside = React.createClass
   getInitialState: ->
     path = new URI(location.href).path()
     # 新增操作
-    path = path.replace(/\/new$/, '')
+    path = path.replace(/\/new$/, '') if path != '/wizard/patients/new'
     # 编辑操作
     path = path.replace(/\/[a-f0-9]+\/edit$/, '')
 
@@ -38,10 +38,12 @@ Aside = React.createClass
         defaultSelectedKeys={[@state.selected_url]}
       >
         {
-          href = "/?role=#{window.current_role}"
-          <Menu.Item key="/">
-            <MenuLink href={href} icon='home'>总控面板</MenuLink>
-          </Menu.Item>
+          current_role = window.current_role
+          if ['admin', 'wizard'].indexOf(current_role) > -1
+            href = "/?role=#{window.current_role}"
+            <Menu.Item key="/">
+              <MenuLink href={href} icon='home'>总控面板</MenuLink>
+            </Menu.Item>
         }
         {
           for sub in menudata

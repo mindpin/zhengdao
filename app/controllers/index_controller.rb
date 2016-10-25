@@ -17,6 +17,10 @@ class IndexController < ApplicationController
     current_user.update_attributes(last_used_role: role)
     session[:current_role] = role
 
+    return redirect_to doctor_queue_path if role == 'doctor'
+    return redirect_to pe_queue_path if role == 'pe'
+    return redirect_to cure_queue_path if role == 'cure'
+
     @component_name = 'RoleIndexPage'
     @component_data = {}
   end
