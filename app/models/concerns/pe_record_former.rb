@@ -17,7 +17,9 @@ module PeRecordFormer
         patient_pe_record_path(instance)
       }
       field :sentences, ->(instance) {
-        instance.sentences
+        instance.sentences.map do |s|
+          DataFormer.new(s).data
+        end
       }
       field :new_sentence_url, ->(instance) {
         new_patient_pe_record_pe_sentence_path(instance)

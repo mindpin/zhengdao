@@ -4,5 +4,5 @@ class PeSentence
 
   belongs_to :pe_record
 
-  field :data # 详细记录内容
+  field :data, type: Array
 end

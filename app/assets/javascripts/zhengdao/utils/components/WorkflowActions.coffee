@@ -22,8 +22,13 @@
     data_source = @props.pe_records
     columns = [
       {title: '体检项名称', dataIndex: 'name', key: 'name'}
-      {title: '记录内容', key: 'desc', render: (x)->
-        <pre>{x.desc}</pre>
+      {title: '记录内容', key: 'sentences', render: (x)->
+        <div>
+        {
+          x.sentences.map (s, idx)->
+            <SentenceShow key={s.id} sentence={s} />
+        }
+        </div>
       }
       {title: '操作', key: 'ops', render: (x)->
         <TableEditButton href={x.edit_url} text='编辑记录' />
@@ -55,7 +60,7 @@
 
     confirm
       title: ''
-      content: '确定结束体检记录吗？'
+      content: '确定结束体检记录操作吗？'
       onOk: ->
         jQuery.ajax
           type: 'PUT'

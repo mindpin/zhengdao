@@ -10,6 +10,7 @@ class DataFormer
   include PeDefineFormer
   include PeFactFormer
   include PeRecordFormer
+  include PeSentenceFormer
   
   def self.paginate_data(models)
     begin
