@@ -28,8 +28,7 @@ class Wizard::PatientsController < ApplicationController
   def create
     patient = Patient.new patient_params
     save_model(patient) do |_patient|
-      DataFormer.new(_patient)
-        .data
+      DataFormer.new(_patient).data
     end
   end
 
