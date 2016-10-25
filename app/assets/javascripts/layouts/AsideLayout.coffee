@@ -106,8 +106,6 @@ BC = React.createClass
 
     menu = menus.filter((x)-> x.href == path)[0]
 
-    console.log menu
-
     <div style={float: 'left'}>
     {
       if menu?

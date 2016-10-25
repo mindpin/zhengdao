@@ -1,25 +1,13 @@
 class PatientPeRecordsController < ApplicationController
   def edit
-    record = PeRecord.find params[:id]
-    pe_define = record.pe_define
+    pe_record = PeRecord.find params[:id]
 
-    saved_records = record.saved_records || []
-
-    @component_name = 'pe_records_form'
+    @component_name = 'pe_record_form'
     @component_data = {
-      pe_name: pe_define.name,
-      records: saved_records,
-      fact_object: DataFormer.new(pe_define.fact_object).data,
-      submit_url: "/patient_pe_records/#{record.id}",
-      cancel_url: "/pe/records/#{record.patient_record.id}/visit"
+      pe_record: DataFormer.new(pe_record).data,
+      submit_url: "/patient_pe_records/#{pe_record.id}",
+      cancel_url: "/pe/records/#{pe_record.patient_record.id}/visit"
     }
-
-    @extend_nav_data = {
-      mobile_back_to: "/pe/records/#{record.patient_record.id}/visit",
-      current_title: "体检录入"
-    }
-
-    # render json: @component_data
   end
 
   def show

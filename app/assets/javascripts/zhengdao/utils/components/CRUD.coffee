@@ -13,13 +13,13 @@ FormItem = Form.Item
       console.log data
       return if errors
 
-      jQuery.ajax
-        type: @props.method
-        url: @props.data.submit_url
-        data:
-          "#{@props.model}": data
-      .done (res)=>
-        location.href = @props.data.cancel_url
+      # jQuery.ajax
+      #   type: @props.method
+      #   url: @props.data.submit_url
+      #   data:
+      #     "#{@props.model}": data
+      # .done (res)=>
+      #   location.href = @props.data.cancel_url
 
   submit_btns: ->
     <FormItem wrapperCol={ span: 16, offset: 4 }>

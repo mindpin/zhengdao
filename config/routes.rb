@@ -93,7 +93,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :pe_records
   resources :records do
     get :visit, on: :member
 
@@ -101,6 +100,9 @@ Rails.application.routes.draw do
     post :cancel, on: :member
   end
 
-  resources :patient_pe_records
+  resources :patient_pe_records do
+    resources :pe_sentences, controller: 'patient_pe_sentences'
+  end
+
   resources :patient_cure_records
 end
