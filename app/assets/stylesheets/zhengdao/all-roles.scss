@@ -51,3 +51,43 @@
     }
   }
 }
+
+.key-value-table {
+  margin-bottom: 1rem;
+
+  .table-title {
+    border-left: 3px solid #96dbfa;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .rows {
+    background-color: #FFF;
+    border-top: solid 1px #eee;
+  }
+
+  $row-lh: 22px;
+  $row-h: 50px;
+  .rows .row {
+    @include clearfix;
+    border-bottom: solid 1px #ECECEC;
+
+    .title, .text {
+      min-height: $row-h;
+      line-height: $row-lh;
+      padding: ($row-h - $row-lh) / 2 1rem;
+    }
+
+    .title {
+      float: left;
+      width: 6rem;
+      text-align: right;
+      font-weight: bold;
+    }
+    .text {
+      border-left: solid 1px #eee;
+      margin-left: 6rem;
+      word-break: break-all;
+    }
+  }
+}

@@ -1,21 +1,4 @@
 class Pe::IndexController < ApplicationController
-  def index
-    funcs = DataFormer.new(current_user)
-      .logic(:role_scenes)
-      .data[:role_scenes]['pe']
-      .map {|x|
-        x[:funcs]
-      }.flatten
-
-    @component_name = 'pe_index'
-    @component_data = {
-      funcs: funcs,
-    }
-    @extend_nav_data = {
-      current_title: '总控面板'
-    }
-  end
-
   def queue
     queue = params[:queue] || 'wait'
 

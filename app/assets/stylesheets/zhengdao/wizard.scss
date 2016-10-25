@@ -162,41 +162,6 @@
   }
 }
 
-.patient-base-info {
-  background-color: #FFF;
-  border-top: solid 1px #ECECEC;
-  margin-bottom: 1rem;
-  .field {
-    border-bottom: solid 1px #ECECEC;
-    @include clearfix;
-    label {
-      height:50px;line-height:50px;
-      width: 6rem;
-      float: left;
-      padding-right: 1rem;
-      text-align: right;
-      font-weight: bold;
-    }
-    .icontent {
-      min-height: 50px;
-      line-height: 24px;
-      padding: 13px 1rem;
-      border-left: solid 1px #ECECEC;
-      margin-left: 6rem;
-      word-break: break-all;
-    }
-
-    textarea {
-      margin-bottom: 0.5rem;
-      resize: none;
-    }
-  }
-}
-
-.patient-records {
-
-}
-
 .select-workers {
   .worker {
     margin:0 -1rem;
