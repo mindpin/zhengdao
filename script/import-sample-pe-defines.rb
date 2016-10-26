@@ -10,6 +10,10 @@ puts '创建腹诊示例'
 pd = PeDefine.create(name: '腹诊')
 
 pd.facts << PeFact.create({
+  name: '腹部区域', 
+  tag_names: %w{整体 左上 上 右上 左 中 右 左下 下 右下}
+})
+pd.facts << PeFact.create({
   name: '状态', 
   tag_names: %w{隆起 结节 凹陷 凸起 瘀点 脱屑 长痘 水槽}
 })
