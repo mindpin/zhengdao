@@ -5,6 +5,9 @@
     font-family: inherit;
     border-left: solid 3px #eee;
     padding-left: 0.5rem;
+    max-width: 300px;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
   }
 }
 
