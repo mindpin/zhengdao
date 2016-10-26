@@ -1,11 +1,6 @@
 jQuery.is_blank = (obj)->
   not obj || jQuery.trim(obj) == ''
 
-jQuery.blank_or = (obj, re)->
-  unless jQuery.is_blank(obj)
-  then obj
-  else re
-
 # ------------------------------
 
 # 对Date的扩展，将 Date 转化为指定格式的String   
@@ -34,28 +29,3 @@ jQuery.format_date = (date, fmt)->
       fmt = fmt.replace RegExp.$1, if RegExp.$1.length == 1 then v else "00#{v}".substr "#{v}".length
 
   fmt
-
-# --------------------------------
-
-
-jQuery.flatten_tree = (tree_array, children_key)->
-  res = Immutable.fromJS []
-
-  _r = (tree_item, depth_array)->
-    children = tree_item.get(children_key)
-    children?.forEach (child, idx)->
-      is_last_sibling = idx == children.size - 1
-      child_depth_array = depth_array.push is_last_sibling
-      x = child
-        .delete(children_key)
-        .set '_depth_array', child_depth_array
-        .set '_depth', child_depth_array.size
-        .set '_is_last_sibling', is_last_sibling
-      res = res.push(x)
-      _r child, child_depth_array
-
-  tree_data = Immutable.fromJS "#{children_key}": tree_array
-
-  _r tree_data, Immutable.fromJS([])
-
-  return res.toJS()

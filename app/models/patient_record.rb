@@ -16,12 +16,15 @@ class PatientRecord
   field :is_landing, type: Boolean, default: false # 是否在店
   
   field :landing_status, type: String, default: 'NOT_HERE' 
-  # 在店状态: 
-  # 'NOT_HERE': 未在店
-  # 'WAIT_FOR_DOCTOR': 待诊
-  # 'WAIT_FOR_PE': 待体检
-  # 'WAIT_FOR_CURE': 待治疗 
-  # 'GO_AWAY': 离开
+  # 'NOT_HERE'              => '待接诊', 
+  # 'WAIT_FOR_ASSIGN_PE'    => '待分配体检', 
+  # 'WAIT_FOR_ASSIGN_CURE'  => '待分配治疗',
+  # 'WAIT_FOR_DOCTOR'       => '待诊', 
+  # 'WAIT_FOR_PE'           => '待体检', 
+  # 'WAIT_FOR_CURE'         => '待治疗',
+  # 'BACK_TO_DOCTOR'        => '待医师确认',
+  # 'FINISH'                => '待离馆确认', 
+  # 'GO_AWAY'               => '已离开'
 
   field :first_visit # 初诊记录
   field :first_visit_conclusion # 初诊结论
