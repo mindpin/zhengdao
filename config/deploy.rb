@@ -54,6 +54,7 @@ task :deploy => :environment do
     to :launch do
       queue %[
         source /etc/profile
+        yarn install
         bundle
         RAILS_ENV="production" bundle exec rake assets:precompile
         ./deploy/sh/unicorn.sh stop
