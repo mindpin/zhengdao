@@ -7,4 +7,9 @@
 window.React = require 'react'
 window.ReactDOM = require 'react-dom'
 
-window.ReactRailsUJS.unmountComponents = -> {}
+window.ReactRailsUJS.unmountComponents = (searchSelector)->
+  nodes = window.ReactRailsUJS.findDOMNodes(searchSelector)
+  for node in nodes
+    key = Object.keys(node.firstChild)[0]
+    if key
+      ReactDOM.unmountComponentAtNode(node)
