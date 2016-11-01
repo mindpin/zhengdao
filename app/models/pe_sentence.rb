@@ -4,5 +4,5 @@ class PeSentence
 
   belongs_to :pe_record
 
-  field :data, type: Array
+  field :data, type: Array, default: []
 end

@@ -12,14 +12,6 @@ module.exports = AppLayoutAside = React.createClass
 
   render: ->
     <div className='aside-layout'>
-      <MediaQuery maxWidth={768}>
-      {
-        (matches)->
-          console.log 123456
-          <div />
-      }
-      </MediaQuery>
-
       <Aside current_path={@state.current_path} />
       <Main current_path={@state.current_path} />
     </div>

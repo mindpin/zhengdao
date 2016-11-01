@@ -8,6 +8,7 @@ module PeRecordFormer
         define = instance.pe_define
         define.blank? ? '' : define.name
       }
+      field :photos
       field :conclusion
 
       field :edit_url, ->(instance) {

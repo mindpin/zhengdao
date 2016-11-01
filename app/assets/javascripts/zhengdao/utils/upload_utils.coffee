@@ -49,6 +49,8 @@
 
       # 某个文件上传进度更新时，此方法会被调用
       update: ->
+        console.log react.state.percent, @qiniu_file.percent
+
         UploadUtils.smooth_percent(
           react.state.percent,
           @qiniu_file.percent,
