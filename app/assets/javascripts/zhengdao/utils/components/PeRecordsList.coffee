@@ -8,12 +8,13 @@
           <div className='field' key={pe_record.id}>
             <label>{pe_record.name}</label>
             {
-              if pe_record.sentences.length
+              if pe_record.sentences.length || pe_record.photos.length
                 <div className='icontent'>
-                {
-                  pe_record.sentences.map (s, idx)->
-                    <SentenceShow key={s.id} sentence={s} />
-                }
+                  {
+                    pe_record.sentences.map (s, idx)->
+                      <SentenceShow key={s.id} sentence={s} />
+                  }
+                  <PeRecordPhotosShow photos={pe_record.photos} />
                 </div>
               else
                 <div className='icontent'>

@@ -13,4 +13,6 @@ class PeRecord
 
   # 体检大项结论
   field :conclusion
+
+  default_scope -> { asc(:id) }
 end

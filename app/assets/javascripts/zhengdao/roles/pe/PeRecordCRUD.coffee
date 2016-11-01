@@ -38,6 +38,14 @@ ModelForm = React.createClass
     photos.push data
     @setState photos: photos
 
+    jQuery.ajax
+      type: 'PUT'
+      url: @props.data[@props.model].update_photos_url
+      data:
+        photos_data_json: JSON.stringify photos
+    .done (res)->
+      console.log res
+
 
 
 BTNS = React.createClass

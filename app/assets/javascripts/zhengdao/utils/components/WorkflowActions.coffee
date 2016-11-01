@@ -24,10 +24,13 @@
       {title: '体检项名称', dataIndex: 'name', key: 'name'}
       {title: '记录内容', key: 'sentences', render: (x)->
         <div>
-        {
-          x.sentences.map (s, idx)->
-            <SentenceShow key={s.id} sentence={s} />
-        }
+          <div>
+          {
+            x.sentences.map (s, idx)->
+              <SentenceShow key={s.id} sentence={s} />
+          }
+          </div>
+          <PeRecordPhotosShow photos={x.photos} />
         </div>
       }
       {title: '操作', key: 'ops', render: (x)->

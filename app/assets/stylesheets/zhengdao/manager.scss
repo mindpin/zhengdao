@@ -375,7 +375,7 @@
   }
 }
 
-.pe-records-page {
+.pe-records-page, .record-photos{
   .photo-preview {
     margin-bottom: 0.5rem;
     margin-right: 0.5rem;
@@ -404,6 +404,12 @@
   }
 }
 
+.record-photos {
+  margin-top: 0.5rem;
+  border-top: dotted 1px #ccc;
+  padding-top: 0.5rem;
+  margin-bottom: -0.5rem;
+}
 
 .pe-define-form .linked-fact {
   margin-top: 7px;
