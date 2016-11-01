@@ -1,23 +1,14 @@
-#= require jquery
-#= require jquery_ujs
-#= require turbolinks
-
-#= require react
-#= require react_ujs
-
-#= require semantic/semantic-2.2.4.min
-#= require antd/antd-2.1.0.min
-
-# --------------------------
+#= require lib
+#= require ui
 
 #= require file_part_upload/uploader
 #= require_tree ./zhengdao/utils
 #= require_tree ./zhengdao
-
-# --------------------------
 
 # https://github.com/medialize/URI.js
 window.URI = require 'urijs'
 
 # # layouts
 require 'layouts/_index'
+
+window.MediaQuery = require 'react-responsive'

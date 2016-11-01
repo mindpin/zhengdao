@@ -7,6 +7,7 @@ module.exports = YieldComponent = React.createClass
     try
       if name?
         console.debug "render content component: ", name
+        window.__last_component_name = name
       else
         console.debug 'not assign ant component'
         return <div />

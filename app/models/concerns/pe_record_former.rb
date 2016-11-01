@@ -8,6 +8,7 @@ module PeRecordFormer
         define = instance.pe_define
         define.blank? ? '' : define.name
       }
+      field :photos
       field :conclusion
 
       field :edit_url, ->(instance) {
@@ -23,6 +24,9 @@ module PeRecordFormer
       }
       field :new_sentence_url, ->(instance) {
         new_patient_pe_record_pe_sentence_path(instance)
+      }
+      field :update_photos_url, ->(instance) {
+        update_photos_patient_pe_record_path(instance)
       }
     end
   end

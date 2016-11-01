@@ -44,11 +44,19 @@ class PatientPeRecordsController < ApplicationController
     }
   end
 
-  def update
-    record = PeRecord.find params[:id]
-    record.saved_records = params[:saved_records]
-    record.save
-    render json: DataFormer.new(record).data
-  end
+  # def update
+  #   record = PeRecord.find params[:id]
+  #   record.saved_records = params[:saved_records]
+  #   record.save
+  #   render json: DataFormer.new(record).data
+  # end
 
+  def update_photos
+    pe_record = PeRecord.find params[:id]
+    photos = JSON.parse params[:photos_data_json]
+    pe_record.photos = photos
+    pe_record.save
+
+    render json: DataFormer.new(pe_record).data
+  end
 end

@@ -375,98 +375,41 @@
   }
 }
 
-.pe-records-page {
-  .pe-recorder {
-    background-color: #FFF;
-    .add-item {
-      padding: 1rem;
-      border-top: solid 1px #ececec;
+.pe-records-page, .record-photos{
+  .photo-preview {
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+    width: 5rem; height: 5rem;
+    border: solid 1px #DEDEDE;
+    position: relative;
+    background-size: cover;
+    box-sizing: content-box;
+    float: left;
+
+    .bar {
+      position: absolute;
+      top:0;bottom:0;left:0;
+      background-color: #F9FAFB;
     }
-
-    .items {
-      .field {
-        padding: 1rem;
-        border-top: solid 1px #ececec;
-        input.label {
-          border: solid 1px #DEDEDE;
-          width: 100%;
-          height: 32px; line-height: 30px;
-          padding: 0 0.5rem;
-          margin-bottom: 0.5rem;
-          &.readonly {
-            border-color: transparent;
-            margin-top: -0.5rem;
-          }
-        }
-
-        div.search {
-          min-height: 68px;
-          margin-bottom: 1rem;
-        }
-
-        .photo-preview {
-          width: 5rem; height: 5rem;
-          border: solid 1px #DEDEDE;
-          margin-bottom: 0.5rem;
-          position: relative;
-          background-size: cover;
-          box-sizing: content-box;
-
-          .bar {
-            position: absolute;
-            top:0;bottom:0;left:0;
-            background-color: #F9FAFB;
-          }
-          .percent {
-            font-size: 16px;
-            font-weight: bold;
-            position: absolute;
-            pointer-events: none;
-            top:0;left:0;right:0;bottom:0;
-            line-height: 5rem;
-            text-align: center;
-            opacity: 0.6;
-          }
-        }
-      }
-    }
-  }
-
-  .page-save {
-    background-color: #FFF;
-    padding: 1rem;
-    border-top: solid 1px #ECECEC;
-  }
-
-  .pe-recorder-show {
-    .tags {
-      margin-top: 1rem;
-      overflow: hidden;
-      margin-bottom: 0.5rem;
-      .tag {
-        float: left;
-        margin-right: 0.5rem;
-        margin-bottom: 0.5rem;
-        border:solid 1px #D9D5CF;
-        background-color: #FFFAF3;
-        height: 1.5rem; line-height: 1.5rem;
-        padding:0 0.3rem;
-        box-sizing: content-box;
-        color: #796138;
-      }
-      .tag.no {
-        color: #999;
-        background-color: #fff;
-        border:solid 1px #fff;
-      }
-    }
-
-    .photo-preview {
-      display: block;
+    .percent {
+      font-size: 16px;
+      font-weight: bold;
+      position: absolute;
+      pointer-events: none;
+      top:0;left:0;right:0;bottom:0;
+      line-height: 5rem;
+      text-align: center;
+      opacity: 0.6;
     }
   }
 }
 
+.record-photos {
+  margin-top: 0.5rem;
+  border-top: dotted 1px #ccc;
+  padding-top: 0.5rem;
+  margin-bottom: -0.5rem;
+}
 
 .pe-define-form .linked-fact {
   margin-top: 7px;

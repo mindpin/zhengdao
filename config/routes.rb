@@ -101,6 +101,8 @@ Rails.application.routes.draw do
   end
 
   resources :patient_pe_records do
+    put :update_photos, on: :member
+
     resources :pe_sentences, controller: 'patient_pe_sentences'
   end
 
