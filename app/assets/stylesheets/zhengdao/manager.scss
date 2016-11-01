@@ -431,3 +431,12 @@
     color: #999;
   }
 }
+
+.custom-tags {
+  .table-tags {
+    .ant-tag {
+      background-color: lighten(#FDDD9B, 10%);
+      border: solid 1px darken(lighten(#FDDD9B, 10%), 20%);
+    }
+  }
+}

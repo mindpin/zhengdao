@@ -20,7 +20,12 @@
     columns = [
       {title: '特征名', dataIndex: 'name', key: 'name'}
       {title: '可选特征值', key: 'tag_names', render: (x)->
-        <TableTags data={x.tag_names} />
+        <div>
+          <TableTags data={x.tag_names} />
+          <div className='custom-tags'>
+            <TableTags data={x.custom_tag_names} />
+          </div>
+        </div>
       }
       {title: '操作', key: 'ops', render: (x)->
         <TableEditButton href={x.edit_url} text='修改' />
@@ -71,6 +76,12 @@ ModelForm = React.createClass
             placeholder='请输入标签'
           />
         )}
+        </FormItem>
+
+        <FormItem {...iprops} label='自定义特征值'>
+          <div className='custom-tags'>
+            <TableTags data={model?.custom_tag_names} />
+          </div>
         </FormItem>
 
         {@submit_btns()}
