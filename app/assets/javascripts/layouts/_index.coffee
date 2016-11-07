@@ -4,3 +4,5 @@ window.YieldComponent = require 'layouts/YieldComponent'
 window.AuthLayout = require 'layouts/AuthLayout'
 # 左侧栏布局
 window.AsideLayout = require 'layouts/AsideLayout'
+# 矢量编辑器布局
+window.VectorLayout = require 'layouts/VectorLayout'

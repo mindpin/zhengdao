@@ -17,6 +17,7 @@ module KnowledgeCamp
     config.assets.precompile += %w{
       zhengdao.css
       zhengdao.js
+      paper.js
 
       *.png *.svg
       *.ttf *.eot *.woff *.woff2 *.otf'

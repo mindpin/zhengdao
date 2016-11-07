@@ -77,6 +77,7 @@ ModelForm = React.createClass
 
         {
           if @props.method is 'PUT'
+            <div>
             <FormItem {...iprops} label='关联字典特征'>
               {
                 for fact in @state.facts
@@ -95,6 +96,11 @@ ModelForm = React.createClass
                 add_fact={@add_fact}
               />
             </FormItem>
+
+            <FormItem {...iprops} label='矢量图标注'>
+              <Button><a href={@props.data.vector_url}><Icon type='setting' /> 设置</a></Button>
+            </FormItem>
+            </div>
         }
 
         {@submit_btns()}

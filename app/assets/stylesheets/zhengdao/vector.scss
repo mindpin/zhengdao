@@ -1,0 +1,118 @@
+.pe-define-vector-editor {
+  position: absolute;
+  top:0;left:0;right:0;bottom:0;
+  background-color: #FFF;
+
+  .toolbar {
+    position: absolute;
+    top:0;left:0;right:0;height:50px;
+    background-color: #F5F7FA;
+    padding: 0 1rem;
+    z-index: 1;
+  }
+
+  .paper {
+    position: absolute;
+    top:50px;left:0;right:0;bottom:0;
+    background-color: #FaFaFa;
+    overflow: hidden;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+
+    .tools {
+      z-index: 1;
+      position: absolute;
+      top:0.5rem;left:0;
+      background-color: rgba(black, 0.2);
+      padding: 1rem;
+      min-width: 150px;
+      border-radius: 0 4px 4px 0;
+
+      .pos-info {
+        background-color: rgba(black, 0.6);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 0 4px 4px 0;
+        margin-bottom: 1rem;
+        margin-left: -1rem;
+        font-size: 12px;
+      }
+    }
+
+    .toucher .areas {
+      position: absolute;
+      top:131px;left:0;
+      background-color: rgba(black, 0.2);
+      padding: 1rem;
+      min-width: 150px;
+      min-height: 20px;
+      border-radius: 0 4px 4px 0;
+
+      .area {
+        background-color: rgba(black, 0.6);
+        color: white;
+        padding: 0 1rem;
+        height: 32px;
+        line-height: 32px;
+        border-radius: 0 4px 4px 0;
+        margin-bottom: 0.2rem;
+        margin-left: -1rem;
+        font-size: 12px;
+        cursor: pointer;
+        position: relative;
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .delete {
+          position: absolute;
+          background-color: rgba(lighten(red, 20%), 0.8);
+          border-radius: 100px;
+          width: 20px; height: 20px; line-height: 20px;
+          top:6px;right:6px;
+          text-align: center;
+          &:hover {
+            background-color: rgba(red, 0.8);
+          }
+        }
+      }
+    }
+
+
+    .toucher {
+      position: absolute;
+      top:0;left:0;bottom:0;right:0;
+      cursor:move;
+
+      .points-area {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        background-color: #FFF;
+        img {
+          pointer-events: none;
+        }
+      }
+
+      &.adding {
+        background-color: rgba(#2DB7F5, 0.2);
+        cursor: crosshair;
+        .points-area {
+          cursor: crosshair;
+        }
+      }
+
+      .drawer {
+        // 需要占满全屏幕
+        position: absolute;
+        top:-50px;left:0;right:0;bottom:0;
+
+        &.a {
+          pointer-events: none;
+        }
+      }
+    }
+
+  }
+}
