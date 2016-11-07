@@ -2,6 +2,8 @@
   render: ->
     svg_data = @props.data?.pe_define?.svg_data
 
+    Paper = window.VectorSVGPaper
+
     <div className='pe-define-vector-editor'>
       <Toolbar {...@props} load_svg={@load_svg}/>
       <Paper ref='paper' svg_data={svg_data} />
@@ -14,88 +16,6 @@ Toolbar = React.createClass
   render: ->
     <div className='toolbar'>
       <Upload {...@props} />
-    </div>
-
-Paper = React.createClass
-  getInitialState: ->
-    svg_data: @props.svg_data
-
-  render: ->
-    { Alert } = antd
-
-    <div className='paper'>
-    {
-      if not @state.svg_data?
-        <div style={padding: '1rem'}>
-        <Alert
-          message='需要上传矢量图' 
-          description='还没有上传矢量图，点击上方的按钮上传。矢量图必须是 SVG 格式' />
-        </div>
-
-      else
-        src = @state.svg_data.file_entity_url
-        <SVGImage src={src} />
-    }
-    </div>
-
-  load_svg: (svg_data)->
-    @setState svg_data: svg_data
-
-
-SVGImage = React.createClass
-  getInitialState: ->
-    loaded: false
-    width: null
-    height: null
-
-  render: ->
-    { Spin, Alert } = antd
-
-    if not @state.loaded
-      <div>
-        <div style={padding: '1rem'}>
-        <Spin>
-          <Alert message="正在加载图片"
-            type="info"
-          />
-        </Spin>
-        </div>
-        <img style={opacity: 0} src={@props.src} onLoad={@load} ref='img' />
-      </div>
-
-    else
-      <Toucher 
-        width={@state.width} 
-        height={@state.height}
-        src={@props.src} 
-      />
-
-  load: ->
-    if not @state.loaded
-      $img = jQuery ReactDOM.findDOMNode @refs.img
-      width = $img.width()
-      height = $img.height()
-
-      @setState
-        loaded: true
-        width: width
-        height: height
-
-Toucher = React.createClass
-  getInitialState: ->
-    width: @props.width
-    height: @props.height
-
-  render: ->
-    w = @state.width
-    h = @state.height
-
-    <div className='toucher'>
-      <div className='points-area'
-        style={width: w, height: h}
-      >
-        <img src={@props.src} width={w} height={h} />
-      </div>
     </div>
 
 
