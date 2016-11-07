@@ -77,6 +77,8 @@ Toucher = React.createClass
     # 是否正在绘制区域
     adding: true
 
+    areas: []
+
   render: ->
     w = @state.width
     h = @state.height
@@ -111,20 +113,19 @@ Toucher = React.createClass
         className: 'toucher adding'
 
     <div>
-      <Info {...@state} add_fact={@add_fact} save_fact={@save_fact} />
+      <Info {...@state} 
+        add_fact={@add_fact} 
+        save_fact={@save_fact} 
+        cancel_fact={@cancel_fact}
+      />
 
       <div ref='toucher'
         {...toucher_props}
       >
-        <div className='points-area' ref='area'
-          style={style}
-        >
+        <div className='points-area' ref='area' style={style}>
           <img src={@props.src} width={w} height={h} style={img_style} />
         </div>
-        {
-          if @state.adding
-            <Drawer />
-        }
+        <Drawer key='drawer' toucher={@} ref='drawer' adding={@state.adding} />
       </div>
     </div>
 
@@ -173,15 +174,8 @@ Toucher = React.createClass
     evt.stopPropagation()
 
   do_scale: (evt)->
-    $area = jQuery ReactDOM.findDOMNode @refs.area
-    offset = $area.offset()
-    px = evt.pageX - offset.left
-    py = evt.pageY - offset.top
-
-    cx = px / @state.scale
-    cy = py / @state.scale
-
-    @compute_scale(evt.deltaY, cx, cy)
+    data = @_trans_points(evt.pageX, evt.pageY)
+    @compute_scale(evt.deltaY, data.cx, data.cy)
     # @compute_scale(evt.deltaY, 0, 0)
 
   compute_scale: (dir, center_x, center_y)->
@@ -208,22 +202,37 @@ Toucher = React.createClass
         y: @state.y - center_y * (new_scale - old_scale)
 
   mouse_move_on_area: (evt)->
+    data = @_trans_points(evt.pageX, evt.pageY)
+    @setState
+      areax: Math.round data.cx
+      areay: Math.round data.cy
+
+  _trans_points: (window_x, window_y)->
     $area = jQuery ReactDOM.findDOMNode @refs.area
     offset = $area.offset()
-    px = evt.pageX - offset.left
-    py = evt.pageY - offset.top
 
-    mouse_x = Math.round px / @state.scale
-    mouse_y = Math.round py / @state.scale
+    cx = (window_x - offset.left) / @state.scale
+    cy = (window_y - offset.top) / @state.scale
 
-    @setState
-      areax: mouse_x
-      areay: mouse_y
+    {cx: cx, cy: cy}
+
+  _untrans_points: (cx, cy)->
+    $area = jQuery ReactDOM.findDOMNode @refs.area
+    offset = $area.offset()
+
+    window_x = cx * @state.scale + offset.left
+    window_y = cy * @state.scale + offset.top
+
+    {window_x: window_x, window_y: window_y}
+
 
   add_fact: ->
     @setState adding: true
 
   save_fact: ->
+    @setState adding: false
+
+  cancel_fact: ->
     @setState adding: false
 
 
@@ -243,56 +252,116 @@ Info = React.createClass
       <div>
       {
         if not @props.adding
-          <Button onClick={@add_fact}><Icon type='plus' /> 添加识别区域</Button>
+          <Button type='primary' onClick={@props.add_fact}><Icon type='plus' /> 添加区域</Button>
         else
-          <Button onClick={@save_fact}><Icon type='check' /> 确定添加完毕</Button>
+          <div>
+            <div style={marginBottom: '0.5rem'}>
+              <Button type='primary' onClick={@props.save_fact}>
+                <Icon type='check' /> 添加完毕
+              </Button>
+            </div>
+            <div>
+              <Button onClick={@props.cancel_fact}>
+                <Icon type='close' /> 取消添加
+              </Button>
+            </div>
+          </div>
       }
       </div>
     </div>
 
-  add_fact: ->
-    @props.add_fact()
-
-  save_fact: ->
-    @props.save_fact()
-
 
 Drawer = React.createClass
   render: ->
-    <div className='drawer'>
+    className = if @props.adding then 'drawer' else 'drawer a'
+
+    <div className={className}>
       <canvas ref='canvas' width={3000} height={3000} />
     </div>
 
   componentDidMount: ->
-    canvas = ReactDOM.findDOMNode @refs.canvas
-    # jQuery(canvas).attr('resize', true)
-
-    paper.setup(canvas)
-    @draw()
-    paper.view.draw()
-
-  draw: ->
     { Path, Point, Tool } = paper
 
-    tool = new Tool()
-    path = null
-    point = null
+    canvas = ReactDOM.findDOMNode @refs.canvas
+    top_offset = jQuery(canvas).offset().top
 
-    tool.onMouseDown = (evt)->
-      point = evt.point
-      path = new Path {
-        strokeColor: '#E4141B'
-        strokeWidth: 3
-        strokeCap: 'round'
-        fillColor: 'rgba(255, 0, 0, 0.1)'
-      }
-      path.add(evt.point)
+    @tool = new Tool() if not @tool
+    @path = null
+    @start_point = null
+    @has_drag = false
 
-    tool.onMouseDrag = (evt)->
-      path.add(evt.point)
+    paper.setup(canvas)
+    @draw(top_offset)
+    paper.view.draw()
 
-    tool.onMouseUp = (evt)->
-      path.add(point)
-      path.closed = true
-      path.fullySelected = true
-      path.simplify(20)
+  componentWillUnmount: ->
+    @path.remove() if @path
+    @tool.remove()
+
+  draw: (top_offset)->
+    { Path, Point, Tool } = paper
+
+    @tool.onMouseDown = @mouse_down
+    @tool.onMouseDrag = @mouse_drag
+    @tool.onMouseUp = @mouse_up
+
+  mouse_down: (evt)->
+    { Path, Point, Tool } = paper
+
+    @has_drag = false
+    @start_point = evt.point
+    @path.remove() if @path
+    @path = new Path {
+      # strokeColor: '#E4141B'
+      strokeColor: '#3E82F7'
+      strokeWidth: 3
+      strokeCap: 'round'
+      fillColor: null
+    }
+    @path.add(evt.point)
+
+  mouse_drag: (evt)->
+    @has_drag = true
+    @path.add(evt.point)
+
+  mouse_up:  (evt)->
+    return if not @has_drag
+    @path.add @start_point
+    @path.closed = true
+    # path.fullySelected = true
+    @path.fillColor = 'rgba(255, 0, 0, 0.1)'
+    @path.simplify(20)
+    @normalize()
+
+
+  normalize: ->
+    { Path, Point, Tool } = paper
+
+    data = @path.exportJSON(asString: false)
+    normalize_segments = @trans data[1].segments
+
+    @path.remove()
+    @path = new Path {
+      strokeColor: '#E4141B'
+      strokeWidth: 3
+      strokeCap: 'round'
+      fillColor: 'rgba(255, 0, 0, 0.1)'
+      closed: true
+      segments: @untrans normalize_segments
+      dashArray: [10, 10]
+    }
+
+
+  # 转换绘图坐标到记录坐标
+  trans: (segments)->
+    segments.map (arrs)=>
+      arr = arrs[0]
+      data = @props.toucher._trans_points arr[0], arr[1]
+      [[data.cx, data.cy], arrs[1], arrs[2]]
+
+  # 将记录坐标转回绘图坐标
+  untrans: (segments)->
+    segments.map (arrs)=>
+      arr = arrs[0]
+      data = @props.toucher._untrans_points arr[0], arr[1]
+      [[data.window_x, data.window_y], arrs[1], arrs[2]]
