@@ -16,15 +16,26 @@
     background-color: #FaFaFa;
     overflow: hidden;
 
-    .pos-info {
-      position: absolute;
-      top:1rem;left:1rem;
-      background-color: rgba(black, 0.6);
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+
+    .tools {
       z-index: 1;
+      position: absolute;
+      top:0;left:0;
+      background-color: rgba(black, 0.2);
+      padding: 1rem;
+
+      .pos-info {
+        background-color: rgba(black, 0.6);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
     }
+
 
     .toucher {
       position: absolute;
@@ -35,9 +46,16 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         position: absolute;
         background-color: #FFF;
-        // cursor: crosshair;
         img {
           pointer-events: none;
+        }
+      }
+
+      &.adding {
+        background-color: rgba(#2DB7F5, 0.2);
+        cursor: crosshair;
+        .points-area {
+          cursor: crosshair;
         }
       }
     }

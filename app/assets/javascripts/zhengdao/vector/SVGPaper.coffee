@@ -16,7 +16,7 @@
 
       else
         src = @state.svg_data.file_entity_url
-        <SVGImage src={src} />
+        <SVGImage src={src} key={src} />
     }
     </div>
 
@@ -74,6 +74,9 @@ Toucher = React.createClass
     areax: 0
     areay: 0
 
+    # 是否正在绘制区域
+    adding: false
+
   render: ->
     w = @state.width
     h = @state.height
@@ -88,19 +91,33 @@ Toucher = React.createClass
       transform: "scale(#{@state.scale})"
       transformOrigin: '0 0'
 
-    <div>
-      <Info {...@state} />
+    if not @state.adding
+      toucher_props =
+        draggable: true
+        onDragStart: @drag_start
+        onMouseMove: (evt)=>
+          if @on_drag
+            @drag_move(evt)
+          else
+            @mouse_move_on_area(evt)
+        onMouseUp: @drag_end
+        onWheel: @do_scale
+        className: 'toucher'
 
-      <div className='toucher' ref='toucher'
-        draggable
-        onDragStart={@drag_start} 
-        onMouseMove={@drag_move} 
-        onMouseUp={@drag_end} 
-        onWheel={@do_scale}
+    else
+      toucher_props =
+        onMouseMove: (evt)=>
+          @mouse_move_on_area(evt)
+        className: 'toucher adding'
+
+    <div>
+      <Info {...@state} add_fact={@add_fact} save_fact={@save_fact} />
+
+      <div ref='toucher'
+        {...toucher_props}
       >
         <div className='points-area' ref='area'
           style={style}
-          onMouseMove={@mouse_move_on_area} 
         >
           <img src={@props.src} width={w} height={h} style={img_style} />
         </div>
@@ -152,14 +169,13 @@ Toucher = React.createClass
     evt.stopPropagation()
 
   do_scale: (evt)->
-    $toucher = jQuery ReactDOM.findDOMNode @refs.toucher
-    offset = $toucher.offset()
+    $area = jQuery ReactDOM.findDOMNode @refs.area
+    offset = $area.offset()
     px = evt.pageX - offset.left
     py = evt.pageY - offset.top
 
-    # console.log px, py, @refs.area.state.x, @refs.area.state.y
-    cx = (px - @state.x) / @state.scale
-    cy = (py - @state.y) / @state.scale
+    cx = px / @state.scale
+    cy = py / @state.scale
 
     @compute_scale(evt.deltaY, cx, cy)
     # @compute_scale(evt.deltaY, 0, 0)
@@ -200,14 +216,38 @@ Toucher = React.createClass
       areax: mouse_x
       areay: mouse_y
 
+  add_fact: ->
+    @setState adding: true
+
+  save_fact: ->
+    @setState adding: false
+
 
 
 Info = React.createClass
   render: ->
+    { Button, Icon } = antd
+
     # percent = Math.round(@props.scale * 100.0)
     percent = Math.round @props.scale * 100
 
-    <div className='pos-info'>
-      <div>缩放比：{percent}%</div>
-      <div>鼠标位置：{@props.areax}, {@props.areay}</div>
+    <div className='tools'>
+      <div className='pos-info'>
+        <div>缩放：{percent}%</div>
+        <div>位置：{@props.areax}, {@props.areay}</div>
+      </div>
+      <div>
+      {
+        if not @props.adding
+          <Button onClick={@add_fact}><Icon type='plus' /> 添加识别区域</Button>
+        else
+          <Button onClick={@save_fact}><Icon type='check' /> 确定添加完毕</Button>
+      }
+      </div>
     </div>
+
+  add_fact: ->
+    @props.add_fact()
+
+  save_fact: ->
+    @props.save_fact()
