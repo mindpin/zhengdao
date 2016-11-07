@@ -75,7 +75,7 @@ Toucher = React.createClass
     areay: 0
 
     # 是否正在绘制区域
-    adding: false
+    adding: true
 
   render: ->
     w = @state.width
@@ -121,6 +121,10 @@ Toucher = React.createClass
         >
           <img src={@props.src} width={w} height={h} style={img_style} />
         </div>
+        {
+          if @state.adding
+            <Drawer />
+        }
       </div>
     </div>
 
@@ -251,3 +255,44 @@ Info = React.createClass
 
   save_fact: ->
     @props.save_fact()
+
+
+Drawer = React.createClass
+  render: ->
+    <div className='drawer'>
+      <canvas ref='canvas' width={3000} height={3000} />
+    </div>
+
+  componentDidMount: ->
+    canvas = ReactDOM.findDOMNode @refs.canvas
+    # jQuery(canvas).attr('resize', true)
+
+    paper.setup(canvas)
+    @draw()
+    paper.view.draw()
+
+  draw: ->
+    { Path, Point, Tool } = paper
+
+    tool = new Tool()
+    path = null
+    point = null
+
+    tool.onMouseDown = (evt)->
+      point = evt.point
+      path = new Path {
+        strokeColor: '#E4141B'
+        strokeWidth: 3
+        strokeCap: 'round'
+        fillColor: 'rgba(255, 0, 0, 0.1)'
+      }
+      path.add(evt.point)
+
+    tool.onMouseDrag = (evt)->
+      path.add(evt.point)
+
+    tool.onMouseUp = (evt)->
+      path.add(point)
+      path.closed = true
+      path.fullySelected = true
+      path.simplify(20)

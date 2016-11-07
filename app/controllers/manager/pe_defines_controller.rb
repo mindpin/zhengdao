@@ -78,6 +78,7 @@ class Manager::PeDefinesController < ApplicationController
   def vector
     pe_define = PeDefine.find params[:id]
 
+    @extra_js = 'paper'
     @component_layout = 'VectorLayout'
     @component_name = 'manager_pe_define_vector'
     @component_data = {
