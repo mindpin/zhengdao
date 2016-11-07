@@ -6,6 +6,7 @@ module PeDefineFormer
       field :id, ->(instance) {instance.id.to_s}
       field :name
       field :desc
+      field :svg_data
       field :facts, ->(instance) {
         instance.facts.map {|f|
           DataFormer.new(f).data

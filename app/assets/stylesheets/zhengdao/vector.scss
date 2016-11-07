@@ -1,0 +1,36 @@
+.pe-define-vector-editor {
+  position: absolute;
+  top:0;left:0;right:0;bottom:0;
+  background-color: #FFF;
+
+  .toolbar {
+    position: absolute;
+    top:0;left:0;right:0;height:50px;
+    background-color: #F5F7FA;
+    padding: 0 1rem;
+  }
+
+  .paper {
+    position: absolute;
+    top:50px;left:0;right:0;bottom:0;
+    background-color: #FaFaFa;
+    overflow: hidden;
+
+    .toucher {
+      position: absolute;
+      top:0;left:0;bottom:0;right:0;
+      cursor:move;
+
+      .points-area {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        background-color: #FFF;
+        cursor: crosshair;
+        img {
+          pointer-events: none;
+        }
+      }
+    }
+
+  }
+}

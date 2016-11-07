@@ -52,6 +52,7 @@ class Manager::PeDefinesController < ApplicationController
       pe_define: DataFormer.new(pe_define).data,
       submit_url: manager_pe_define_path(pe_define),
       cancel_url: manager_pe_defines_path,
+      vector_url: vector_manager_pe_define_path(pe_define),
     }
     @extend_nav_data = {
       mobile_back_to: manager_pe_defines_path,
@@ -72,6 +73,25 @@ class Manager::PeDefinesController < ApplicationController
       DataFormer.new(fact).data
     }
     render json: data
+  end
+
+  def vector
+    pe_define = PeDefine.find params[:id]
+
+    @component_layout = 'VectorLayout'
+    @component_name = 'manager_pe_define_vector'
+    @component_data = {
+      pe_define: DataFormer.new(pe_define).data,
+      save_svg_url: save_svg_data_manager_pe_define_path(pe_define),
+    }
+  end
+
+  def save_svg_data
+    pe_define = PeDefine.find params[:id]
+    pe_define.svg_data = params[:svg_data]
+    pe_define.save
+
+    render json: {}
   end
 
   private

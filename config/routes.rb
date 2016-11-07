@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :pay_defines
     resources :pe_defines do
       get :search_facts, on: :member
+      get :vector, on: :member
+      put :save_svg_data, on: :member
     end
 
     # 体检记录相关
