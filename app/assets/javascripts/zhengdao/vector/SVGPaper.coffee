@@ -16,7 +16,7 @@
 
       else
         src = @state.svg_data.file_entity_url
-        <SVGImage src={src} key={src} />
+        <SVGImage {...@props} src={src} key={src} />
     }
     </div>
 
@@ -46,7 +46,8 @@ SVGImage = React.createClass
       </div>
 
     else
-      <Toucher 
+      <Toucher
+        {...@props}
         width={@state.width} 
         height={@state.height}
         src={@props.src} 
@@ -75,9 +76,7 @@ Toucher = React.createClass
     areay: 0
 
     # 是否正在绘制区域
-    adding: true
-
-    areas: []
+    adding: false
 
   render: ->
     w = @state.width
@@ -114,9 +113,8 @@ Toucher = React.createClass
 
     <div>
       <Info {...@state} 
-        add_fact={@add_fact} 
-        save_fact={@save_fact} 
-        cancel_fact={@cancel_fact}
+        add_area={@add_area} 
+        add_area_done={@add_area_done} 
       />
 
       <div ref='toucher'
@@ -125,7 +123,13 @@ Toucher = React.createClass
         <div className='points-area' ref='area' style={style}>
           <img src={@props.src} width={w} height={h} style={img_style} />
         </div>
-        <Drawer key='drawer' toucher={@} ref='drawer' adding={@state.adding} />
+        <Drawer 
+          key='drawer' 
+          toucher={@} 
+          ref='drawer' 
+          adding={@state.adding}
+          areas={@props.data.pe_define.svg_areas}
+        />
       </div>
     </div>
 
@@ -189,7 +193,7 @@ Toucher = React.createClass
       new_scale = Math.round(new_scale * 100) / 100
 
     if dir < 0
-      return if @state.scale >= 3
+      return if @state.scale >= 4
       # 放大
       old_scale = @state.scale
       new_scale = @state.scale * i
@@ -226,15 +230,19 @@ Toucher = React.createClass
     {window_x: window_x, window_y: window_y}
 
 
-  add_fact: ->
+  add_area: ->
     @setState adding: true
 
-  save_fact: ->
+  add_area_done: (areas)->
     @setState adding: false
 
-  cancel_fact: ->
-    @setState adding: false
-
+    jQuery.ajax
+      url: @props.data.savg_svg_areas_url
+      type: 'PUT'
+      data:
+        areas: JSON.stringify areas
+    .done (res)->
+      console.log res
 
 
 Info = React.createClass
@@ -252,38 +260,50 @@ Info = React.createClass
       <div>
       {
         if not @props.adding
-          <Button type='primary' onClick={@props.add_fact}><Icon type='plus' /> 添加区域</Button>
+          <Button type='primary' onClick={@props.add_area}><Icon type='plus' /> 添加区域</Button>
         else
-          <div>
-            <div style={marginBottom: '0.5rem'}>
-              <Button type='primary' onClick={@props.save_fact}>
-                <Icon type='check' /> 添加完毕
-              </Button>
-            </div>
-            <div>
-              <Button onClick={@props.cancel_fact}>
-                <Icon type='close' /> 取消添加
-              </Button>
-            </div>
-          </div>
+          <Button onClick={@props.add_area_done}>
+            <Icon type='close' /> 取消添加
+          </Button>
       }
       </div>
     </div>
 
 
 Drawer = React.createClass
+  getInitialState: ->
+    areas: @props.areas || []
+    hover_area_idx: null
+
   render: ->
     className = if @props.adding then 'drawer' else 'drawer a'
 
-    <div className={className}>
-      <canvas ref='canvas' width={3000} height={3000} />
+    <div>
+      <div className={className}>
+        <canvas ref='canvas' width={3000} height={3000} />
+      </div>
+      <Areas
+        ref='areas'
+        areas={@state.areas} 
+        set_hover_area={(idx)=>
+          @setState hover_area_idx: idx
+        }
+        delete_area_by_idx={(idx)=>
+          areas = @state.areas
+          areas = areas.filter (x, i)->
+            i != idx
+          @setState areas: areas
+          @draw_areas()
+          @props.toucher.add_area_done areas
+        }
+      />
     </div>
 
   componentDidMount: ->
     { Path, Point, Tool } = paper
 
     canvas = ReactDOM.findDOMNode @refs.canvas
-    top_offset = jQuery(canvas).offset().top
+    @top_offset = jQuery(canvas).offset().top
 
     @tool = new Tool() if not @tool
     @path = null
@@ -291,14 +311,17 @@ Drawer = React.createClass
     @has_drag = false
 
     paper.setup(canvas)
-    @draw(top_offset)
+    @draw()
     paper.view.draw()
+
+  componentDidUpdate: ->
+    @draw_areas()
 
   componentWillUnmount: ->
     @path.remove() if @path
     @tool.remove()
 
-  draw: (top_offset)->
+  draw: ->
     { Path, Point, Tool } = paper
 
     @tool.onMouseDown = @mouse_down
@@ -324,44 +347,113 @@ Drawer = React.createClass
     @has_drag = true
     @path.add(evt.point)
 
-  mouse_up:  (evt)->
+  mouse_up: (evt)->
     return if not @has_drag
     @path.add @start_point
     @path.closed = true
     # path.fullySelected = true
     @path.fillColor = 'rgba(255, 0, 0, 0.1)'
     @path.simplify(20)
-    @normalize()
+    @save()
 
+  save: ->
+    data = @path.exportJSON(asString: false)
+    raw_segments = data[1].segments
+    segments = @trans raw_segments
+    @path.remove()
 
-  normalize: ->
+    areas = @state.areas
+    areas.push {
+      segments: segments
+    }
+    @setState areas: areas
+    @draw_areas()
+    @props.toucher.add_area_done areas
+
+  draw_areas: ->
     { Path, Point, Tool } = paper
 
-    data = @path.exportJSON(asString: false)
-    normalize_segments = @trans data[1].segments
+    @areas_paths ||= []
+    @areas_paths.forEach (path)->
+      path.remove()
 
-    @path.remove()
-    @path = new Path {
-      strokeColor: '#E4141B'
-      strokeWidth: 3
-      strokeCap: 'round'
-      fillColor: 'rgba(255, 0, 0, 0.1)'
-      closed: true
-      segments: @untrans normalize_segments
-      dashArray: [10, 10]
-    }
+    @state.areas.forEach (area, idx)=>
+      segments = area.segments
+      path = new Path {
+        strokeColor: '#E4141B'
+        strokeWidth: 2
+        strokeCap: 'round'
+        fillColor: 'rgba(255, 0, 0, 0.1)'
+        closed: true
+        segments: @untrans segments
+        dashArray: [10, 10]
+      }
+
+      if @state.hover_area_idx == idx
+        path.strokeWidth = 3
+        path.dashArray = null
+        path.fillColor = 'rgba(255, 0, 0, 0.3)'
+
+      @areas_paths.push path
 
 
   # 转换绘图坐标到记录坐标
   trans: (segments)->
+    toucher = @props.toucher
+
     segments.map (arrs)=>
       arr = arrs[0]
-      data = @props.toucher._trans_points arr[0], arr[1]
-      [[data.cx, data.cy], arrs[1], arrs[2]]
+      data = toucher._trans_points arr[0], arr[1]
+      [
+        [data.cx, data.cy]
+        arrs[1].map (x)-> x / toucher.state.scale
+        arrs[2].map (x)-> x / toucher.state.scale
+      ]
 
   # 将记录坐标转回绘图坐标
   untrans: (segments)->
+    toucher = @props.toucher
+
     segments.map (arrs)=>
       arr = arrs[0]
-      data = @props.toucher._untrans_points arr[0], arr[1]
-      [[data.window_x, data.window_y], arrs[1], arrs[2]]
+      data = toucher._untrans_points arr[0], arr[1]
+      [
+        [data.window_x, data.window_y]
+        arrs[1].map (x)-> x * toucher.state.scale
+        arrs[2].map (x)-> x * toucher.state.scale
+      ]
+
+
+Areas = React.createClass
+  render: ->
+    { Icon } = antd
+
+    <div className='areas'>
+    {
+      @props.areas.map (area, idx)=>
+        <div key={idx} className='area'
+          onMouseEnter={@enter(idx)}
+          onMouseLeave={@leave(idx)}
+        >
+          <span>区域{idx}</span>
+          <div className='delete' onClick={@delete(idx)}>
+            <Icon type='delete' />
+          </div>
+        </div>
+    }
+    </div>
+
+  enter: (idx)->
+    => @props.set_hover_area idx
+
+  leave: (idx)->
+    => @props.set_hover_area null
+
+  delete: (idx)->
+    =>
+      antd.Modal.confirm {
+        title: '删除区域'
+        content: '确定要删除吗？'
+        onOk: =>
+          @props.delete_area_by_idx idx
+      } 

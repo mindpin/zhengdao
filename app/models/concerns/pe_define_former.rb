@@ -7,6 +7,7 @@ module PeDefineFormer
       field :name
       field :desc
       field :svg_data
+      field :svg_areas
       field :facts, ->(instance) {
         instance.facts.map {|f|
           DataFormer.new(f).data

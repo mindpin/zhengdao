@@ -84,6 +84,7 @@ class Manager::PeDefinesController < ApplicationController
     @component_data = {
       pe_define: DataFormer.new(pe_define).data,
       save_svg_url: save_svg_data_manager_pe_define_path(pe_define),
+      savg_svg_areas_url: save_svg_areas_manager_pe_define_path(pe_define),
     }
   end
 
@@ -91,7 +92,13 @@ class Manager::PeDefinesController < ApplicationController
     pe_define = PeDefine.find params[:id]
     pe_define.svg_data = params[:svg_data]
     pe_define.save
+    render json: {}
+  end
 
+  def save_svg_areas
+    pe_define = PeDefine.find params[:id]
+    pe_define.svg_areas = JSON.parse params[:areas]
+    pe_define.save
     render json: {}
   end
 

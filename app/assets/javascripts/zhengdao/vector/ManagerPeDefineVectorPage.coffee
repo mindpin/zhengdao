@@ -6,7 +6,7 @@
 
     <div className='pe-define-vector-editor'>
       <Toolbar {...@props} load_svg={@load_svg}/>
-      <Paper ref='paper' svg_data={svg_data} />
+      <Paper {...@props} ref='paper' svg_data={svg_data} />
     </div>
 
   load_svg: (svg_data)->

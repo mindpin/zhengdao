@@ -6,6 +6,7 @@ class PeDefine
   field :desc # 描述
 
   field :svg_data # svg 文件信息
+  field :svg_areas, type: Array, default: [] # 触摸区域信息
 
   has_and_belongs_to_many :facts, class_name: 'PeFact'
 

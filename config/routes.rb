@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       get :search_facts, on: :member
       get :vector, on: :member
       put :save_svg_data, on: :member
+      put :save_svg_areas, on: :member
     end
 
     # 体检记录相关
