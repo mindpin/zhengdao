@@ -67,6 +67,9 @@ class Manager::PeDefinesController < ApplicationController
       facts = []
     else
       facts = PeFact.where(name: /#{params[:q]}/)
+      if params[:only_area_facts]
+        facts = facts.where(is_area_fact: true)
+      end
     end
 
     data = facts.map {|fact|

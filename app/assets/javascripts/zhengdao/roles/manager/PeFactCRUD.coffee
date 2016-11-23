@@ -46,7 +46,7 @@ ModelForm = React.createClass
   mixins: [CRUDMixin]
 
   render: ->
-    { Form, Input, Button, Icon, Select } = antd
+    { Form, Input, Button, Icon, Select, Switch, Checkbox} = antd
     FormItem  = Form.Item
     { getFieldDecorator } = @props.form
 
@@ -78,11 +78,14 @@ ModelForm = React.createClass
         )}
         </FormItem>
 
-        <FormItem {...iprops} label='自定义特征值'>
-          <div className='custom-tags'>
-            <TableTags data={model?.custom_tag_names} />
-          </div>
-        </FormItem>
+        {
+          if @props.method is 'PUT'
+            <FormItem {...iprops} label='自定义特征值'>
+              <div className='custom-tags'>
+                <TableTags data={model?.custom_tag_names} />
+              </div>
+            </FormItem>
+        }
 
         {@submit_btns()}
       </Form>

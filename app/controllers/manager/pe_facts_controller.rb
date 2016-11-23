@@ -63,6 +63,6 @@ class Manager::PeFactsController < ApplicationController
   private
 
   def pe_fact_params
-    params.require(:pe_fact).permit(:name, tag_names: [])
+    params.require(:pe_fact).permit(:name, :is_area_fact, tag_names: [])
   end
 end

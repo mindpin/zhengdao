@@ -115,6 +115,7 @@ Toucher = React.createClass
       <Info {...@state} 
         add_area={@add_area} 
         add_area_done={@add_area_done} 
+        add_area_cancel={@add_area_cancel}
       />
 
       <div ref='toucher'
@@ -129,6 +130,7 @@ Toucher = React.createClass
           ref='drawer' 
           adding={@state.adding}
           areas={@props.data.pe_define.svg_areas}
+          search_facts_url={@props.data.pe_define.search_facts_url}
         />
       </div>
     </div>
@@ -244,6 +246,9 @@ Toucher = React.createClass
     .done (res)->
       console.log res
 
+  add_area_cancel: ->
+    @setState adding: false
+
 
 Info = React.createClass
   render: ->
@@ -262,7 +267,7 @@ Info = React.createClass
         if not @props.adding
           <Button type='primary' onClick={@props.add_area}><Icon type='plus' /> 添加区域</Button>
         else
-          <Button onClick={@props.add_area_done}>
+          <Button onClick={@props.add_area_cancel}>
             <Icon type='close' /> 取消添加
           </Button>
       }
@@ -296,6 +301,11 @@ Drawer = React.createClass
           @draw_areas()
           @props.toucher.add_area_done areas
         }
+      />
+      <ConfirmModal ref='cmodal' 
+        cancel={@cancel_save}
+        ok={@save}
+        search_facts_url={@props.search_facts_url}
       />
     </div>
 
@@ -354,9 +364,12 @@ Drawer = React.createClass
     # path.fullySelected = true
     @path.fillColor = 'rgba(255, 0, 0, 0.1)'
     @path.simplify(20)
-    @save()
+    
+    @refs.cmodal.show()
 
-  save: ->
+  save: (ipt_data)->
+    name = ipt_data.name
+
     data = @path.exportJSON(asString: false)
     raw_segments = data[1].segments
     segments = @trans raw_segments
@@ -364,11 +377,16 @@ Drawer = React.createClass
 
     areas = @state.areas
     areas.push {
+      name: name
       segments: segments
     }
     @setState areas: areas
     @draw_areas()
     @props.toucher.add_area_done areas
+
+  cancel_save: ->
+    @path.remove()
+    @props.toucher.add_area_cancel()
 
   draw_areas: ->
     { Path, Point, Tool } = paper
@@ -381,7 +399,7 @@ Drawer = React.createClass
       segments = area.segments
       path = new Path {
         strokeColor: '#E4141B'
-        strokeWidth: 2
+        strokeWidth: 1
         strokeCap: 'round'
         fillColor: 'rgba(255, 0, 0, 0.1)'
         closed: true
@@ -390,7 +408,7 @@ Drawer = React.createClass
       }
 
       if @state.hover_area_idx == idx
-        path.strokeWidth = 3
+        path.strokeWidth = 2
         path.dashArray = null
         path.fillColor = 'rgba(255, 0, 0, 0.3)'
 
@@ -431,11 +449,13 @@ Areas = React.createClass
     <div className='areas'>
     {
       @props.areas.map (area, idx)=>
+        console.log area
+
         <div key={idx} className='area'
           onMouseEnter={@enter(idx)}
           onMouseLeave={@leave(idx)}
         >
-          <span>区域{idx}</span>
+          <span>{area.name}</span>
           <div className='delete' onClick={@delete(idx)}>
             <Icon type='delete' />
           </div>
@@ -457,3 +477,54 @@ Areas = React.createClass
         onOk: =>
           @props.delete_area_by_idx idx
       } 
+
+
+ConfirmModal = React.createClass
+  getInitialState: ->
+    visible: false
+
+  render: ->
+    { Modal } = antd
+    <Modal
+      visible={@state.visible}
+      title='创建一个识别区域'
+      onOk={@handle_ok}
+      onCancel={@handle_cancel}
+    >
+      <ModalForm search_facts_url={@props.search_facts_url} ref='mf'/>
+    </Modal>
+
+  handle_cancel: ->
+    @props.cancel()
+    @setState visible: false
+
+  handle_ok: ->
+    name = @refs.mf.get_name()
+    @props.ok {name: name}
+    @setState visible: false
+
+  show: ->
+    @setState visible: true
+
+ModalForm = React.createClass
+  getInitialState: ->
+    name: ''
+
+  render: ->
+    { Form, Select, Icon, Input } = antd
+    FormItem = Form.Item
+    Option = Select.Option
+
+    <Form>
+      <FormItem label='输入区域名称'>
+        <Input value={@state.name} onChange={@change} />
+      </FormItem>
+    </Form>
+
+  change: (evt)->
+    @setState name: evt.target.value
+
+  get_name: ->
+    name = @state.name
+    @setState name: ''
+    name

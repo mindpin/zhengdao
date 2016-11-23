@@ -14,7 +14,14 @@
 
 Toolbar = React.createClass
   render: ->
+    { Button, Icon } = antd
+
     <div className='toolbar'>
+      <div style={marginTop: 9, marginRight:'1rem', float: 'left'}>
+        <Button>
+          <a href={@props.data.pe_define.edit_url}><Icon type='arrow-left' /> 退出</a>
+        </Button>
+      </div>
       <Upload {...@props} />
     </div>
 
@@ -31,7 +38,7 @@ Upload = React.createClass
   render: ->
     { Button, Icon} = antd
 
-    <div style={marginTop: 9, width: 200}>
+    <div style={marginTop: 9, width: 200, float: 'left'}>
       <UploadWidget.BrowseButton ref='browse_btn' status={@state.status}>
         <a href='javascript:;' className='ant-btn ant-btn-primary'>
           <Icon type='upload' /> 上传矢量图

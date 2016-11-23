@@ -25,6 +25,12 @@
       {title: '关联字典特征', key: 'facts', render: (x)->
         <TableIDTags data={x.facts} icon='tags' />
       }
+      {title: '矢量图', key: 'svg_data', render: (x)->
+        if x.svg_data
+          <div>已设置</div>
+        else
+          <div>--</div>
+      }
       {title: '操作', key: 'ops', render: (x)->
         <TableEditButton href={x.edit_url} text='修改' />
       }
@@ -99,6 +105,14 @@ ModelForm = React.createClass
 
             <FormItem {...iprops} label='矢量图标注'>
               <Button><a href={@props.data.vector_url}><Icon type='setting' /> 设置</a></Button>
+              {
+                define = @props.data.pe_define
+                if define.svg_data
+                  <div>
+                  <div><Icon type='check' /> 已设置矢量图</div>
+                  <div>矢量图已设置 {define.svg_areas.length} 个区域</div>
+                  </div>
+              }
             </FormItem>
             </div>
         }
@@ -139,7 +153,7 @@ ModelForm = React.createClass
         location.href = @props.data.cancel_url
 
 
-FactSearcher = React.createClass
+@FactSearcher = React.createClass
   getInitialState: ->
     fact_id: null
     value: ''
@@ -149,31 +163,29 @@ FactSearcher = React.createClass
     { Input, Col, Select, Button, Icon } = antd
     InputGroup = Input.Group
 
-    <InputGroup>
-      <Select 
-        combobox
-        value={@state.value}
-        placeholder='输入特征名'
-        showArrow={false}
-        filterOption={false}
-        onChange={@handleChange}
-        optionLabelProp='children'
-        onSelect={@select}
-      >
-      {
-        for fact in @state.facts
-          <Option key={fact.id} value={fact.name} fact={fact}>
-            <div className='linked-fact'>
-              <div>
-                <Icon type='tag' />
-                <strong>{fact.name}: </strong>
-              </div>
-              <div className='tag-names'>{fact.tag_names.join(', ')}</div>
+    <Select 
+      combobox
+      value={@state.value}
+      placeholder='查找特征名'
+      showArrow={false}
+      filterOption={false}
+      onChange={@handleChange}
+      optionLabelProp='children'
+      onSelect={@select}
+    >
+    {
+      for fact in @state.facts
+        <Option key={fact.id} value={fact.name} fact={fact}>
+          <div className='linked-fact'>
+            <div>
+              <Icon type='tag' />
+              <strong>{fact.name}: </strong>
             </div>
-          </Option>
-      }
-      </Select>
-    </InputGroup>
+            <div className='tag-names'>{fact.tag_names.join(', ')}</div>
+          </div>
+        </Option>
+    }
+    </Select>
 
   handleChange: (value)->
     @setState value: value
@@ -199,6 +211,7 @@ FactSearcher = React.createClass
       url: @props.url
       data:
         q: @current_value
+        only_area_facts: @props.only_area_facts
     .done (res)=>
       @setState facts: res
 

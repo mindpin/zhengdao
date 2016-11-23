@@ -3,6 +3,7 @@ class PeFact
   include Mongoid::Timestamps
 
   field :name # 特征名
+  field :is_area_fact, type: Boolean, default: false # 是否是区域特征（能被矢量图引用）
 
   has_many :tags, class_name: 'PeTag', dependent: :destroy
   has_and_belongs_to_many :define, class_name: 'PeDefine'

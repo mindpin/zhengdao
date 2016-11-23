@@ -7,6 +7,7 @@ module PeFactFormer
       field :name
       field :tag_names
       field :custom_tag_names
+      field :is_area_fact
 
       field :edit_url, ->(instance) {
         edit_manager_pe_fact_path(instance)
