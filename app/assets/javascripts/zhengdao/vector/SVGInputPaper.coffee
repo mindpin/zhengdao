@@ -1,4 +1,4 @@
-@VectorSVGPaper = React.createClass
+@VectorSVGInputPaper = React.createClass
   getInitialState: ->
     svg_data: @props.svg_data
 
@@ -7,16 +7,8 @@
 
     <div className='paper'>
     {
-      if not @state.svg_data?
-        <div style={padding: '1rem'}>
-        <Alert
-          message='需要上传矢量图' 
-          description='还没有上传矢量图，点击上方的按钮上传。矢量图必须是 SVG 格式' />
-        </div>
-
-      else
-        src = @state.svg_data.file_entity_url
-        <SVGImage {...@props} src={src} key={src} />
+      src = @state.svg_data.file_entity_url
+      <SVGImage {...@props} src={src} key={src} />
     }
     </div>
 
@@ -46,12 +38,19 @@ SVGImage = React.createClass
       </div>
 
     else
-      <Toucher
-        {...@props}
-        width={@state.width} 
-        height={@state.height}
-        src={@props.src} 
-      />
+      <div>
+        <Toucher
+          {...@props}
+          width={@state.width} 
+          height={@state.height}
+          src={@props.src} 
+          show_modal={@show_modal}
+        />
+        <RecordModal {...@props} ref='modal' />
+      </div>
+
+  show_modal: (areas)->
+    @refs.modal.show(areas)
 
   load: ->
     if not @state.loaded
@@ -104,12 +103,7 @@ Toucher = React.createClass
         onMouseUp: @drag_end
         onWheel: @do_scale
         className: 'toucher'
-
-    else
-      toucher_props =
-        onMouseMove: (evt)=>
-          @mouse_move_on_area(evt)
-        className: 'toucher adding'
+        onClick: @do_click
 
     <div>
       <Info {...@state} 
@@ -120,6 +114,7 @@ Toucher = React.createClass
 
       <div ref='toucher'
         {...toucher_props}
+        style={cursor: 'pointer'}
       >
         <div className='points-area' ref='area' style={style}>
           <img src={@props.src} width={w} height={h} style={img_style} />
@@ -131,6 +126,7 @@ Toucher = React.createClass
           adding={@state.adding}
           areas={@props.data.pe_define.svg_areas}
           search_facts_url={@props.data.pe_define.search_facts_url}
+          show_modal={@props.show_modal}
         />
       </div>
     </div>
@@ -183,6 +179,9 @@ Toucher = React.createClass
     data = @_trans_points(evt.pageX, evt.pageY)
     @compute_scale(evt.deltaY, data.cx, data.cy)
     # @compute_scale(evt.deltaY, 0, 0)
+
+  do_click: (evt)->
+    @refs.drawer.mouse_down evt.pageX, evt.pageY
 
   compute_scale: (dir, center_x, center_y)->
     i = 1.25
@@ -258,19 +257,9 @@ Info = React.createClass
     percent = Math.round @props.scale * 100
 
     <div className='tools'>
-      <div className='pos-info'>
+      <div className='pos-info' style={marginBottom: 0}>
         <div>缩放：{percent}%</div>
         <div>位置：{@props.areax}, {@props.areay}</div>
-      </div>
-      <div>
-      {
-        if not @props.adding
-          <Button type='primary' onClick={@props.add_area}><Icon type='plus' /> 添加区域</Button>
-        else
-          <Button onClick={@props.add_area_cancel}>
-            <Icon type='close' /> 取消添加
-          </Button>
-      }
       </div>
     </div>
 
@@ -281,32 +270,12 @@ Drawer = React.createClass
     hover_area_idx: null
 
   render: ->
-    className = if @props.adding then 'drawer' else 'drawer a'
+    className = 'drawer a'
 
     <div>
       <div className={className}>
         <canvas ref='canvas' width={3000} height={3000} />
       </div>
-      <Areas
-        ref='areas'
-        areas={@state.areas} 
-        set_hover_area={(idx)=>
-          @setState hover_area_idx: idx
-        }
-        delete_area_by_idx={(idx)=>
-          areas = @state.areas
-          areas = areas.filter (x, i)->
-            i != idx
-          @setState areas: areas
-          @draw_areas()
-          @props.toucher.add_area_done areas
-        }
-      />
-      <ConfirmModal ref='cmodal' 
-        cancel={@cancel_save}
-        ok={@save}
-        search_facts_url={@props.search_facts_url}
-      />
     </div>
 
   componentDidMount: ->
@@ -334,59 +303,23 @@ Drawer = React.createClass
   draw: ->
     { Path, Point, Tool } = paper
 
-    @tool.onMouseDown = @mouse_down
-    @tool.onMouseDrag = @mouse_drag
-    @tool.onMouseUp = @mouse_up
+  #   @tool.onMouseDown = @mouse_down
 
-  mouse_down: (evt)->
+  mouse_down: (x, y)->
     { Path, Point, Tool } = paper
 
-    @has_drag = false
-    @start_point = evt.point
-    @path.remove() if @path
-    @path = new Path {
-      # strokeColor: '#E4141B'
-      strokeColor: '#3E82F7'
-      strokeWidth: 3
-      strokeCap: 'round'
-      fillColor: null
-    }
-    @path.add(evt.point)
+    point = new Point(x, y)
 
-  mouse_drag: (evt)->
-    @has_drag = true
-    @path.add(evt.point)
+    pointed_areas = []
+    @areas_paths.forEach (path, idx)=>
+      if path.contains point
+        pointed_areas.push @state.areas[idx]
 
-  mouse_up: (evt)->
-    return if not @has_drag
-    @path.add @start_point
-    @path.closed = true
-    # path.fullySelected = true
-    @path.fillColor = 'rgba(255, 0, 0, 0.1)'
-    @path.simplify(20)
-    
-    @refs.cmodal.show()
+    @show_modal pointed_areas
 
-  save: (ipt_data)->
-    name = ipt_data.name
-
-    data = @path.exportJSON(asString: false)
-    raw_segments = data[1].segments
-    segments = @trans raw_segments
-    @path.remove()
-
-    areas = @state.areas
-    areas.push {
-      name: name
-      segments: segments
-    }
-    @setState areas: areas
-    @draw_areas()
-    @props.toucher.add_area_done areas
-
-  cancel_save: ->
-    @path.remove()
-    @props.toucher.add_area_cancel()
+  show_modal: (pointed_areas)->
+    return if pointed_areas.length is 0
+    @props.show_modal pointed_areas
 
   draw_areas: ->
     { Path, Point, Tool } = paper
@@ -443,89 +376,155 @@ Drawer = React.createClass
       ]
 
 
-Areas = React.createClass
-  render: ->
-    { Icon } = antd
-
-    <div className='areas'>
-    {
-      @props.areas.map (area, idx)=>
-        console.log area
-
-        <div key={idx} className='area'
-          onMouseEnter={@enter(idx)}
-          onMouseLeave={@leave(idx)}
-        >
-          <span>{area.name}</span>
-          <div className='delete' onClick={@delete(idx)}>
-            <Icon type='delete' />
-          </div>
-        </div>
-    }
-    </div>
-
-  enter: (idx)->
-    => @props.set_hover_area idx
-
-  leave: (idx)->
-    => @props.set_hover_area null
-
-  delete: (idx)->
-    =>
-      antd.Modal.confirm {
-        title: '删除区域'
-        content: '确定要删除吗？'
-        onOk: =>
-          @props.delete_area_by_idx idx
-      } 
-
-
-ConfirmModal = React.createClass
+RecordModal = React.createClass
   getInitialState: ->
     visible: false
+    areas: []
 
   render: ->
     { Modal } = antd
+
+    names = @state.areas.map (x)-> x.name
+
     <Modal
       visible={@state.visible}
-      title='创建一个识别区域'
+      title='添加图形区域记录'
       onOk={@handle_ok}
       onCancel={@handle_cancel}
     >
-      <ModalForm search_facts_url={@props.search_facts_url} ref='mf'/>
+      <TheForm {...@props} area_names={names} key={names} ref='the_form'/>
     </Modal>
 
-  handle_cancel: ->
-    @props.cancel()
-    @setState visible: false
+  show: (areas)->
+    @setState 
+      areas: areas
+      visible: true
 
   handle_ok: ->
-    name = @refs.mf.get_name()
-    @props.ok {name: name}
+    @submit()
     @setState visible: false
 
-  show: ->
-    @setState visible: true
+  handle_cancel: ->
+    @setState visible: false
 
-ModalForm = React.createClass
+  submit: ->
+    form = @refs.the_form.getForm()
+
+    form.validateFields (errors, data) => 
+      return if errors
+
+      facts = @props.data?.pe_define?.facts || []
+
+      _data = []
+
+      area_names = data['svg-area-names']
+      _data.push {
+        area_names: area_names
+      }
+
+      # 标签值
+      facts.forEach (f)->
+        values = data[f.name]
+        if values.length
+          _data.push {
+            fact: f.name
+            values: values
+          }
+
+      # 自定义描述
+      user_custom = jQuery.trim(data['user-custom'])
+      if user_custom != ''
+        _data.push {
+          custom: user_custom
+        }
+
+      console.log _data
+
+      json = JSON.stringify _data
+
+      jQuery.ajax
+        type: 'POST'
+        url: @props.data.submit_url
+        data:
+          "sentence_data_json": json
+      .done (res)=>
+        location.href = @props.data.cancel_url
+
+
+# ---------------------------
+
+ModelForm = React.createClass
+  mixins: [CRUDMixin]
+
   getInitialState: ->
-    name: ''
+    facts: @props.data?.pe_define?.facts || []
 
   render: ->
-    { Form, Select, Icon, Input } = antd
-    FormItem = Form.Item
-    Option = Select.Option
+    { Form, Input, Button, Icon, Select } = antd
+    FormItem  = Form.Item
+    { getFieldDecorator } = @props.form
 
-    <Form>
-      <FormItem label='输入区域名称'>
-        <Input value={@state.name} onChange={@change} />
-      </FormItem>
-    </Form>
+    iprops = {
+      labelCol: { span: 4 }
+      wrapperCol: { span: 16 }
+    }
 
-  change: (evt)->
-    @setState name: evt.target.value
+    define = @props.data?.pe_define
+    area_names = @props.area_names
 
-  get_name: ->
-    name = @state.name
-    @setState name: ''
-    name
+    <div style={@form_style()}>
+      <Form onSubmit={@submit}>
+        <FormItem {...iprops} label='图形区域'>
+          {getFieldDecorator('svg-area-names', {initialValue: area_names, rules: [
+          ]})(
+            <Select
+              tags
+              placeholder='请输入'
+            >
+              {
+                area_names.map (name, idx)->
+                  <Option key={idx} value={name}><Icon type='tag' /> {name}</Option>
+              }
+            </Select>
+          )}
+        </FormItem>
+        {
+          @state.facts.map (f)->
+            <FactInputer key={f.id} fact={f} iprops={iprops} getFieldDecorator={getFieldDecorator} />
+        }
+        <FormItem {...iprops} label='自定义描述'>
+          {getFieldDecorator('user-custom', {initialValue: '', rules: [
+          ]})(
+            <Input type='textarea' rows={4} />
+          )}
+        </FormItem>
+      </Form>
+    </div>
+
+FactInputer = React.createClass
+  render: ->
+    { Form, Icon, Select, Input } = antd
+    FormItem  = Form.Item
+    { getFieldDecorator } = @props
+
+    fact = @props.fact
+    <FormItem {...@props.iprops} label={fact.name}>
+      {getFieldDecorator(fact.name, {initialValue: [], rules: [
+      ]})(
+        <Select
+          tags
+          placeholder='请输入'
+        >
+          {
+            fact.tag_names.map (name, idx)->
+              <Option key={idx} value={name}><Icon type='tag' /> {name}</Option>
+          }
+        </Select>
+      )}
+    </FormItem>
+
+TheForm = antd.Form.create()(
+  React.createClass
+    render: ->
+      <ModelForm {...@props} method='POST' refs='mform'/>
+)

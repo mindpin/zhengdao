@@ -14,6 +14,8 @@ ModelForm = React.createClass
       wrapperCol: { span: 16 }
     }
 
+    define = @props.data?.pe_define
+
     <div style={@form_style()}>
       <Form onSubmit={@submit}>
         {

@@ -1,6 +1,6 @@
 @WizardPatientRecordsNewPage = React.createClass
   getInitialState: ->
-    reg_kind: null
+    reg_kind: 'PE'
     reg_date: new Date
     reg_period: null
     reg_worker_id: null

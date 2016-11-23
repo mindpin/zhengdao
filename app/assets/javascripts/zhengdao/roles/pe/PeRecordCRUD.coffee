@@ -73,6 +73,12 @@ BTNS = React.createClass
         marginRight: 8
       href: @props.model.new_sentence_url
 
+    b2 = 
+      className: 'ant-btn ant-btn-primary ant-btn-lg'
+      style:
+        marginRight: 8
+      href: "#{@props.model.new_sentence_url}?svg=true"
+
     b3 =
       className: 'ant-btn ant-btn-lg'
       style:
@@ -93,7 +99,11 @@ BTNS = React.createClass
         }
         <UploadProgress {...@state} />
       </div>
-      <a {...b1}><Icon type='plus' /> 增加一条记录</a>
+
+      <a {...b1}><Icon type='plus' /> 增加一般记录</a>
+      <a {...b2}><Icon type='plus' /> 增加图形记录</a>
+
+
       <div style={display: 'inline-block', marginRight: 8}>
         <UploadWidget.BrowseButton ref='browse_btn' status={@state.status}>
           <a href='javascript:;' className='ant-btn ant-btn-primary ant-btn-lg'>

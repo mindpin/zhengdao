@@ -15,6 +15,11 @@
           <span key={idx}>
             {x.custom};
           </span>
+        else if x.area_names
+          <div key={idx}>
+            <span>图形区域：</span>
+            <span>{x.area_names.join(', ')}</span>
+          </div>
     }
     {
       if sentence.data.length == 0
